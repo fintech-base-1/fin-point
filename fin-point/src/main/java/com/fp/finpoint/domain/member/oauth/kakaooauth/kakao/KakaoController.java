@@ -1,4 +1,4 @@
-package com.fp.finpoint.domain.member.oauth.naver;
+package com.fp.finpoint.domain.member.oauth.kakaooauth.kakao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,19 +8,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
-public class NaverController {
+public class KakaoController {
 
-    private final NaverService naverService;
+    private final KakaoService kakaoService;
 
     @GetMapping("/")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/finpoint/naver/auth")
+    @GetMapping("/finpoint/kakao/auth")
     @ResponseBody
-    public ProfileResponseDto getCode(@RequestParam String code, @RequestParam String state) {
-        return naverService.loginService(code, state);
-        //123456
+    public ProfileResponseDto getCode(@RequestParam String code) {
+        return kakaoService.loginService(code);
     }
 }

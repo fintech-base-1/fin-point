@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="googleLogin">Google 로그인</button>
+
+
+
+
+<!-- 구글 -->
+<script>
+    document.getElementById('googleLogin').addEventListener('click', function() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/v1/oauth2/google');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    window.open(xhr.responseText, '_blank', 'width=600,height=800, top=100, left=700, scrollbars=yes, resizable=yes');
+                } else {
+                    console.error('요청 실패:', xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
+
+</body>
+</html>
