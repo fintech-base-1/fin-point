@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b21027c-f520-47fe-aa5f-89af45248a0e" name="Changes" comment="INIT: project init" />
+    <list default="true" id="4b21027c-f520-47fe-aa5f-89af45248a0e" name="Changes" comment="INIT: project init">
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/config/FeignConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/config/JpaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/entity/Invest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/repository/InvestRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/service/InvestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/member/entity/Member.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/member/repository/MemberRespository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/member/service/MemberService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/audit/Auditable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/exception/BusinessLogicException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/exception/ExceptionCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/interceptor/Interceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/jwt/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/invest/controller/InvestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/member/controller/MemberController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/oauth/kakao/test.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +50,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/fin-point" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -97,37 +117,37 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/hojinlee/IdeaProjects/fin-point/fin-point/src/main/resources/image",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.scopes",
-    "spring.configuration.checksum": "ab0f80020c53753a0cabf1f72ae8c55d",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hojinlee/IdeaProjects/fin-point/fin-point/src/main/resources/image&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.scopes&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;ab0f80020c53753a0cabf1f72ae8c55d&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Properties"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Properties&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.fp.finpoint.controller" />
@@ -181,6 +201,7 @@
       <workItem from="1685581136260" duration="8253000" />
       <workItem from="1685672533339" duration="215000" />
       <workItem from="1685672773569" duration="319000" />
+      <workItem from="1685673126416" duration="1519000" />
     </task>
     <task id="LOCAL-00001" summary="INIT: project init">
       <created>1685187415770</created>
