@@ -3,6 +3,7 @@ package com.fp.finpoint.web.member.oauth.google.controller;
 import com.fp.finpoint.web.member.oauth.google.dto.GoogleInfoDto;
 import com.fp.finpoint.web.member.oauth.google.dto.GoogleRequestDto;
 import com.fp.finpoint.web.member.oauth.google.dto.GoogleResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@CrossOrigin("*")
+@Slf4j
 public class GoogleController {
     @Value("${google.client.id}")
     private String googleClientId;
@@ -26,16 +27,15 @@ public class GoogleController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/api/v1/oauth2/google", method = RequestMethod.POST)
+    @PostMapping("/api/v1/oauth2/google")
     public String loginUrlGoogle(){
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
-                + "&redirect_uri=http://localhost:8080/oauth/google&response_type=code&scope=email%20profile%20openid&access_type=offline";
-        System.out.println("reqUrl : "+reqUrl);
+                + "&redirect_uri=http://localhost:8080/finpoint/google/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
         return reqUrl;
     }
 
     @ResponseBody
-    @RequestMapping(value="/oauth/google", method = RequestMethod.GET)
+    @GetMapping("/finpoint/google/auth")
     public String loginGoogle(@RequestParam(value = "code") String authCode){
         RestTemplate restTemplate = new RestTemplate();
         GoogleRequestDto googleOAuthRequestParam = GoogleRequestDto
@@ -43,7 +43,7 @@ public class GoogleController {
                 .clientId(googleClientId)
                 .clientSecret(googleClientPw)
                 .code(authCode)
-                .redirectUri("http://localhost:8080/oauth/google")
+                .redirectUri("http://localhost:8080/finpoint/google/auth")
                 .grantType("authorization_code").build();
         ResponseEntity<GoogleResponseDto> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
                 googleOAuthRequestParam, GoogleResponseDto.class);
@@ -54,11 +54,9 @@ public class GoogleController {
                 map, GoogleInfoDto.class);
         String email=resultEntity2.getBody().getEmail();
         String name=resultEntity2.getBody().getName();
-        System.out.println("받아온 이메일 확인: "+email);
-        System.out.println("받아온 이름 확인: "+name);
+        System.out.println(email);
+        System.out.println(name);
+        log.info("email address = {}", email);
         return "<script>window.close();</script>";
-    }
-
-
-
+    };
 }
