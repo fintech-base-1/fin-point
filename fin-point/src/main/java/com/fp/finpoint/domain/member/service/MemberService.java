@@ -5,6 +5,7 @@ import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
+import com.fp.finpoint.global.jwt.JwtUtil;
 import com.fp.finpoint.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +38,10 @@ public class MemberService {
         //TODO: 이메일 인증
 
         memberRepository.save(member);
+        log.info("# Successful Member Registration!");
     }
 
-    public void doLogin(MemberDto memberDto) {
+    public String doLogin(MemberDto memberDto) {
         String password = memberDto.getPassword();
         // 유무 검증
         Member member = memberRepository.findByEmail(memberDto.getEmail()).orElseThrow(
@@ -55,8 +57,10 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_WRONG_PASSWORD);
         }
 
-        //TODO: 성공 시 jwt 토큰 전달
-
+        log.info("# Member Login Successful!");
+        String accessToken = JwtUtil.createAccessToken(member.getEmail());
+        log.info("# JWT Token Create Successful!");
+        return accessToken;
     }
 
     public void verifyExistEmail(String email) {
