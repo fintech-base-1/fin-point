@@ -1,7 +1,9 @@
 package com.fp.finpoint.config;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Configuration;
 
-@EnableFeignClients
+@Configuration
+@EnableFeignClients(basePackages = "com.fp.finpoint")
 public class FeignConfig {
 }
