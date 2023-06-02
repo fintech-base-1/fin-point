@@ -54,8 +54,7 @@ public class GoogleController {
                 map, GoogleInfoDto.class);
         String email=resultEntity2.getBody().getEmail();
         String name=resultEntity2.getBody().getName();
-        System.out.println(email);
-        System.out.println(name);
+        log.info("email address = {}", email);
         log.info("email address = {}", email);
         return "<script>window.close();</script>";
     };
