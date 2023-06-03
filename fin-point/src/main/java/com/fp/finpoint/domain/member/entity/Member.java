@@ -22,4 +22,10 @@ public class Member {
     private String password;
 
     private String salt;
+
+    private String code;
+
+    public void assignCode(String code) {
+        this.code = code;
+    }
 }
