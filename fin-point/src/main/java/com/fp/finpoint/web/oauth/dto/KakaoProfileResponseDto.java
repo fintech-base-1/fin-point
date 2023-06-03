@@ -1,4 +1,4 @@
-package com.fp.finpoint.web.oauth.kakao.dto;
+package com.fp.finpoint.web.oauth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileResponseDto {
+public class KakaoProfileResponseDto {
 
     public Long id;
     public kakao_account kakao_account;

@@ -1,4 +1,4 @@
-package com.fp.finpoint.web.oauth.naver.dto;
+package com.fp.finpoint.web.oauth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDto {
+public class NaverResponseDto {
 
     String access_token;
     String refresh_token;
