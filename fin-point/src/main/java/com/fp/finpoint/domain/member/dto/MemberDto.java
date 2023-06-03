@@ -1,6 +1,7 @@
 package com.fp.finpoint.domain.member.dto;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,4 +14,10 @@ public class MemberDto {
 
     @NotBlank
     private String password;
+
+    public static class Code {
+        @Getter
+        @NotBlank
+        String code;
+    }
 }
