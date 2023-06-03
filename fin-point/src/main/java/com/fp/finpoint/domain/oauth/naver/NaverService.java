@@ -1,9 +1,9 @@
 package com.fp.finpoint.domain.oauth.naver;
 
-import com.fp.finpoint.domain.oauth.feign.feign.LoginFeign;
-import com.fp.finpoint.domain.oauth.feign.feign.ProfileFeign;
-import com.fp.finpoint.web.oauth.naver.dto.ProfileResponseDto;
-import com.fp.finpoint.web.oauth.naver.dto.ResponseDto;
+import com.fp.finpoint.domain.oauth.feign.NaverLoginFeign;
+import com.fp.finpoint.domain.oauth.feign.NaverGetProfileFeign;
+import com.fp.finpoint.web.oauth.dto.NaverProfileResponseDto;
+import com.fp.finpoint.web.oauth.dto.NaverResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class NaverService {
 
-    private final LoginFeign loginFeign;
-    private final ProfileFeign profileFeign;
+    private final NaverLoginFeign naverLoginFeign;
+    private final NaverGetProfileFeign naverGetProfileFeign;
 
     @Value("${oauth.naver.client_id}")
     private String client_id;
     @Value("${oauth.naver.client_secret}")
     private String client_secret;
 
-    public ProfileResponseDto loginService(String code, String state) {
-        ResponseDto responseDto =
-                loginFeign.login("authorization_code", client_id, client_secret, code, state);
-        String accessToken = "Bearer " + responseDto.getAccess_token();
+    public NaverProfileResponseDto loginService(String code, String state) {
+        NaverResponseDto naverResponseDto =
+                naverLoginFeign.login("authorization_code", client_id, client_secret, code, state);
+        String accessToken = "Bearer " + naverResponseDto.getAccess_token();
         log.info("accessToken = {}" , accessToken);
-        ProfileResponseDto profileResponseDto = profileFeign.getProfile(accessToken);
-        log.info("email = {}", profileResponseDto.getResponse().getEmail());
-        return profileResponseDto;
+        NaverProfileResponseDto naverProfileResponseDto = naverGetProfileFeign.getProfile(accessToken);
+        log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
+        return naverProfileResponseDto;
     }
 }
