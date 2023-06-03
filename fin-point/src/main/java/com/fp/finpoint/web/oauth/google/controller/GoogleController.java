@@ -56,7 +56,7 @@ public class GoogleController {
         String email=resultEntity2.getBody().getEmail();
         String name=resultEntity2.getBody().getName();
         log.info("email address = {}", email);
-        log.info("email address = {}", email);
+        log.info("name = {}", name);
         return "<script>window.close();</script>";
     };
 }
