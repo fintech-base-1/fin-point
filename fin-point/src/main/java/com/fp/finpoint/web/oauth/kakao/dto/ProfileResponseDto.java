@@ -1,4 +1,4 @@
-package com.fp.finpoint.domain.member.oauth.kakaooauth.kakao;
+package com.fp.finpoint.web.oauth.kakao.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
