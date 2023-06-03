@@ -1,7 +1,9 @@
 package com.fp.finpoint.domain.oauth.naver;
 
-import com.fp.finpoint.domain.oauth.feign.NaverLoginFeign;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.feign.NaverGetProfileFeign;
+import com.fp.finpoint.domain.oauth.feign.NaverLoginFeign;
 import com.fp.finpoint.web.oauth.dto.NaverProfileResponseDto;
 import com.fp.finpoint.web.oauth.dto.NaverResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class NaverService {
 
     private final NaverLoginFeign naverLoginFeign;
     private final NaverGetProfileFeign naverGetProfileFeign;
+    private final MemberRepository memberRepository;
 
     @Value("${oauth.naver.client_id}")
     private String client_id;
@@ -30,6 +33,15 @@ public class NaverService {
         NaverProfileResponseDto naverProfileResponseDto = naverGetProfileFeign.getProfile(accessToken);
         log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
         log.info("nickname = {}", naverProfileResponseDto.getResponse().getNickname());
+        oauthJoin(naverProfileResponseDto.getResponse().getEmail());
         return naverProfileResponseDto;
+    }
+
+    public void oauthJoin(String email) {
+        if (memberRepository.findByEmail(email).isPresent()) {
+            return;
+        }
+        Member member = Member.builder().email(email).build();
+        memberRepository.save(member);
     }
 }
