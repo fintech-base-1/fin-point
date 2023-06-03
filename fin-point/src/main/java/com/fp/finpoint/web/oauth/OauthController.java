@@ -20,11 +20,6 @@ public class OauthController {
     private final KakaoService kakaoService;
     private final GoogleService googleService;
 
-    @GetMapping(value = "/google")
-    public String viewTest(){
-        return "main";
-    }
-
     @ResponseBody
     @PostMapping("/api/v1/oauth2/google")
     public String loginUrlGoogle(){
