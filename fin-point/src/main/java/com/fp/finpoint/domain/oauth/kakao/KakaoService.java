@@ -28,6 +28,12 @@ public class KakaoService {
     @Value("${oauth.kakao.callback}")
     private String redirect_uri;
 
+    public String getRequireUrl() {
+        String reqUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + client_id
+                + "&redirect_uri=" + redirect_uri + "&response_type=code";
+        return reqUrl;
+    }
+
     public String loginService(String code) {
         KakaoResponseDto kakaoResponseDto =
                 kakaoLoginFeign.login("authorization_code",client_id,redirect_uri,code);
