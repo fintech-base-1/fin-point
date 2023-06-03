@@ -1,4 +1,4 @@
-package com.fp.finpoint.web.oauth.google.dto;
+package com.fp.finpoint.web.oauth.dto.google;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
