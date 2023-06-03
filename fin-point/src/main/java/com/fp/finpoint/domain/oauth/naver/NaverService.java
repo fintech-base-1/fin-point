@@ -29,6 +29,7 @@ public class NaverService {
         log.info("accessToken = {}" , accessToken);
         NaverProfileResponseDto naverProfileResponseDto = naverGetProfileFeign.getProfile(accessToken);
         log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
+        log.info("nickname = {}", naverProfileResponseDto.getResponse().getNickname());
         return naverProfileResponseDto;
     }
 }
