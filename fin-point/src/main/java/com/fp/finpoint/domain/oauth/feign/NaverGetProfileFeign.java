@@ -1,7 +1,7 @@
 package com.fp.finpoint.domain.oauth.feign;
 
 
-import com.fp.finpoint.web.oauth.dto.NaverProfileResponseDto;
+import com.fp.finpoint.web.oauth.dto.naver.NaverProfileResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

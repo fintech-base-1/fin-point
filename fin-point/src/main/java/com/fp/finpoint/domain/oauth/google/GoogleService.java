@@ -1,43 +1,40 @@
-package com.fp.finpoint.web.oauth.google.controller;
+package com.fp.finpoint.domain.oauth.google;
 
-import com.fp.finpoint.web.oauth.google.dto.GoogleInfoDto;
-import com.fp.finpoint.web.oauth.google.dto.GoogleRequestDto;
-import com.fp.finpoint.web.oauth.google.dto.GoogleResponseDto;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.repository.MemberRepository;
+import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.web.oauth.dto.google.GoogleInfoDto;
+import com.fp.finpoint.web.oauth.dto.google.GoogleRequestDto;
+import com.fp.finpoint.web.oauth.dto.google.GoogleResponseDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@Service
 @Slf4j
-public class GoogleController {
+@RequiredArgsConstructor
+public class GoogleService {
 
     @Value("${google.client.id}")
     private String googleClientId;
     @Value("${google.client.pw}")
     private String googleClientPw;
 
-    @GetMapping(value = "/google")
-    public String viewTest(){
-        return "main";
-    }
+    private final MemberRepository memberRepository;
 
-    @ResponseBody
-    @PostMapping("/api/v1/oauth2/google")
-    public String loginUrlGoogle(){
+    public String getRequireUrl() {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
                 + "&redirect_uri=http://localhost:8080/finpoint/google/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
         return reqUrl;
     }
 
-    @ResponseBody
-    @GetMapping("/finpoint/google/auth")
-    public String loginGoogle(@RequestParam(value = "code") String authCode){
+    public String oauthLogin(String authCode) {
         RestTemplate restTemplate = new RestTemplate();
         GoogleRequestDto googleOAuthRequestParam = GoogleRequestDto
                 .builder()
@@ -53,10 +50,20 @@ public class GoogleController {
         map.put("id_token",jwtToken);
         ResponseEntity<GoogleInfoDto> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
                 map, GoogleInfoDto.class);
-        String email=resultEntity2.getBody().getEmail();
-        String name=resultEntity2.getBody().getName();
-        log.info("email address = {}", email);
+        String email = resultEntity2.getBody().getEmail();
+        String name = resultEntity2.getBody().getName();
+        log.info("email = {}", email);
         log.info("name = {}", name);
-        return "<script>window.close();</script>";
+        oauthJoin(email);
+
+        return JwtUtil.createAccessToken(email);
+    }
+
+    public void oauthJoin(String email) {
+        if (memberRepository.findByEmail(email).isPresent()) {
+            return;
+        }
+        Member member = Member.builder().email(email).build();
+        memberRepository.save(member);
     }
 }
