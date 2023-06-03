@@ -5,10 +5,7 @@ import com.fp.finpoint.domain.oauth.kakao.KakaoService;
 import com.fp.finpoint.domain.oauth.naver.NaverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,15 +18,22 @@ public class OauthController {
     private final GoogleService googleService;
 
     @ResponseBody
-    @PostMapping("/api/v1/oauth2/google")
-    public String loginUrlGoogle(){
-
-        return googleService.getRequireUrl();
+    @PostMapping("/oauth/{id}")
+    public String loginUrlGoogle(@PathVariable(name = "id") String id) {
+        switch (id) {
+            case "google":
+                return googleService.getRequireUrl();
+            case "naver":
+                return naverService.getRequireUrl();
+            case "kakao":
+                return kakaoService.getRequireUrl();
+        }
+        return id;
     }
 
     @ResponseBody
     @GetMapping("/finpoint/google/auth")
-    public String loginGoogle(@RequestParam(value = "code") String authCode, HttpServletResponse response){
+    public String loginGoogle(@RequestParam(value = "code") String authCode, HttpServletResponse response) {
 
         String jwtToken = googleService.oauthLogin(authCode);
         response.addHeader("Authorization", jwtToken);
