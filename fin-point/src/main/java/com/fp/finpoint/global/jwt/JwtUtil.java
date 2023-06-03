@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-@Component
 @Slf4j
+@Component
 public class JwtUtil {
 
+    private static String secretKey;
+
     @Value("${jwt.salt}")
-    private String secretKey;
+    public void setSecretKey(String key) {
+        secretKey = key;
+    }
 
     public static final String PREFIX = "Bearer ";
     public static final String AUTHORIZATION = "Authorization";
@@ -23,12 +28,15 @@ public class JwtUtil {
 
     public static final long ACCESS_TOKEN_VALIDATION_SECOND = 1000L * 60 * 30;  //30분
 
-    public String createAccessToken(String email) {
-
+    public static String createAccessToken(String email) {
         return PREFIX + JWT.create()
                 .withSubject(SUBJECT)
                 .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDATION_SECOND))
                 .withClaim(EMAIL, email)
                 .sign(Algorithm.HMAC512(secretKey));
+    }
+
+    public static void setAccessToken(String accessToken, HttpServletResponse response) {
+        response.addHeader(AUTHORIZATION, accessToken);
     }
 }
