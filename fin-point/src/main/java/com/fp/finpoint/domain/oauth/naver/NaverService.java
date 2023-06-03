@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.feign.NaverGetProfileFeign;
 import com.fp.finpoint.domain.oauth.feign.NaverLoginFeign;
+import com.fp.finpoint.global.jwt.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.NaverProfileResponseDto;
 import com.fp.finpoint.web.oauth.dto.NaverResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +26,17 @@ public class NaverService {
     @Value("${oauth.naver.client_secret}")
     private String client_secret;
 
-    public NaverProfileResponseDto loginService(String code, String state) {
+    public String loginService(String code, String state) {
         NaverResponseDto naverResponseDto =
                 naverLoginFeign.login("authorization_code", client_id, client_secret, code, state);
         String accessToken = "Bearer " + naverResponseDto.getAccess_token();
         log.info("accessToken = {}" , accessToken);
         NaverProfileResponseDto naverProfileResponseDto = naverGetProfileFeign.getProfile(accessToken);
+        String email = naverProfileResponseDto.getResponse().getEmail();
         log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
         log.info("nickname = {}", naverProfileResponseDto.getResponse().getNickname());
-        oauthJoin(naverProfileResponseDto.getResponse().getEmail());
-        return naverProfileResponseDto;
+        oauthJoin(email);
+        return JwtUtil.createAccessToken(email);
     }
 
     public void oauthJoin(String email) {

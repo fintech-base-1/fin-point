@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequiredArgsConstructor
 public class OauthController {
@@ -22,17 +24,19 @@ public class OauthController {
 
     @GetMapping("/finpoint/naver/auth")
     @ResponseBody
-    public String getCode(@RequestParam String code, @RequestParam String state) {
+    public String getCode(@RequestParam String code, @RequestParam String state, HttpServletResponse response) {
 
-        naverService.loginService(code, state);
+        String getToken = naverService.loginService(code, state);
+        response.addHeader("Authorization", getToken);
         return "<script>window.close();</script>";
     }
 
     @GetMapping("/finpoint/kakao/auth")
     @ResponseBody
-    public String getCode(@RequestParam String code) {
+    public String getCode(@RequestParam String code, HttpServletResponse response) {
 
-        kakaoService.loginService(code);
+        String getToken = kakaoService.loginService(code);
+        response.addHeader("Authorization", getToken);
         return "<script>window.close();</script>";
     }
 }
