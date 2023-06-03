@@ -1,4 +1,4 @@
-package com.fp.finpoint.domain.member.oauth.naver;
+package com.fp.finpoint.web.oauth.naver.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

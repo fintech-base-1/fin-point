@@ -1,7 +1,9 @@
-package com.fp.finpoint.domain.member.oauth.kakaooauth.kakao;
+package com.fp.finpoint.domain.oauth.kakao;
 
-import com.fp.finpoint.domain.member.oauth.kakaooauth.feign.LoginFeign;
-import com.fp.finpoint.domain.member.oauth.kakaooauth.feign.ProfileFeign;
+import com.fp.finpoint.domain.oauth.feign.LoginFeign;
+import com.fp.finpoint.domain.oauth.feign.ProfileFeign;
+import com.fp.finpoint.web.oauth.kakao.dto.ProfileResponseDto;
+import com.fp.finpoint.web.oauth.kakao.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +28,9 @@ public class KakaoService {
         ResponseDto responseDto =
                 loginFeign.login("authorization_code",client_id,redirect_uri,code);
         String accessToken = "Bearer " + responseDto.getAccess_token();
-        System.out.println("액세스토큰!!!!!! : "+accessToken);
         log.info("accessToken = {}" , accessToken);
         ProfileResponseDto profileResponseDto = profileFeign.getProfile(accessToken, "application/x-www-form-urlencoded;charset=utf-8");
-//        log.info("email = {}", profileResponseDto.getResponse().getEmail());
+        log.info("email = {}", profileResponseDto.getKakao_account().getEmail());
         return profileResponseDto;
     }
 

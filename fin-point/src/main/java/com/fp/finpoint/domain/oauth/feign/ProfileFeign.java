@@ -1,6 +1,6 @@
-package com.fp.finpoint.domain.member.oauth.kakaooauth.feign;
+package com.fp.finpoint.domain.oauth.feign;
 
-import com.fp.finpoint.domain.member.oauth.kakaooauth.kakao.ProfileResponseDto;
+import com.fp.finpoint.web.oauth.kakao.dto.ProfileResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

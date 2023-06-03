@@ -1,10 +1,13 @@
-package com.fp.finpoint.domain.member.oauth.kakaooauth.feign;
+package com.fp.finpoint.domain.oauth.feign;
 
-import com.fp.finpoint.domain.member.oauth.kakaooauth.kakao.ResponseDto;
+import com.fp.finpoint.web.oauth.kakao.dto.ResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @FeignClient url
+ */
 @FeignClient(name = "kakao", url = "https://kauth.kakao.com/oauth/") // 카카오 개발자 사이트 고정값 uri
 public interface LoginFeign {
 

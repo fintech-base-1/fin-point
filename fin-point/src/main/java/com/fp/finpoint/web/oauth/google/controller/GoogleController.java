@@ -1,8 +1,8 @@
-package com.fp.finpoint.web.member.oauth.google.controller;
+package com.fp.finpoint.web.oauth.google.controller;
 
-import com.fp.finpoint.web.member.oauth.google.dto.GoogleInfoDto;
-import com.fp.finpoint.web.member.oauth.google.dto.GoogleRequestDto;
-import com.fp.finpoint.web.member.oauth.google.dto.GoogleResponseDto;
+import com.fp.finpoint.web.oauth.google.dto.GoogleInfoDto;
+import com.fp.finpoint.web.oauth.google.dto.GoogleRequestDto;
+import com.fp.finpoint.web.oauth.google.dto.GoogleResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,13 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class GoogleController {
+
     @Value("${google.client.id}")
     private String googleClientId;
     @Value("${google.client.pw}")
     private String googleClientPw;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/google")
     public String viewTest(){
         return "main";
     }
