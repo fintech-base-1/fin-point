@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -71,11 +70,10 @@ public class MemberService {
     }
 
     private void verifyExistEmail(String email) {
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-
-        if (optionalMember.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
-        }
+        memberRepository.findByEmail(email)
+                .ifPresent(member -> {
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
+                });
     }
 
     public Member checkCode(String code) {
