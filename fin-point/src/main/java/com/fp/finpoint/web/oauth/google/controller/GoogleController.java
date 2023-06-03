@@ -58,5 +58,5 @@ public class GoogleController {
         log.info("email address = {}", email);
         log.info("name = {}", name);
         return "<script>window.close();</script>";
-    };
+    }
 }
