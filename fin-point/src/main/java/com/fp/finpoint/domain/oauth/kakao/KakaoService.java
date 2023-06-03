@@ -20,7 +20,6 @@ public class KakaoService {
     private final KakaoLoginFeign kakaoLoginFeign;
     private final KakaoGetProfileFeign kakaoGetProfileFeign;
     private final MemberRepository memberRepository;
-    private final JwtUtil jwtUtil;
 
     @Value("${oauth.kakao.client_id}")
     private String client_id;
@@ -38,8 +37,7 @@ public class KakaoService {
         String email = kakaoProfileResponseDto.getKakao_account().getEmail();
         log.info("email = {}", email);
         oauthJoin(email);
-        String jwtToken = JwtUtil.createAccessToken(email);
-        return jwtToken;
+        return JwtUtil.createAccessToken(email);
     }
 
     public void oauthJoin(String email) {
