@@ -25,6 +25,14 @@ public class NaverService {
     private String client_id;
     @Value("${oauth.naver.client_secret}")
     private String client_secret;
+    @Value("${oauth.naver.callback}")
+    private String redirect_uri;
+
+    public String getRequireUrl() {
+        String reqUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + client_id
+                + "&redirect_uri=" + redirect_uri + "&state=1546578234123";
+        return reqUrl;
+    }
 
     public String loginService(String code, String state) {
         NaverResponseDto naverResponseDto =
