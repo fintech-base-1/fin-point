@@ -5,12 +5,13 @@ import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.util.EmailSenderService;
 import com.fp.finpoint.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.Optional;
 
 @Slf4j
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final EmailSenderService emailSenderService;
 
     public void registerMember(MemberDto memberDto) {
         // 검증
@@ -35,39 +37,53 @@ public class MemberService {
                 .salt(salt)
                 .build();
 
-        //TODO: 이메일 인증
-
         memberRepository.save(member);
         log.info("# Successful Member Registration!");
     }
 
-    public String doLogin(MemberDto memberDto) {
-        String password = memberDto.getPassword();
-        // 유무 검증
-        Member member = memberRepository.findByEmail(memberDto.getEmail()).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
-        );
-
-        // 패스워드 검증
-        String salt = member.getSalt();
-        String expect = PasswordEncoder.hashPassword(password, salt);
-        String real = member.getPassword();
-
-        if (!expect.equals(real)) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_WRONG_PASSWORD);
-        }
-
-        log.info("# Member Login Successful!");
-        String accessToken = JwtUtil.createAccessToken(member.getEmail());
-        log.info("# JWT Token Create Successful!");
-        return accessToken;
+    public void doLogin(MemberDto memberDto) throws MessagingException {
+        Member member;
+        member = inspectEmailExistence(memberDto.getEmail());
+        verifyPassword(memberDto.getPassword(), member);
+        transferEmail(member);
     }
 
-    public void verifyExistEmail(String email) {
+    private Member inspectEmailExistence(String knockEmail) {
+        return memberRepository.findByEmail(knockEmail).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
+        );
+    }
+
+    private static void verifyPassword(String knockPassword, Member member) {
+        String expect = PasswordEncoder.hashPassword(knockPassword, member.getSalt());
+        String password = member.getPassword();
+
+        if (!expect.equals(password)) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_WRONG_PASSWORD);
+        }
+    }
+
+    private void transferEmail(Member member) throws MessagingException {
+        String code = emailSenderService.sendHtmlMessageWithInlineImage(member.getEmail());
+        member.assignCode(code);
+        memberRepository.save(member);
+        log.info("# Member Code Save");
+    }
+
+    private void verifyExistEmail(String email) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
         if (optionalMember.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
         }
+    }
+
+    public Member checkCode(String code) {
+        Member member = memberRepository.findByCode(code).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_WRONG_CODE)
+        );
+        log.info("Code !!");
+
+        return member;
     }
 }
