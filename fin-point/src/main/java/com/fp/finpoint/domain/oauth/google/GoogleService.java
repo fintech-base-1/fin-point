@@ -21,16 +21,18 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GoogleService {
 
-    @Value("${google.client.id}")
-    private String googleClientId;
-    @Value("${google.client.pw}")
-    private String googleClientPw;
-
     private final MemberRepository memberRepository;
+
+    @Value("${oauth.google.client_id}")
+    private String googleClientId;
+    @Value("${oauth.google.client_secret}")
+    private String googleClientPw;
+    @Value("${oauth.google.callback}")
+    private String redirect_uri;
 
     public String getRequireUrl() {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
-                + "&redirect_uri=http://localhost:8080/finpoint/google/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
+                + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=email%20profile%20openid&access_type=offline";
         return reqUrl;
     }
 
@@ -55,7 +57,6 @@ public class GoogleService {
         log.info("email = {}", email);
         log.info("name = {}", name);
         oauthJoin(email);
-
         return JwtUtil.createAccessToken(email);
     }
 
