@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.mail.MessagingException;
+
 @SpringBootTest
 public class MemberTest {
     @Autowired
@@ -17,7 +19,7 @@ public class MemberTest {
     private MemberRepository memberRepository;
 
     @Test
-    void memberPasswordTest() {
+    void memberPasswordTest() throws MessagingException {
         String email = "haha@naver.com";
         String password = "hahahoho!123";
         String password1 = "hahahoho!124";
