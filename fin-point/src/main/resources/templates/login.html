@@ -12,7 +12,7 @@
 
 <script>
     document.getElementById('googleLogin').addEventListener('click', function () {
-        fetch("/oauth/google", {
+        fetch("/finpoint/oauth/google", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@
 
 <script>
     function authorizationForNaver() {
-        fetch("/oauth/naver", {
+        fetch("/finpoint/oauth/naver", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +42,7 @@
 
 <script>
     function authorizationForKakao() {
-        fetch("/oauth/kakao", {
+        fetch("/finpoint/oauth/kakao", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
