@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button onclick="authorizationOpenBank()">뱅킹인증</button>
+
+<script>
+    function authorizationOpenBank() {
+        fetch("/finpoint/bank/auth", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.text())
+            .then(function (data) {
+            window.open(data, "인증", "width=800px, height=800px");
+        })
+    }
+</script>
+</body>
+</html>
