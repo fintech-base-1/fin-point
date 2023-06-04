@@ -41,4 +41,9 @@ public class JwtUtil {
     public static void setAccessToken(String accessToken, HttpServletResponse response) {
         response.addHeader(AUTHORIZATION, accessToken);
     }
+
+    public static String getEmail(String token) {
+        String accessToken = token.replace(PREFIX, "");
+        return JWT.decode(accessToken).getClaim(EMAIL).asString();
+    }
 }
