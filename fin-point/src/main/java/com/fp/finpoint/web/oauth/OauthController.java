@@ -18,7 +18,7 @@ public class OauthController {
     private final GoogleService googleService;
 
     @ResponseBody
-    @PostMapping("/oauth/{id}")
+    @PostMapping("/finpoint/oauth/{id}")
     public String loginUrlGoogle(@PathVariable(name = "id") String id) {
         switch (id) {
             case "google":
