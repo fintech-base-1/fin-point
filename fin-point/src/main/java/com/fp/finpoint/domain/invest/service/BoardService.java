@@ -3,9 +3,7 @@ package com.fp.finpoint.domain.invest.service;
 import com.fp.finpoint.domain.invest.entity.Board;
 import com.fp.finpoint.domain.invest.entity.BoardDto;
 import com.fp.finpoint.domain.invest.repository.BoardRepository;
-import com.studyBoard.entity.Board;
-import com.studyBoard.entity.BoardDto;
-import com.studyBoard.repository.BoardRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +40,7 @@ public class BoardService {
 
     // 특정 게시글 불러오기
     public Board boardView(Integer id){
-        return boardRepository.findById(id).get();
+        return boardRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
     }
 
     public void boardDelete(Integer id){

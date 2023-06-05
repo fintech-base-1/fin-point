@@ -44,5 +44,15 @@ public class InvestService {
         investRepository.deleteById(id);
     }
 
+    // 특정 게시글.
+    public Invest investDetail(Long id) {
+        return investRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
+    }
+
+    public void update(InvestDto investDto){
+
+        investRepository.save(investDto.toEntity());
+    }
+
 
 }

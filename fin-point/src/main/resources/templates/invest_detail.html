@@ -4,7 +4,7 @@
 
   <h2 class="border-bottom py-2" th:text="${investDto.subject}"></h2>
   <div th:text="${investDto.content}"></div>
-  <a th:href="@{/invest/delete/(id=${investDto.id})}">삭제</a>
-
+  <a th:href="@{|/invest/delete/${investDto.id}|}">삭제</a>
+  <a th:href="@{|/invest/modify/${investDto.id}|}">수정</a>
 </div>
 </html>

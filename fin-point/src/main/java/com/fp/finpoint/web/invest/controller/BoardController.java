@@ -61,7 +61,7 @@ public class BoardController {
         System.out.println("수정test");
         model.addAttribute("board",boardService.boardView(id));
 
-        return "modify";
+        return "invest_modify";
     }
 
     @PostMapping("/board/update/{id}")

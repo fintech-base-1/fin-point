@@ -24,11 +24,11 @@
 </style>
 
 <body>
+<H2>게시글 수정 페이지</H2>
 <div class="layout">
-    <form th:action="@{/board/update/{id}(id = ${board.id})}" method="post">
-        <input name="title" type="text" th:value="${board.title}">
-        <input name="name" type="text" th:value="${board.name}" th:readonly="${board.name}">
-        <textarea name="content" th:text ="${board.content}"></textarea>
+    <form th:action="@{/invest/update/{id}(id = ${modify.id})}" method="post">
+        <input name="title" type="text" th:field="${modify.subject}" >
+        <textarea name="content" th:text ="${modify.content}"></textarea>
         <button>수정</button>
     </form>
 </div>
