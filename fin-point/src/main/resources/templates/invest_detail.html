@@ -1,0 +1,10 @@
+<html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
+<div layout:fragment="content" class="container my-3">
+  <div>Invest Detail</div>
+
+  <h2 class="border-bottom py-2" th:text="${investDto.subject}"></h2>
+  <div th:text="${investDto.content}"></div>
+  <a th:href="@{/invest/delete/(id=${investDto.id})}">삭제</a>
+
+</div>
+</html>
