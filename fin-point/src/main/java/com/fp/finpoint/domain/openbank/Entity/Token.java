@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.openbank.Entity;
 
+import com.fp.finpoint.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class Token {
     private String refresh_token;
     private String scope;
     private String user_seq_no;
+    @OneToOne(mappedBy = "token", fetch = FetchType.LAZY)
+    private Member member;
 
     public Token(String access_token, String token_type, String expires_in, String refresh_token, String scope, String user_seq_no) {
         this.access_token = access_token;
@@ -33,5 +36,9 @@ public class Token {
         this.refresh_token = refresh_token;
         this.scope = scope;
         this.user_seq_no = user_seq_no;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
