@@ -26,7 +26,9 @@ public class TokenController {
     }
 
     @GetMapping("/requesttoken")
+    @ResponseBody
     public void requestToken(@RequestParam("code") String code,
+                             @RequestParam("scope") String scope,
                              @RequestParam("state") String state) {
         log.info("code = {}", code);
         tokenService.saveToken(code);
