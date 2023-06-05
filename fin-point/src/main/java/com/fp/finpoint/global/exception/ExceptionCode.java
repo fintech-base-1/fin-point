@@ -10,6 +10,11 @@ public enum ExceptionCode {
     MEMBER_WRONG_PASSWORD(400, "패스워드가 틀립니다."),
     MEMBER_WRONG_CODE(400, "입력한 코드가 틀립니다."),
 
+    // oauth
+    MEMBER_REGISTRY_GOOGEL(400, "이미 구글인증으로 가입한 회원입니다"),
+    MEMBER_REGISTRY_NAVER(400, "이미 네이버인증으로 가입한 회원입니다"),
+    MEMBER_REGISTRY_KAKAO(400, "이미 카카오인증으로 가입한 회원입니다"),
+
     // mail
     EMAIL_TRANSFER_FAIL(500, "이메일 전송이 실패했습니다");
 
