@@ -16,7 +16,11 @@ public enum ExceptionCode {
     MEMBER_REGISTRY_KAKAO(400, "이미 카카오인증으로 가입한 회원입니다"),
 
     // mail
-    EMAIL_TRANSFER_FAIL(500, "이메일 전송이 실패했습니다");
+    EMAIL_TRANSFER_FAIL(500, "이메일 전송이 실패했습니다"),
+
+    // piece
+    PIECE_NOT_FOUND(404, "존재하지 않는 조각입니다."),
+    PIECE_NOT_ENOUGH(400, "조각이 모자랍니다.");
 
 
     @Getter

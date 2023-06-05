@@ -40,9 +40,8 @@ public class Member {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id")
+  
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Token token;
 
     private String fintech_use_num;
@@ -52,5 +51,10 @@ public class Member {
 
     public void setFintech_use_num(String fintech_use_num) {
         this.fintech_use_num = fintech_use_num;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+        token.setMember(this);
     }
 }
