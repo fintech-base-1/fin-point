@@ -1,4 +1,9 @@
 package com.fp.finpoint.domain.invest.repository;
 
-public interface InvestRepository {
+import com.fp.finpoint.domain.invest.entity.Invest;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface InvestRepository extends JpaRepository<Invest, Integer> {
 }
