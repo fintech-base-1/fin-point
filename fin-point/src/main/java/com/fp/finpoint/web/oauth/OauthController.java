@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.oauth.google.GoogleService;
 import com.fp.finpoint.domain.oauth.kakao.KakaoService;
 import com.fp.finpoint.domain.oauth.naver.NaverService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class OauthController {
 
     private final NaverService naverService;
@@ -18,7 +20,7 @@ public class OauthController {
     private final GoogleService googleService;
 
     @ResponseBody
-    @PostMapping("/oauth/{id}")
+    @PostMapping("/finpoint/oauth/{id}")
     public String loginUrlGoogle(@PathVariable(name = "id") String id) {
         switch (id) {
             case "google":
