@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.member.entity;
 
+import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.openbank.Entity.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -18,6 +23,9 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
+    @Column(unique = true, nullable = false)
+    @Email
+    @NotBlank
     private String email;
 
     private String password;
@@ -26,6 +34,13 @@ public class Member {
 
     private String code;
 
+    @Enumerated(EnumType.STRING)
+    private OauthClient oauthClient;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+  
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Token token;
 
