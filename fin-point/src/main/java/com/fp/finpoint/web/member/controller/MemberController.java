@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import static com.fp.finpoint.global.jwt.JwtUtil.AUTHORIZATION;
 
 @Slf4j
 @Validated
@@ -42,6 +45,15 @@ public class MemberController {
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
         Member member = memberService.checkCode(code.getCode());
         JwtUtil.setAccessToken(JwtUtil.createAccessToken(member.getEmail()), response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 권한 추가 컨트롤러
+    @PostMapping("/finpoint/assign-seller")
+    public ResponseEntity<HttpStatus> assignSeller(HttpServletRequest request) {
+        String accessToken = request.getHeader(AUTHORIZATION);
+        String loginUserEmail = JwtUtil.getEmail(accessToken);
+        memberService.addSeller(loginUserEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
