@@ -39,8 +39,9 @@ public class Invest {
 
     private Long seller_id;
 
-    public Invest(String subject, String content) {
+    public Invest(String subject, String content, Long id) {
         this.subject = subject;
         this.content = content;
+        this.id = id;
     }
 }
