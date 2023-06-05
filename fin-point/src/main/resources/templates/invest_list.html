@@ -1,5 +1,4 @@
 <html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
-
 <div layout:fragment="content" class="container my-3">
     <table class="table">
         <thead class="table-dark">
@@ -13,13 +12,12 @@
             <tr th:each="invest, loop : ${investList}">
                 <td th:text="${loop.count}"></td>
                 <td>
-                    <a th:href="@{|/invest/detail/${invest.id}|}" th:text="${invest.subject}"></a>
+                    <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
                 </td>
                 <td th:text="${invest.content}"></td>
             </tr>
         </tbody>
     </table>
     <a th:href="@{/invest/create}" class="btn btn-primary">질문 등록하기 (관리자만 가능)</a>
-
 </div>
 </html>

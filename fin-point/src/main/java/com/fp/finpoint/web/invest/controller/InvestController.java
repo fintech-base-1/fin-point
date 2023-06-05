@@ -19,7 +19,7 @@ public class InvestController {
 
     @GetMapping("/list")
     public String list (Model model) {
-        List<Invest> investList = this.investService.getList();
+        List<Invest> investList = this.investService.getInvestList();
         model.addAttribute("investList", investList);
         return "invest_list";
     }
@@ -31,8 +31,24 @@ public class InvestController {
 
     @PostMapping("/create")
     public String listCreate(Model model, InvestDto investDto) {
-        this.investService.create(investDto.getSubject(), investDto.getContent());
+        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId());
         return "redirect:/invest/list";
+    }
+
+    // 디테일 페이지
+    @GetMapping(value = "/list/detail/{id}")
+    public String detail(Model model, InvestDto investDto, @PathVariable Long id) {
+//        this.investService.getInvestListDetail(id);
+        model.addAttribute("investDto", investDto); // model 을 통해 view(화면)에서 사용 가능하게 함.
+        return "invest_detail";
+    }
+
+    // Invest 게시글 삭제.
+    @GetMapping("/delete")
+    public String boardDelete(Long id){
+        investService.deleteInvest(id);
+
+        return "redirect:/invest_list";
     }
 
 }
