@@ -42,6 +42,7 @@ public class Member {
     private Set<Role> roles = new HashSet<>();
   
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "token_id")
     private Token token;
 
     private String fintech_use_num;
@@ -55,6 +56,5 @@ public class Member {
 
     public void setToken(Token token) {
         this.token = token;
-        token.setMember(this);
     }
 }
