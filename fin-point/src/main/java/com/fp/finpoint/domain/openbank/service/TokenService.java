@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
@@ -63,7 +64,8 @@ public class TokenService {
     }
 
     @Transactional
-    public void registration(Cookie[] cookies) throws UnsupportedEncodingException {
+    public void registration(HttpServletRequest request) throws UnsupportedEncodingException {
+        Cookie[] cookies = request.getCookies();
         String accessToken = JwtUtil.getAccessToken(cookies);
         String seqNum = JwtUtil.getSequence(cookies);
         String email = JwtUtil.getEmail(accessToken);

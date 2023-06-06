@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -41,8 +40,7 @@ public class TokenController {
     @GetMapping("/finpoint/bank/registration")
     @ResponseBody
     public void registrationToken(HttpServletRequest request) throws UnsupportedEncodingException {
-        Cookie[] cookies = request.getCookies();
-        tokenService.registration(cookies);
+        tokenService.registration(request);
     }
 
     @GetMapping("/finpoint/bank")
