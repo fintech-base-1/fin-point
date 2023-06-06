@@ -7,6 +7,7 @@ import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
+import com.fp.finpoint.global.jwt.JwtUtil;
 import com.fp.finpoint.util.EmailSenderService;
 import com.fp.finpoint.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -124,5 +129,14 @@ public class MemberService {
                 .ifPresent(member -> {
                     throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
                 });
+    }
+
+    public void test(MemberDto.Code code, HttpServletResponse response) throws UnsupportedEncodingException {
+        Member member = memberRepository.findByCode(code.getCode()).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_WRONG_CODE)
+        );
+        String encodedValue = URLEncoder.encode(JwtUtil.createAccessToken(member.getEmail()), "UTF-8");
+        Cookie cookie = new Cookie("Authorization", encodedValue);
+        response.addCookie(cookie);
     }
 }
