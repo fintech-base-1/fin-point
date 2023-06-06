@@ -39,11 +39,20 @@ public class MemberController {
     }
 
     // url mail-confirm 수정필요
-    @PostMapping("/finpoint/mail-confirm")
-    public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) throws UnsupportedEncodingException {
+    @PostMapping("/finpoint/mail-confirm1")
+
+    public ResponseEntity<HttpStatus> code1(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) throws UnsupportedEncodingException {
 //        Member member = memberService.checkCode(code.getCode());
 //        JwtUtil.setAccessToken(JwtUtil.createAccessToken(member.getEmail()), response);
         memberService.test(code, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/finpoint/mail-confirm")
+    public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
+        String email = memberService.checkCode(code.getCode());
+        String accessToken = JwtUtil.createAccessToken(email);
+        JwtUtil.setAccessToken(accessToken, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
