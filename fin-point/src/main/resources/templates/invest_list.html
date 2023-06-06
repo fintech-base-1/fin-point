@@ -1,6 +1,5 @@
 <html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
 <div layout:fragment="content" class="container my-3">
-    <div th:text="${list.content}"></div>
 
     <table class="table">
         <thead class="table-dark">
@@ -11,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="invest, loop : ${investList}">
+            <tr th:each="invest, loop : ${list}">
                 <td th:text="${loop.count}"></td>
                 <td>
                     <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
