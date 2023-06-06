@@ -1,3 +1,31 @@
+document.getElementById('login')
+    .addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const loginMemberDto = {
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        }
+
+        fetch('/finpoint/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginMemberDto)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/finish";
+                } else {
+                    alert("존재하지 않는 회원입니다.")
+                }
+            })
+            .catch(error => {
+                console.log("전송 오류")
+            })
+    })
+
 document.getElementById('googleLogin').addEventListener('click', function () {
     fetch("/finpoint/oauth/google", {
         method: "GET",

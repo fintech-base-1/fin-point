@@ -23,9 +23,17 @@ public class OauthController {
     private final OauthService oauthService;
 
     /* 임시 view */
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login() {
         return "login";
+    }
+    @GetMapping("/join")
+    public String join() {
+        return "join";
+    }
+    @GetMapping("/finish")
+    public String finish() {
+        return "finish";
     }
 
 
