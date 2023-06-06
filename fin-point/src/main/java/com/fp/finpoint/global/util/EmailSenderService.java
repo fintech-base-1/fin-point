@@ -1,4 +1,4 @@
-package com.fp.finpoint.util;
+package com.fp.finpoint.global.util;
 
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
@@ -14,6 +14,8 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
@@ -60,8 +62,13 @@ public class EmailSenderService {
 
     private String buildHtmlEmail(String message) {
         Context context = new Context();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tenMinutesLater = now.plusMinutes(10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         context.setVariable("message", message);
         context.setVariable("imageId", IMAGE_ID);
+//        context.setVariable("currentTime", now.format(formatter));
+        context.setVariable("tenMinutesLater", tenMinutesLater.format(formatter));
         return templateEngine.process("login-mail", context);
     }
 
