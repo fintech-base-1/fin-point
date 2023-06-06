@@ -20,29 +20,25 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse methodArgumentValidExceptionHandler(MethodArgumentNotValidException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
-        return response;
+        return ErrorResponse.of(e.getBindingResult());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse constraintViolationExceptionHandler(ConstraintViolationException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
-        return response;
+        return ErrorResponse.of(e.getConstraintViolations());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponse httpRequestMethodSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
-        return response;
+        return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse nullPointerExceptionHandler(NullPointerException e) {
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
-        return response;
+        return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler

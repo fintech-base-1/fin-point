@@ -34,7 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("/finpoint/login")
-    public ResponseEntity<HttpStatus> login(@Valid @RequestBody MemberDto memberDto, HttpServletResponse response) throws MessagingException {
+    public ResponseEntity<HttpStatus> login(@Valid @RequestBody MemberDto memberDto) throws MessagingException {
         memberService.doLogin(memberDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
