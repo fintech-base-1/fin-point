@@ -4,6 +4,10 @@ import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +88,7 @@ public class InvestController {
     @PostMapping("/update/{id}")
     public String investUpdate(@PathVariable("id") Long id, Model model, InvestDto investDto) {
 
-        this.investService.update(investDto);
+        this.investService.updateInvest(investDto);
 
         model.addAttribute("message", "수정 완료");
         model.addAttribute("SearchUrl", "/invest/list");

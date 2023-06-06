@@ -57,7 +57,7 @@ public class InvestService {
 
     //검색 페이징 제목만
     public Page<Invest> investSearchList(String SearchKeyword,Pageable pageable){
-        return investRepository.findByTitleContaining(SearchKeyword,pageable);
+        return investRepository.findBySubjectContaining(SearchKeyword,pageable);
 
     }
 

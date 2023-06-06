@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface InvestRepository extends JpaRepository<Invest, Long> {
 
-    Page<Invest> findByTitleContaining(String searchKeyword, Pageable pageable);
+    Page<Invest> findBySubjectContaining(String searchKeyword, Pageable pageable);
 }
