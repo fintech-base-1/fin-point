@@ -10,6 +10,8 @@
         <td>
             <img src="cid:logo" alt="Logo" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
             <h2 th:text="${message}" style="text-align:center; padding:20px; color:#333; font-size:24px; border-bottom:1px solid #ddd;">Your Text Here</h2>
+<!--            <p th:text="'현재 시간: ' + ${currentTime}" style="text-align:center; padding:10px; font-size:16px;"></p>-->
+            <p th:text="'코드 만료 시간: ' + ${tenMinutesLater}" style="text-align:center; padding:10px; font-size:16px;"></p>
         </td>
     </tr>
 </table>
