@@ -41,7 +41,7 @@ public class MemberController {
     }
 
     // url mail-confirm 수정필요
-    @PostMapping("/finpoint/mail-confirm")
+    @PostMapping("/finpoint/mailconfirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
         Member member = memberService.checkCode(code.getCode());
         JwtUtil.setAccessToken(JwtUtil.createAccessToken(member.getEmail()), response);

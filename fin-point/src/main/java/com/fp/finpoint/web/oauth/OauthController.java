@@ -35,6 +35,10 @@ public class OauthController {
     public String finish() {
         return "finish";
     }
+    @GetMapping("/mailConfirm")
+    public String mailConfirm() {
+        return "mailConfirm";
+    }
 
 
     @ResponseBody

@@ -16,7 +16,7 @@ document.getElementById('login')
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = "/finish";
+                    window.location.href = "/mailConfirm";
                 } else {
                     alert("존재하지 않는 회원입니다.")
                 }
