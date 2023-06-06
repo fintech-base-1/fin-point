@@ -1,7 +1,6 @@
 package com.fp.finpoint.web.member.controller;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +42,9 @@ public class MemberController {
     // url mail-confirm 수정필요
     @PostMapping("/finpoint/mail-confirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
-        Member member = memberService.checkCode(code.getCode());
-        JwtUtil.setAccessToken(JwtUtil.createAccessToken(member.getEmail()), response);
+        String email = memberService.checkCode(code.getCode());
+        String accessToken = JwtUtil.createAccessToken(email);
+        JwtUtil.setAccessToken(accessToken, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
