@@ -27,14 +27,14 @@ public class Interceptor implements HandlerInterceptor {
 
         String header = request.getHeader(JwtUtil.AUTHORIZATION);
         // Authorization 이라는 이름의 header 가 없거나 Bearer 로 시작하지 않는다면 return false
-        if (header == null || header.startsWith(JwtUtil.PREFIX)) {
+        if (header == null || !header.startsWith(JwtUtil.PREFIX)) {
             log.info("header = {}", header);
             errorResponse(response, "header is not valid");
             return false;
         }
         String email = JwtUtil.getEmail(header);
         // email 정보를 확인
-        if (email == null || memberRepository.existsByEmail(email)) {
+        if (email == null || !memberRepository.existsByEmail(email)) {
             log.info("email = {}", email);
             errorResponse(response, "email from token is not exist");
             return false;
