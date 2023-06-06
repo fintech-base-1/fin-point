@@ -19,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class Interceptor implements HandlerInterceptor {
-    //todo: interceptor 구현
+
     private final MemberRepository memberRepository;
 
     @Override
