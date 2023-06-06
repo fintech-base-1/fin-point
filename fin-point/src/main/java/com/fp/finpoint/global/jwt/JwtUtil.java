@@ -25,7 +25,7 @@ public class JwtUtil {
         secretKey = key;
     }
 
-    public static final String PREFIX = "Bearer ";
+    public static final String PREFIX = "Bearer";
     public static final String AUTHORIZATION = "Authorization";
     public static final String EMAIL = "email";
     public static final String SUBJECT = "finPoint token";

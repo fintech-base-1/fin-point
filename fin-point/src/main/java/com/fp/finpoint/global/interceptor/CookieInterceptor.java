@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,21 +19,22 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class Interceptor implements HandlerInterceptor {
+public class CookieInterceptor implements HandlerInterceptor {
 
     private final MemberRepository memberRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String header = request.getHeader(JwtUtil.AUTHORIZATION);
-        // Authorization 이라는 이름의 header 가 없거나 Bearer 로 시작하지 않는다면 return false
-        if (header == null || !header.startsWith(JwtUtil.PREFIX)) {
-            log.info("header = {}", header);
-            errorResponse(response, "header is not valid");
+        Cookie[] cookies = request.getCookies();
+        String accessToken = JwtUtil.getAccessToken(cookies);
+        // Authorization 이라는 이름의 accessToken 가 없거나 Bearer 로 시작하지 않는다면 return false
+        if (accessToken == null || !accessToken.startsWith(JwtUtil.PREFIX)) {
+            log.info("accessToken = {}", accessToken);
+            errorResponse(response, "accessToken is not valid");
             return false;
         }
-        String email = JwtUtil.getEmail(header);
+        String email = JwtUtil.getEmail(accessToken);
         // email 정보를 확인
         if (email == null || !memberRepository.existsByEmail(email)) {
             log.info("email = {}", email);
