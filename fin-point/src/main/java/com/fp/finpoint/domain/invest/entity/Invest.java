@@ -18,10 +18,10 @@ public class Invest {
     private Long id;
 
     @Column(length = 200)
-    private String subject;
+    private String subject;//제목
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content;//내용
 
     private String imgUrl;
 
@@ -37,7 +37,7 @@ public class Invest {
 
     private String category;
 
-    private Long seller_id;
+    private Long seller_id;//작성자
 
     public Invest(String subject, String content, Long id) {
         this.subject = subject;

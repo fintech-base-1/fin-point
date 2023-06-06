@@ -20,9 +20,25 @@ public class InvestController {
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
-    public String list (Model model) {
-        List<Invest> investList = this.investService.getInvestList();
-        model.addAttribute("investList", investList);
+    public String list (Model model,
+                        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                        String searchKeyword) {
+        Page<Invest> list = null;
+
+        if(searchKeyword == null) {
+            list = investService.investList(pageable);
+        }else {
+            list = investService.investSearchList(searchKeyword, pageable);
+        }
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "invest_list";
     }
 

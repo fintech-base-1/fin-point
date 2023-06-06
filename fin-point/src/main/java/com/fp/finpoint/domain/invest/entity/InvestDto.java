@@ -7,12 +7,13 @@ import lombok.*;
 @NoArgsConstructor
 public class InvestDto {
 
-    public String subject;
-    public String content;
-    public Long id;
+    public String subject;//제목
+    public String content;//내용
+    public Long id;//글 번호
 
     // 여기서 Invest는 return 타입
     public Invest toEntity() {
+
         return new Invest(this.subject, this.content, this.id);
     }
 }
