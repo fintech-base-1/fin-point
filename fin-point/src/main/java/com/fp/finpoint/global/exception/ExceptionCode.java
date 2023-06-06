@@ -20,7 +20,11 @@ public enum ExceptionCode {
 
     // piece
     PIECE_NOT_FOUND(404, "존재하지 않는 조각입니다."),
-    PIECE_NOT_ENOUGH(400, "조각이 모자랍니다.");
+    PIECE_NOT_ENOUGH(400, "조각이 모자랍니다."),
+
+    //token
+    TOKEN_NOT_FOUND(404, "존재하지 않는 토큰입니다."),
+    VALUE_NOT_FOUND(404, "원하는 쿠키 값이 없습니다");
 
 
     @Getter
