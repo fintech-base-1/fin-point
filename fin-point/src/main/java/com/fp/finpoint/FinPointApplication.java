@@ -13,9 +13,4 @@ public class FinPointApplication {
 		SpringApplication.run(FinPointApplication.class, args);
 	}
 
-
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
-		return new HiddenHttpMethodFilter();
-	}
 }

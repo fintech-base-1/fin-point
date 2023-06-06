@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/invest")
 @Controller
@@ -17,6 +18,7 @@ public class InvestController {
 
     private final InvestService investService;
 
+    // 전체 리스트 페이지.
     @GetMapping("/list")
     public String list (Model model) {
         List<Invest> investList = this.investService.getInvestList();
@@ -24,6 +26,16 @@ public class InvestController {
         return "invest_list";
     }
 
+    // 디테일 페이지.
+    @GetMapping(value = "/list/detail/{id}")
+    public String detail(Model model, @PathVariable("id") Long id) {
+        Invest investDetail = this.investService.investDetail(id);
+        model.addAttribute("investDetail", investDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
+
+        return "invest_detail";
+    }
+
+    // 글 작성.
     @GetMapping("/create")
     public String listCreate(InvestDto investDto) {
         return "invest_create";
@@ -35,15 +47,7 @@ public class InvestController {
         return "redirect:/invest/list";
     }
 
-    // 디테일 페이지
-    @GetMapping(value = "/list/detail/{id}")
-    public String detail(Model model, InvestDto investDto, @PathVariable("id") Long id) {
-//        this.investService.getInvestListDetail(id);
-        model.addAttribute("investDto", investDto); // model 을 통해 view(화면)에서 사용 가능하게 함.
-        return "invest_detail";
-    }
-
-    // Invest 게시글 삭제.
+    // 글 삭제.
     @GetMapping ("/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id){
         investService.deleteInvest(id);
@@ -51,6 +55,8 @@ public class InvestController {
         return "redirect:/invest/list";
     }
 
+
+    // 글 수정.
     @GetMapping("/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
         Invest modifyInvest = investService.investDetail(id);

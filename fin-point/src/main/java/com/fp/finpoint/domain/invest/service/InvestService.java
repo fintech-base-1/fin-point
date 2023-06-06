@@ -20,17 +20,13 @@ public class InvestService {
         return this.investRepository.findAll();
     }
 
-    //특정 게시글.
-    public Optional<Invest> getInvestListDetail(Long id) {
-        return this.investRepository.findById(id);
+    // 특정 게시글.
+    public Invest investDetail(Long id) {
+        return investRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
     }
 
     //게시글 생성.
     public void create(String subject, String content , Long id) {
-//            Invest i = new Invest();
-//            i.setSubject(subject);
-//            i.setContent(content);
-//            this.investRepository.save(i);
         InvestDto investDto = new InvestDto(subject, content, id);
         investRepository.save(investDto.toEntity());
     }
@@ -44,10 +40,7 @@ public class InvestService {
         investRepository.deleteById(id);
     }
 
-    // 특정 게시글.
-    public Invest investDetail(Long id) {
-        return investRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
-    }
+
 
     public void update(InvestDto investDto){
 
