@@ -8,9 +8,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 @Component
@@ -22,21 +19,12 @@ public class CookieUtil {
         ResponseCookie cookie = ResponseCookie.from("Authorization", accessToken)
 //                .maxAge(3 * 24 * 60 * 60) // 쿠키 유효기간 설정 (3일)
                 .path("/")
-                .secure(true)
-//                .httpOnly(true)
+//                .secure(true)
+                .httpOnly(true)
                 .sameSite("None")
                 .build();
 
         response.setHeader(SET_COOKIE, String.valueOf(cookie));
-    }
-
-    public static void setCookie(HttpServletResponse response, String accessToken) {
-        String encodedValue = URLEncoder.encode(accessToken, StandardCharsets.UTF_8);
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION, encodedValue);
-//        cookie.setMaxAge(3 * 24 * 60 * 60); // 유효기간 max: 3일
-//        cookie.setHttpOnly(true); // XSS 공격 방지
-//        cookie.setSecure(true); // HTTPS 적용 시
-        response.addCookie(cookie);
     }
 
     // 수정 핊요
