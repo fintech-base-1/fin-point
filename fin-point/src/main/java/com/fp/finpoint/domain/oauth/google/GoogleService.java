@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.oauth.google;
 
+import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.global.util.JwtUtil;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class GoogleService {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @Value("${oauth.google.client_id}")
     private String googleClientId;
@@ -47,16 +49,17 @@ public class GoogleService {
                 .grantType("authorization_code").build();
         ResponseEntity<GoogleResponseDto> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
                 googleOAuthRequestParam, GoogleResponseDto.class);
-        String jwtToken=resultEntity.getBody().getId_token();
-        Map<String, String> map=new HashMap<>();
-        map.put("id_token",jwtToken);
+        String jwtToken = resultEntity.getBody().getId_token();
+        Map<String, String> map = new HashMap<>();
+        map.put("id_token", jwtToken);
         ResponseEntity<GoogleInfoDto> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
                 map, GoogleInfoDto.class);
         String email = resultEntity2.getBody().getEmail();
         String name = resultEntity2.getBody().getName();
         log.info("email = {}", email);
         log.info("name = {}", name);
-        memberService.oauthJoin(email, OauthClient.GOOGLE);
+        memberService.manageDuplicateOAuthLogin(email, OauthClient.GOOGLE);
         return JwtUtil.createAccessToken(email);
     }
+
 }
