@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 
 @Service
@@ -60,19 +61,18 @@ public class TokenService {
     }
 
     public void setTokenToMember(Token token, HttpServletRequest request) throws UnsupportedEncodingException {
-        Cookie[] cookies = request.getCookies();
-        String accessToken = JwtUtil.getAccessToken(cookies);
-        String email = JwtUtil.getEmail(accessToken);
-        log.info("email = {}", email);
+        String email = getEmailToCookie(request);
         Member savedMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         savedMember.setToken(token);
         memberRepository.save(savedMember);
     }
 
-    public void getAccountList(Long memberId) {
-        Member savedMember = memberRepository.findById(memberId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    @Transactional
+    public void getAccountList(HttpServletRequest request) throws UnsupportedEncodingException {
+        String email = getEmailToCookie(request);
+        Member savedMember = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Token savedToken = savedMember.getToken();
         String token = createToken(savedToken.getToken_type(), savedToken.getAccess_token());
         AccountResponseDto accountResponseDto =
@@ -87,5 +87,12 @@ public class TokenService {
         StringBuilder sb = new StringBuilder();
         sb.append(type).append(" ").append(accessToken);
         return sb.toString();
+    }
+
+    public String getEmailToCookie(HttpServletRequest request) throws UnsupportedEncodingException {
+        Cookie[] cookies = request.getCookies();
+        String accessToken = JwtUtil.getAccessToken(cookies);
+        return JwtUtil.getEmail(accessToken);
+
     }
 }
