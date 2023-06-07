@@ -28,13 +28,9 @@ public class InvestService {
     }
 
     //게시글 생성.
-    public void create(String subject, String content , Long id) {
-        InvestDto investDto = new InvestDto(subject, content, id);
+    public void create(InvestDto investDto) {
+//        InvestDto investDto = new InvestDto(subject, content, id);
         investRepository.save(investDto.toEntity());
-    }
-
-    public void save(InvestDto investDto) {
-        investRepository.save(investDto.toEntity()).getId();
     }
 
     //게시글 삭제.

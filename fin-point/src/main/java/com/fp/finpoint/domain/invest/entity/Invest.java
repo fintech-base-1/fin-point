@@ -39,9 +39,8 @@ public class Invest {
 
     private Long seller_id;//작성자
 
-    public Invest(String subject, String content, Long id) {
+    public Invest(String subject, String content) {
         this.subject = subject;
         this.content = content;
-        this.id = id;
     }
 }

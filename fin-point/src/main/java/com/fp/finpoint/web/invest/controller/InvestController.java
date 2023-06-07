@@ -63,7 +63,7 @@ public class InvestController {
 
     @PostMapping("/create")
     public String listCreate(Model model, InvestDto investDto) {
-        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId());
+        this.investService.create(investDto);
         return "redirect:/invest/list";
     }
 
