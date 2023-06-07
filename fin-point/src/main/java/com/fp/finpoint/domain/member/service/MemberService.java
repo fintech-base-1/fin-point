@@ -54,6 +54,14 @@ public class MemberService {
         log.info("# Successful Member Registration!");
     }
 
+    public void manageDuplicateOAuthLogin(String email, OauthClient oauthClient) {
+        memberRepository.findByEmail(email)
+                .ifPresentOrElse(
+                        member -> log.info("# {} OAuth Member Login Complete!", oauthClient),
+                        () -> this.oauthJoin(email, oauthClient)
+                );
+    }
+
     public void oauthJoin(String email, OauthClient oauthClient) {
         isExistEmail(email);
         Set<Role> roles = new HashSet<>();
@@ -65,6 +73,14 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
+        log.info("# {} OAuth Member Registration & Login Complete!", oauthClient);
+    }
+
+    private void isExistEmail(String email) {
+        memberRepository.findByEmail(email)
+                .ifPresent(member -> {
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
+                });
     }
 
     public void doLogin(MemberDto memberDto) {
@@ -132,14 +148,9 @@ public class MemberService {
     private void setMemberInRedisWithCode(Member member, String code) {
         String email = member.getEmail();
         ValueOperations<String, String> operations = redisUtil.getValueOperations();
-        redisUtil.setRedisValue(operations, code, email, 10, TimeUnit.MINUTES);
+        redisUtil.setRedisValue(operations, code, email, 3, TimeUnit.MINUTES);
         log.info("# Code set in Redis!");
     }
 
-    private void isExistEmail(String email) {
-        memberRepository.findByEmail(email)
-                .ifPresent(member -> {
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
-                });
-    }
+
 }
