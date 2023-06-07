@@ -1,8 +1,8 @@
 package com.fp.finpoint.domain.oauth.google;
 
-import com.fp.finpoint.domain.member.entity.Member;
-import com.fp.finpoint.domain.member.repository.MemberRepository;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.domain.oauth.OauthClient;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.google.GoogleInfoDto;
 import com.fp.finpoint.web.oauth.dto.google.GoogleRequestDto;
 import com.fp.finpoint.web.oauth.dto.google.GoogleResponseDto;
@@ -21,7 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GoogleService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Value("${oauth.google.client_id}")
     private String googleClientId;
@@ -56,15 +56,7 @@ public class GoogleService {
         String name = resultEntity2.getBody().getName();
         log.info("email = {}", email);
         log.info("name = {}", name);
-        oauthJoin(email);
+        memberService.oauthJoin(email, OauthClient.GOOGLE);
         return JwtUtil.createAccessToken(email);
-    }
-
-    public void oauthJoin(String email) {
-        if (memberRepository.findByEmail(email).isPresent()) {
-            return;
-        }
-        Member member = Member.builder().email(email).build();
-        memberRepository.save(member);
     }
 }

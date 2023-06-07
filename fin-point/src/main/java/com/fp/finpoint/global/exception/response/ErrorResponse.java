@@ -1,10 +1,10 @@
 package com.fp.finpoint.global.exception.response;
 
 import com.fp.finpoint.global.exception.ExceptionCode;
+import io.lettuce.core.RedisConnectionException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -32,6 +32,10 @@ public class ErrorResponse {
         return new ErrorResponse(exceptionCode.getCode(), exceptionCode.getMessage());
     }
 
+    public static ErrorResponse of(RedisConnectionException redisConnectionException) {
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Unable to connect to redis");
+    }
+
     public static ErrorResponse of(HttpStatus status) {
         return new ErrorResponse(status.value(), status.getReasonPhrase());
     }
@@ -42,6 +46,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> constraintViolations) {
         return new ErrorResponse(null, ConstraintViolationError.of(constraintViolations));
+    }
+
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
     }
 
     @Getter

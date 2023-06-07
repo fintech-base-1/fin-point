@@ -1,4 +1,4 @@
-package com.fp.finpoint.util;
+package com.fp.finpoint.global.util;
 
 import org.apache.commons.codec.binary.Hex;
 

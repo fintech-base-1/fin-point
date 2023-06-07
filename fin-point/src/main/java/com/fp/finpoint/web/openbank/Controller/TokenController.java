@@ -1,7 +1,7 @@
 package com.fp.finpoint.web.openbank.Controller;
 
 import com.fp.finpoint.domain.openbank.service.TokenService;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,10 +30,17 @@ public class TokenController {
     @GetMapping("/requesttoken")
     @ResponseBody
     public void requestToken(@RequestParam("code") String code,
-                             @RequestParam("scope") String scope,
-                             @RequestParam("state") String state) {
+                               @RequestParam("scope") String scope,
+                               @RequestParam("state") String state,
+                               HttpServletResponse response) {
         log.info("code = {}", code);
-        tokenService.saveToken(code);
+        tokenService.saveToken(code, response);
+    }
+
+    @GetMapping("/finpoint/bank/registration")
+    @ResponseBody
+    public void registrationToken(HttpServletRequest request) throws UnsupportedEncodingException {
+        tokenService.registration(request);
     }
 
     @GetMapping("/finpoint/bank")
