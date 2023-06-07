@@ -7,7 +7,7 @@ import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.domain.openbank.repository.TokenRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.util.JwtUtil;
+import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.web.openbank.dto.AccountResponseDto;
 import com.fp.finpoint.web.openbank.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
@@ -61,7 +60,7 @@ public class TokenService {
     }
 
     public void setTokenToMember(Token token, HttpServletRequest request) throws UnsupportedEncodingException {
-        String email = getEmailToCookie(request);
+        String email = CookieUtil.getEmailToCookie(request);
         Member savedMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         savedMember.setToken(token);
@@ -70,7 +69,7 @@ public class TokenService {
 
     @Transactional
     public void getAccountList(HttpServletRequest request) throws UnsupportedEncodingException {
-        String email = getEmailToCookie(request);
+        String email = CookieUtil.getEmailToCookie(request);
         Member savedMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Token savedToken = savedMember.getToken();
@@ -87,12 +86,5 @@ public class TokenService {
         StringBuilder sb = new StringBuilder();
         sb.append(type).append(" ").append(accessToken);
         return sb.toString();
-    }
-
-    public String getEmailToCookie(HttpServletRequest request) throws UnsupportedEncodingException {
-        Cookie[] cookies = request.getCookies();
-        String accessToken = JwtUtil.getAccessToken(cookies);
-        return JwtUtil.getEmail(accessToken);
-
     }
 }

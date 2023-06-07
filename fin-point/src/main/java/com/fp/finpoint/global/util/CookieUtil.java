@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -39,19 +39,10 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    // 수정 핊요
-    public String getCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies(); // 모든 쿠키 가져오기
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                String name = c.getName(); // 쿠키 이름 가져오기
-                String value = c.getValue(); // 쿠키 값 가져오기
-                if (name.equals("refreshToken")) {
-                    return value;
-                }
-            }
-        }
-        return null;
+    public static String getEmailToCookie(HttpServletRequest request) throws UnsupportedEncodingException {
+        Cookie[] cookies = request.getCookies();
+        String accessToken = JwtUtil.getAccessToken(cookies);
+        return JwtUtil.getEmail(accessToken);
     }
 
     // 수정 핊요
