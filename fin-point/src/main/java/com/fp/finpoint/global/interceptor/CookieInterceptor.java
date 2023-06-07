@@ -3,7 +3,7 @@ package com.fp.finpoint.global.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.exception.response.ErrorResponse;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

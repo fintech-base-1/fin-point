@@ -1,7 +1,7 @@
 package com.fp.finpoint.web.openbank.Controller;
 
 import com.fp.finpoint.domain.openbank.service.TokenService;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -7,7 +7,7 @@ import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.domain.openbank.repository.TokenRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.openbank.dto.AccountResponseDto;
 import com.fp.finpoint.web.openbank.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
