@@ -43,7 +43,8 @@ public class MemberController {
     @PostMapping("/finpoint/mailconfirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
         String email = memberService.checkCode(code.getCode());
-        CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));
+        CookieUtil.setCookieInHeader(response, JwtUtil.createAccessToken(email));
+//        CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

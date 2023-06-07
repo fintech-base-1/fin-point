@@ -17,6 +17,19 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 @RequiredArgsConstructor
 public class CookieUtil {
 
+    public static void setCookieInHeader(HttpServletResponse response, String accessToken) {
+
+        ResponseCookie cookie = ResponseCookie.from("Authorization", accessToken)
+//                .maxAge(3 * 24 * 60 * 60) // 쿠키 유효기간 설정 (3일)
+                .path("/")
+                .secure(true)
+//                .httpOnly(true)
+                .sameSite("None")
+                .build();
+
+        response.setHeader(SET_COOKIE, String.valueOf(cookie));
+    }
+
     public static void setCookie(HttpServletResponse response, String accessToken) {
         String encodedValue = URLEncoder.encode(accessToken, StandardCharsets.UTF_8);
         Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION, encodedValue);
