@@ -1,0 +1,8 @@
+<html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
+<div layout:fragment="content" class="container my-3">
+  <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
+  <div th:text="${investDetail.content}"></div>
+  <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
+  <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
+</div>
+</html>
