@@ -1,0 +1,44 @@
+<html layout:decorate="~{layout}">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+
+</head>
+
+<body>
+<div layout:fragment="content" class="container">
+  <div id="editor"></div>
+  <h5 class="my-3 border-bottom pb-2">Invest 등록</h5>
+  <form th:action="@{/invest/create}" th:object="${investDto}" method="post">
+    <div class="mb-3">
+      <label for="subject" class="form-label">제목</label>
+      <input type="text" th:field="*{subject}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">내용</label>
+      <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+    </div>
+    <input type="submit" value="저장하기" class="btn btn-primary my-2">
+  </form>
+</div>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>.
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+  const Editor = toastui.Editor;
+  const editor = new Editor({
+    el: document.querySelector('#editor'),
+    height: '600px',
+    toolbarItems: [
+      ['heading', 'bold', 'italic', 'strike', 'hr'],
+      ['ul', 'ol', 'task'],
+      ['table', 'image', 'link'],
+      ['code', 'codeblock'],
+      ['scrollSync'],
+    ],
+    initialEditType: 'wysiwyg',
+    previewStyle: 'tab'
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+@import "reset.css";
+
+html {
+    justify-content: center;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    height: 1000vh;
+    width: 100%;
+    background-color: #e2f4fb;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 auto;
+}
+
+/*.main-screen {*/
+/*    padding: 0px var(--horizontal-space);*/
+/*}*/
+
+.nav-bar {
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    /* border-top: 1px solid rgba(123, 121, 121, 0.3); */
+    font-size: 30px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 120px;
+    height: 50px;
+}
+
+.services {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 100px;
+}
+
+.services a {
+    text-decoration-line: none;
+    color: black;
+    margin-left: 100px;
+}
+
+.mypage-logout {
+    right: 0;
+}
+
+.mypage-logout button {
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    width: 150px;
+    height: 50px;
+    border: none;
+}
+
+.mypage-logout button:hover {
+    background-color: #008dcd;
+}
