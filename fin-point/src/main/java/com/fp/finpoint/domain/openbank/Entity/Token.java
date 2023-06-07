@@ -25,8 +25,8 @@ public class Token {
     @Column(columnDefinition = "text")
     private String refresh_token;
     private String scope;
-    private String user_seq_no;
-    @OneToOne(mappedBy = "token", fetch = FetchType.LAZY)
+    private String userSeqNo;
+    @OneToOne(mappedBy = "token")
     private Member member;
 
     public Token(String access_token, String token_type, String expires_in, String refresh_token, String scope, String user_seq_no) {
@@ -35,10 +35,6 @@ public class Token {
         this.expires_in = expires_in;
         this.refresh_token = refresh_token;
         this.scope = scope;
-        this.user_seq_no = user_seq_no;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
+        this.userSeqNo = user_seq_no;
     }
 }
