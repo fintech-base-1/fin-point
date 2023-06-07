@@ -2,8 +2,8 @@ package com.fp.finpoint.web.member.controller;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.service.MemberService;
-import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.global.util.CookieUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class MemberController {
     }
 
     // url mail-confirm 수정필요
-    @PostMapping("/finpoint/mail-confirm")
+    @PostMapping("/finpoint/mailconfirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
         String email = memberService.checkCode(code.getCode());
         CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));

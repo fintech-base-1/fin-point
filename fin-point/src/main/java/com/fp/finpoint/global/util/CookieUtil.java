@@ -20,8 +20,8 @@ public class CookieUtil {
     public static void setCookie(HttpServletResponse response, String accessToken) {
         String encodedValue = URLEncoder.encode(accessToken, StandardCharsets.UTF_8);
         Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION, encodedValue);
-        cookie.setMaxAge(3 * 24 * 60 * 60); // 유효기간 max: 3일
-        cookie.setHttpOnly(true); // XSS 공격 방지
+//        cookie.setMaxAge(3 * 24 * 60 * 60); // 유효기간 max: 3일
+//        cookie.setHttpOnly(true); // XSS 공격 방지
 //        cookie.setSecure(true); // HTTPS 적용 시
         response.addCookie(cookie);
     }
