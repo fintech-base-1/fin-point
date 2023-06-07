@@ -1,4 +1,4 @@
-package com.fp.finpoint.global.jwt;
+package com.fp.finpoint.global.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Slf4j
@@ -49,7 +50,7 @@ public class JwtUtil {
     }
 
     public static String getEmail(String token) throws UnsupportedEncodingException {
-        String decode = URLDecoder.decode(token, "UTF-8");
+        String decode = URLDecoder.decode(token, StandardCharsets.UTF_8);
         String accessToken = decode.replace(PREFIX, "");
         return JWT.decode(accessToken).getClaim(EMAIL).asString();
     }

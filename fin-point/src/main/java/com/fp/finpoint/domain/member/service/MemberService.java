@@ -1,26 +1,23 @@
 package com.fp.finpoint.domain.member.service;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Role;
 import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.entity.Role;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.jwt.JwtUtil;
-import com.fp.finpoint.util.EmailSenderService;
-import com.fp.finpoint.util.PasswordEncoder;
+import com.fp.finpoint.global.util.EmailSenderService;
+import com.fp.finpoint.global.util.PasswordEncoder;
+import com.fp.finpoint.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -29,6 +26,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final EmailSenderService emailSenderService;
+    private final RedisUtil redisUtil;
 
     public void registerMember(MemberDto memberDto) {
         // 검증
@@ -68,14 +66,14 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void doLogin(MemberDto memberDto) throws MessagingException {
-        Member member;
-        member = inspectEmailExistence(memberDto.getEmail());
-        OauthClient oauthClient = member.getOauthClient();
+    public void doLogin(MemberDto memberDto) {
+        Member savedMember = inspectEmailExistence(memberDto.getEmail());
+        OauthClient oauthClient = savedMember.getOauthClient();
         switch (oauthClient) {
             case NOTHING:
-                verifyPassword(memberDto.getPassword(), member);
-                transferEmail(member);
+                verifyPassword(memberDto.getPassword(), savedMember);
+                String verificationCode = transferEmail(savedMember);
+                setMemberInRedisWithCode(savedMember, verificationCode);
                 break;
             case GOOGLE:
                 throw new BusinessLogicException(ExceptionCode.MEMBER_REGISTRY_GOOGEL);
@@ -86,13 +84,17 @@ public class MemberService {
         }
     }
 
-    public Member checkCode(String code) {
-        Member member = memberRepository.findByCode(code).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_WRONG_CODE)
-        );
-        log.info("Code !!");
+    public String checkCode(String code) {
+        ValueOperations<String, String> operations = redisUtil.getValueOperations();
+        String value = redisUtil.getRedisValue(operations, code);
+        isCodeExpired(value);
+        return value;
+    }
 
-        return member;
+    private static void isCodeExpired(String value) {
+        if (value == null) {
+            throw new BusinessLogicException(ExceptionCode.CODE_EXPIRED);
+        }
     }
 
     public void addSeller(String loginUserEmail) {
@@ -117,11 +119,18 @@ public class MemberService {
         }
     }
 
-    private void transferEmail(Member member) throws MessagingException {
-        String code = emailSenderService.sendHtmlMessageWithInlineImage(member.getEmail());
-        member.assignCode(code);
-        memberRepository.save(member);
-        log.info("# Member Code Save");
+    private String transferEmail(Member member) {
+        String email = member.getEmail();
+        String code = emailSenderService.sendHtmlMessageWithInlineImage(email);
+        log.info("# Authentication Mail Transfer!");
+        return code;
+    }
+
+    private void setMemberInRedisWithCode(Member member, String code) {
+        String email = member.getEmail();
+        ValueOperations<String, String> operations = redisUtil.getValueOperations();
+        redisUtil.setRedisValue(operations, code, email, 10, TimeUnit.MINUTES);
+        log.info("# Code set in Redis!");
     }
 
     private void isExistEmail(String email) {
@@ -129,14 +138,5 @@ public class MemberService {
                 .ifPresent(member -> {
                     throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
                 });
-    }
-
-    public void test(MemberDto.Code code, HttpServletResponse response) throws UnsupportedEncodingException {
-        Member member = memberRepository.findByCode(code.getCode()).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_WRONG_CODE)
-        );
-        String encodedValue = URLEncoder.encode(JwtUtil.createAccessToken(member.getEmail()), "UTF-8");
-        Cookie cookie = new Cookie("Authorization", encodedValue);
-        response.addCookie(cookie);
     }
 }

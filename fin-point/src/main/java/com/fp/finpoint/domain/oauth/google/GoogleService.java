@@ -2,7 +2,7 @@ package com.fp.finpoint.domain.oauth.google;
 
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.domain.oauth.OauthClient;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.google.GoogleInfoDto;
 import com.fp.finpoint.web.oauth.dto.google.GoogleRequestDto;
 import com.fp.finpoint.web.oauth.dto.google.GoogleResponseDto;
