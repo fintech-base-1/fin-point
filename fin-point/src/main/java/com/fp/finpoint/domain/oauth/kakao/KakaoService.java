@@ -4,7 +4,7 @@ import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.oauth.feign.KakaoGetProfileFeign;
 import com.fp.finpoint.domain.oauth.feign.KakaoLoginFeign;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.kakao.KakaoProfileResponseDto;
 import com.fp.finpoint.web.oauth.dto.kakao.KakaoResponseDto;
 import lombok.RequiredArgsConstructor;

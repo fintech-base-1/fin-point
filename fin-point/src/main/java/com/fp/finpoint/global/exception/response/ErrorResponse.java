@@ -1,6 +1,7 @@
 package com.fp.finpoint.global.exception.response;
 
 import com.fp.finpoint.global.exception.ExceptionCode;
+import io.lettuce.core.RedisConnectionException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getCode(), exceptionCode.getMessage());
+    }
+
+    public static ErrorResponse of(RedisConnectionException redisConnectionException) {
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Unable to connect to redis");
     }
 
     public static ErrorResponse of(HttpStatus status) {

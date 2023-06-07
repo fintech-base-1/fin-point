@@ -1,9 +1,9 @@
 package com.fp.finpoint.web.member.controller;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.service.MemberService;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
+import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import static com.fp.finpoint.global.jwt.JwtUtil.AUTHORIZATION;
+import java.io.UnsupportedEncodingException;
 
 @Slf4j
 @Validated
@@ -35,23 +34,23 @@ public class MemberController {
     }
 
     @PostMapping("/finpoint/login")
-    public ResponseEntity<HttpStatus> login(@Valid @RequestBody MemberDto memberDto, HttpServletResponse response) throws MessagingException {
+    public ResponseEntity<HttpStatus> login(@Valid @RequestBody MemberDto memberDto) throws MessagingException {
         memberService.doLogin(memberDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // url mail-confirm 수정필요
-    @PostMapping("/finpoint/mailconfirm")
+    @PostMapping("/finpoint/mail-confirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
-        Member member = memberService.checkCode(code.getCode());
-        JwtUtil.setAccessToken(JwtUtil.createAccessToken(member.getEmail()), response);
+        String email = memberService.checkCode(code.getCode());
+        CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 권한 추가 컨트롤러
     @PostMapping("/finpoint/assign-seller")
-    public ResponseEntity<HttpStatus> assignSeller(HttpServletRequest request) {
-        String accessToken = request.getHeader(AUTHORIZATION);
+    public ResponseEntity<HttpStatus> assignSeller(HttpServletRequest request) throws UnsupportedEncodingException {
+        String accessToken = JwtUtil.getAccessToken(request.getCookies());
         String loginUserEmail = JwtUtil.getEmail(accessToken);
         memberService.addSeller(loginUserEmail);
         return new ResponseEntity<>(HttpStatus.OK);

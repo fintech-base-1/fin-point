@@ -5,11 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body style="font-family:'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif; background-color:#f4f4f4; color:#666; letter-spacing:0; line-height:1.5;">
-<table style="width:700px; margin:50px auto; background-color:#fff; border:0; border-collapse:collapse; empty-cells:show; table-layout:fixed; box-shadow:0px 0px 20px rgba(0, 0, 0, 0.1); border-radius:10px;">
+<table style="width:700px; margin:50px auto; background-color:#fff; border:0; border-collapse:collapse; empty-cells:show; table-layout:fixed; box-shadow:0 0 20px rgba(0, 0, 0, 0.1); border-radius:10px;">
     <tr>
         <td>
             <img src="cid:logo" alt="Logo" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px;">
             <h2 th:text="${message}" style="text-align:center; padding:20px; color:#333; font-size:24px; border-bottom:1px solid #ddd;">Your Text Here</h2>
+<!--            <p th:text="'현재 시간: ' + ${currentTime}" style="text-align:center; padding:10px; font-size:16px;"></p>-->
+            <p th:text="'코드 만료 시간: ' + ${tenMinutesLater}" style="text-align:center; padding:10px; font-size:16px;"></p>
         </td>
     </tr>
 </table>
