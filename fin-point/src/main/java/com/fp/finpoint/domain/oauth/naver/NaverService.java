@@ -1,10 +1,10 @@
 package com.fp.finpoint.domain.oauth.naver;
 
-import com.fp.finpoint.domain.member.entity.Member;
-import com.fp.finpoint.domain.member.repository.MemberRepository;
+import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.oauth.feign.NaverGetProfileFeign;
 import com.fp.finpoint.domain.oauth.feign.NaverLoginFeign;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.naver.NaverProfileResponseDto;
 import com.fp.finpoint.web.oauth.dto.naver.NaverResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class NaverService {
 
     private final NaverLoginFeign naverLoginFeign;
     private final NaverGetProfileFeign naverGetProfileFeign;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Value("${oauth.naver.client_id}")
     private String client_id;
@@ -43,15 +43,8 @@ public class NaverService {
         String email = naverProfileResponseDto.getResponse().getEmail();
         log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
         log.info("nickname = {}", naverProfileResponseDto.getResponse().getNickname());
-        oauthJoin(email);
+        memberService.oauthJoin(email, OauthClient.NAVER);
         return JwtUtil.createAccessToken(email);
     }
 
-    public void oauthJoin(String email) {
-        if (memberRepository.findByEmail(email).isPresent()) {
-            return;
-        }
-        Member member = Member.builder().email(email).build();
-        memberRepository.save(member);
-    }
 }

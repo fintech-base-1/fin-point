@@ -1,6 +1,5 @@
 package com.fp.finpoint.domain.member.service;
 
-import com.fp.finpoint.domain.invest.entity.DataNotFoundException;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;

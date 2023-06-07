@@ -1,10 +1,10 @@
 package com.fp.finpoint.domain.oauth.kakao;
 
-import com.fp.finpoint.domain.member.entity.Member;
-import com.fp.finpoint.domain.member.repository.MemberRepository;
-import com.fp.finpoint.domain.oauth.feign.KakaoLoginFeign;
+import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.oauth.feign.KakaoGetProfileFeign;
-import com.fp.finpoint.global.jwt.JwtUtil;
+import com.fp.finpoint.domain.oauth.feign.KakaoLoginFeign;
+import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.oauth.dto.kakao.KakaoProfileResponseDto;
 import com.fp.finpoint.web.oauth.dto.kakao.KakaoResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class KakaoService {
 
     private final KakaoLoginFeign kakaoLoginFeign;
     private final KakaoGetProfileFeign kakaoGetProfileFeign;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Value("${oauth.kakao.client_id}")
     private String client_id;
@@ -41,16 +41,9 @@ public class KakaoService {
         log.info("accessToken = {}" , accessToken);
         KakaoProfileResponseDto kakaoProfileResponseDto = kakaoGetProfileFeign.getProfile(accessToken, "application/x-www-form-urlencoded;charset=utf-8");
         String email = kakaoProfileResponseDto.getKakao_account().getEmail();
-        log.info("email = {}", email);
-        oauthJoin(email);
+        log.info("카카오email = {}", email);
+        memberService.oauthJoin(email, OauthClient.KAKAO);
         return JwtUtil.createAccessToken(email);
     }
 
-    public void oauthJoin(String email) {
-        if (memberRepository.findByEmail(email).isPresent()) {
-            return;
-        }
-        Member member = Member.builder().email(email).build();
-        memberRepository.save(member);
-    }
 }
