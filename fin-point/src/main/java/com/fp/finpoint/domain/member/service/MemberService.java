@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -121,8 +122,10 @@ public class MemberService {
 
     private String transferEmail(Member member) {
         String email = member.getEmail();
-        String code = emailSenderService.sendHtmlMessageWithInlineImage(email);
+        String code = UUID.randomUUID().toString();
+        emailSenderService.sendHtmlMessageWithInlineImage(email, code);
         log.info("# Authentication Mail Transfer!");
+        log.info("# Code = {}", code);
         return code;
     }
 
