@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 
 @Service
@@ -55,26 +53,21 @@ public class TokenService {
         log.info("URL = {}" , requireUrl);
         return requireUrl;
     }
-    public void saveToken(String requestToken, HttpServletResponse response) {
+    public void saveToken(String requestToken, HttpServletRequest request) throws UnsupportedEncodingException {
         TokenResponseDto tokenResponseDto =
                 bankingFeign.requestToken(requestToken, clientId, clientSecret, redirectUri, grantType);
-        tokenRepository.save(tokenResponseDto.toEntity());
-        Cookie cookie = new Cookie("Sequence", tokenResponseDto.getUser_seq_no());
-        response.addCookie(cookie);
+        setTokenToMember(tokenResponseDto.toEntity(), request);
     }
 
-    @Transactional
-    public void registration(HttpServletRequest request) throws UnsupportedEncodingException {
+    public void setTokenToMember(Token token, HttpServletRequest request) throws UnsupportedEncodingException {
         Cookie[] cookies = request.getCookies();
         String accessToken = JwtUtil.getAccessToken(cookies);
-        String seqNum = JwtUtil.getSequence(cookies);
         String email = JwtUtil.getEmail(accessToken);
+        log.info("email = {}", email);
         Member savedMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        Token savedToken = tokenRepository.findByUserSeqNo(seqNum)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND));
-        savedMember.setToken(savedToken);
-        log.info("token id is = {}", savedToken.getId());
+        savedMember.setToken(token);
+        memberRepository.save(savedMember);
     }
 
     public void getAccountList(Long memberId) {
