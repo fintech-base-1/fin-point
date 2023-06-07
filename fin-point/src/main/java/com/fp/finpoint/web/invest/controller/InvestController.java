@@ -49,8 +49,8 @@ public class InvestController {
     // 디테일 페이지.
     @GetMapping(value = "/list/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
-        Invest investDetail = this.investService.investDetail(id);
-        model.addAttribute("investDetail", investDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
+        Invest readInvestDetail = this.investService.readInvestDetail(id);
+        model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
 
         return "invest_detail";
     }
@@ -79,7 +79,7 @@ public class InvestController {
     // 글 수정.
     @GetMapping("/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
-        Invest modifyInvest = investService.investDetail(id);
+        Invest modifyInvest = investService.readInvestDetail(id);
         model.addAttribute("modify", modifyInvest);
 
         return "invest_modify";
