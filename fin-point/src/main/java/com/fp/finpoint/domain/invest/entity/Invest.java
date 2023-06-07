@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.invest.entity;
 
+import com.fp.finpoint.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -39,9 +41,14 @@ public class Invest {
 
     private Long seller_id;//작성자
 
-    public Invest(String subject, String content, Long id) {
+    @ManyToMany
+    Set<Member> liked;// 좋아요
+
+    public Invest(String subject, String content, Long id, Set<Member> liked) {
         this.subject = subject;
         this.content = content;
         this.id = id;
+        this.liked=liked;
     }
+
 }

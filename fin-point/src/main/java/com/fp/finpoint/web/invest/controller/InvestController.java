@@ -3,7 +3,10 @@ package com.fp.finpoint.web.invest.controller;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,15 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/invest")
 @Controller
 @RequiredArgsConstructor // DI 주입. (InvestService)
+@Slf4j
 public class InvestController {
 
     private final InvestService investService;
+    private final MemberService memberService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -63,7 +69,7 @@ public class InvestController {
 
     @PostMapping("/create")
     public String listCreate(Model model, InvestDto investDto) {
-        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId());
+        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId(), investDto.getLiked());
         return "redirect:/invest/list";
     }
 
@@ -94,6 +100,19 @@ public class InvestController {
         model.addAttribute("SearchUrl", "/invest/list");
 
         return  "Message";
+    }
+
+    //좋아요 기능
+    @GetMapping("/liked/{id}")
+    public String investLiked(Principal principal, @PathVariable("id") long id){
+        Invest invest= this.investService.getInvest(id);
+        log.info("invest id = {}", invest.getSubject());
+        Member member= this.memberService.getMember(principal.getName());
+        log.info("member = {}", member.getEmail());
+        this.investService.liked(invest, member);
+
+        return String.format("redirect:/invest/list/detail/%s",id);
+        //return "redirect:/invest/list/detail/%s";
     }
 
 }

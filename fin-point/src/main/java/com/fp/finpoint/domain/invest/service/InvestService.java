@@ -1,15 +1,20 @@
 package com.fp.finpoint.domain.invest.service;
 
+import com.fp.finpoint.domain.invest.entity.DataNotFoundException;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +33,8 @@ public class InvestService {
     }
 
     //게시글 생성.
-    public void create(String subject, String content , Long id) {
-        InvestDto investDto = new InvestDto(subject, content, id);
+    public void create(String subject, String content , Long id, Set<Member> liked) {
+        InvestDto investDto = new InvestDto(subject, content, id, liked);
         investRepository.save(investDto.toEntity());
     }
 
@@ -60,6 +65,23 @@ public class InvestService {
         return investRepository.findBySubjectContaining(SearchKeyword,pageable);
 
     }
+
+    //좋아요 기능
+    public void liked(Invest invest, Member member){
+        invest.getLiked().add(member);
+        this.investRepository.save(invest);
+    }
+
+    public Invest getInvest(long id){
+        Optional<Invest> invest=this.investRepository.findById(id);
+        if(invest.isPresent()) {
+            return invest.get();
+        }else{
+            throw new DataNotFoundException("invest not found");
+        }
+    }
+
+
 
 
 

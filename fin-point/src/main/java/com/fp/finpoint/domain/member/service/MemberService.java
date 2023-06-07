@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.member.service;
 
+import com.fp.finpoint.domain.invest.entity.DataNotFoundException;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
@@ -10,8 +11,8 @@ import com.fp.finpoint.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -83,5 +84,16 @@ public class MemberService {
         log.info("Code !!");
 
         return member;
+    }
+
+    //좋아요 기능
+    public Member getMember(String email){
+        Optional<Member> member=this.memberRepository.findByEmail(email);
+        if(member.isPresent()) {
+            return member.get();
+        }else{
+            throw new DataNotFoundException("member not found");
+        }
+
     }
 }

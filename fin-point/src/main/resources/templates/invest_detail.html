@@ -2,7 +2,29 @@
 <div layout:fragment="content" class="container my-3">
   <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
   <div th:text="${investDetail.content}"></div>
-  <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
-  <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
+<!--  <a class="btn btn-primary">추천</a>-->
+  <a href="javascript:void(0);" th:data-uri="@{|/invest/liked/${investDetail.id}|}" class="recommend btn btn-sm btn-outline-secondary">좋아요
+    <span class="badge rounded-pill bg-success" th:text="${#lists.size('invest.liked')}"></span>
+  </a>
+    <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
+    <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
+
+<!--  <a href="javascript:void(0);" class="btn btn-primary"-->
+<!--     th:data-uri="@{|/invest/liked/${investDetail.id}|}">추천-->
+<!--    <span class="badge rounded-pill bg-success" th:text="${#lists.size(invest.liked)}"></span>-->
+<!--  </a>-->
+
 </div>
+
+<script layout:fragment="script" type='text/javascript'>
+
+  const recommend_elements = document.getElementsByClassName("recommend");
+  Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+      if(confirm("정말로 좋아요 하시겠습니까?")) {
+        location.href = this.dataset.uri;
+      };
+    });
+  });
+</script>
 </html>
