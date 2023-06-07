@@ -56,19 +56,15 @@ public class JwtUtil {
     }
 
     public static String getAccessToken(Cookie[] cookies) {
-        return getString(cookies, AUTHORIZATION);
+        return getString(cookies);
     }
 
-    public static String getSequence(Cookie[] cookies) {
-        return getString(cookies, SEQUENCE);
-    }
-
-    private static String getString(Cookie[] cookies, String standard) {
+    private static String getString(Cookie[] cookies) {
         if (cookies != null) {
             for (Cookie c : cookies) {
                 String name = c.getName();
                 String value = c.getValue();
-                if (name.equals(standard)) {
+                if (name.equals(JwtUtil.AUTHORIZATION)) {
                     return value;
                 }
             }

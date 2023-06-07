@@ -1,7 +1,6 @@
 package com.fp.finpoint.web.openbank.Controller;
 
 import com.fp.finpoint.domain.openbank.service.TokenService;
-import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -42,9 +41,8 @@ public class TokenController {
     }
 
     @GetMapping("/finpoint/bank/account")
-    public void getAccountList(HttpServletRequest request) {
-        String token = request.getHeader(JwtUtil.AUTHORIZATION);
-        //todo: Http Request에서 jwt 정보 받아와 decode 이후 email로 memberId를 찾아와야함
-        tokenService.getAccountList(1L);
+    @ResponseBody
+    public void getAccountList(HttpServletRequest request) throws UnsupportedEncodingException {
+        tokenService.getAccountList(request);
     }
 }
