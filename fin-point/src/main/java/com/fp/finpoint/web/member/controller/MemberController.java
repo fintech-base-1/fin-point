@@ -39,6 +39,7 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // url mail-confirm 수정필요
     @PostMapping("/finpoint/mail-confirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
         String email = memberService.checkCode(code.getCode());

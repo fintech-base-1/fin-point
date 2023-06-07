@@ -41,7 +41,7 @@ public class KakaoService {
         log.info("accessToken = {}" , accessToken);
         KakaoProfileResponseDto kakaoProfileResponseDto = kakaoGetProfileFeign.getProfile(accessToken, "application/x-www-form-urlencoded;charset=utf-8");
         String email = kakaoProfileResponseDto.getKakao_account().getEmail();
-        log.info("email = {}", email);
+        log.info("카카오email = {}", email);
         memberService.oauthJoin(email, OauthClient.KAKAO);
         return JwtUtil.createAccessToken(email);
     }
