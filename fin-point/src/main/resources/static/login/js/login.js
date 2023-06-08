@@ -35,7 +35,15 @@ document.getElementById('googleLogin').addEventListener('click', function () {
     })
         .then(response => response.text())
         .then(data => {
-            window.open(data, '로그인', 'width=600,height=800')
+            const login = window.open(data, "로그인", 'width=600,height=800, top=100, left=700, scrollbars=yes, resizable=yes')
+            const check = setInterval(()=> {
+                if (login.window.location.href.includes('finpoint')) {
+                    login.close()
+                }
+                if (!login || login.closed) {
+                    clearInterval(check);
+                }
+            }, 1000);
         })
 })
 
@@ -48,7 +56,15 @@ document.getElementById('naverLogin').addEventListener('click', function () {
     })
         .then((response) => response.text())
         .then(function (data) {
-            window.open(data, "로그인", "width=800px,height=800px")
+            const login = window.open(data, "로그인", "width=800px,height=800px")
+            const check = setInterval(()=> {
+                if (login.window.location.href.includes('finpoint')) {
+                    login.close()
+                }
+                if (!login || login.closed) {
+                    clearInterval(check);
+                }
+            }, 1000);
         })
 })
 
@@ -61,6 +77,14 @@ document.getElementById('kakaoLogin').addEventListener('click', function () {
     })
         .then((response) => response.text())
         .then(function (data) {
-            window.open(data, "로그인", "width=500px,height=800px")
+            const login = window.open(data, "로그인", "width=500px,height=800px")
+            const check = setInterval(()=> {
+                if (login.window.location.href.includes('finpoint')) {
+                    login.close()
+                }
+                if (!login || login.closed) {
+                    clearInterval(check);
+                }
+            }, 1000);
         })
 })

@@ -6,6 +6,8 @@ import com.fp.finpoint.domain.oauth.naver.NaverService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,25 +57,25 @@ public class OauthController {
 
     @ResponseBody
     @GetMapping("/finpoint/google/auth")
-    public String loginGoogle(@RequestParam(value = "code") String code, HttpServletResponse response) {
+    public ResponseEntity<HttpStatus> loginGoogle(@RequestParam(value = "code") String code, HttpServletResponse response) {
         String getToken = googleService.oauthLogin(code);
         CookieUtil.setCookieInHeader(response,getToken);
-        return "<script>window.close();</script>";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/finpoint/naver/auth")
-    public String getCode(@RequestParam String code, @RequestParam String state, HttpServletResponse response) {
+    public ResponseEntity<HttpStatus> getCode(@RequestParam String code, @RequestParam String state, HttpServletResponse response) {
         String getToken = naverService.loginService(code, state);
         CookieUtil.setCookieInHeader(response,getToken);
-        return "<script>window.close();</script>";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ResponseBody
     @GetMapping("/finpoint/kakao/auth")
-    public String getCode(@RequestParam String code, HttpServletResponse response) {
+    public ResponseEntity<HttpStatus> getCode(@RequestParam String code, HttpServletResponse response) {
         String getToken = kakaoService.loginService(code);
         CookieUtil.setCookieInHeader(response,getToken);
-        return "<script>window.close();</script>";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
