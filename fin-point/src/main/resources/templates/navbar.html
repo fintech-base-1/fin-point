@@ -1,0 +1,17 @@
+
+<nav th:fragment="navbarFragment" class="nav-bar" >
+    <div>
+        <a href="/">
+            <img src="../static/images/finpoint-logo.png" class="logo"  alt="image"/>
+        </a>
+    </div>
+    <div class="services">
+        <a >홈</a>
+        <a th:href="@{/invest/list}" >조각투자</a>
+        <a th:href="@{/invest/create}" >투자 등록</a>
+    </div>
+    <div class="mypage-logout">
+        <button class="mypage">마이페이지</button>
+        <button th:onclick="|location.href='/login'|" class="logout">로그인</button>
+    </div>
+</nav>
