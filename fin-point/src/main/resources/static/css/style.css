@@ -1,15 +1,26 @@
 @import "reset.css";
 @import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
 
+:root {
+    --very-dark-blue: hsl(229, 57%, 11%);
+    --white: hsl(0, 0%, 100%);
+    --dark-blue: hsl(228, 56%, 26%);
+    --pale-blue: hsl(243, 100%, 93%);
+    --grayish-blue: hsl(229, 7%, 55%);
+    /*--ligth-blue: #2F6EF8;*/
+}
+
+
 html {
     justify-content: center;
 }
 
 body {
+    background-color: #F6F5F7;
     font-family: 'Grandiflora One', serif;
     height: 1000vh;
     width: 100%;
-    background-color: #e2f4fb;
+    /*background-color: #e2f4fb;*/
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -21,10 +32,10 @@ body {
 /*}*/
 
 .nav-bar {
-    background-color: #f9f9f9;
     display: flex;
-    justify-content: space-between;
-    padding: 20px 50px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
     position: absolute;
     top: 0;
     bottom: 150px;
@@ -32,8 +43,17 @@ body {
     height: 100px;
     box-sizing: border-box;
     /* border-top: 1px solid rgba(123, 121, 121, 0.3); */
-    font-size: 30px;
+    font-size: 24px;
     margin-bottom: 100px;
+}
+
+.nav-container {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .logo {
@@ -45,7 +65,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 100px;
+    gap: 40px;
 }
 
 .services a {
@@ -56,14 +76,16 @@ body {
 
 .mypage-logout {
     right: 0;
+    font-size: 20px;
+
 }
 
 .mypage-logout button {
     background-color: black;
     color: white;
     border-radius: 8px;
-    width: 150px;
-    height: 50px;
+    width: 120px;
+    height: 30px;
     border: none;
 }
 
