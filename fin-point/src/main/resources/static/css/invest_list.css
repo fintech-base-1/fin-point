@@ -12,21 +12,22 @@ body {
 }
 
 .add-invest {
-    margin-top : 100px;
+    margin-top : 130px;
     display: flex;
     flex-direction: row-reverse;
     margin-right: 250px;
     margin-bottom: 0;
 
+
 }
 
-.add-invest button {
-    width: 150px;
-    height:50px;
+.add-invest button{
     background-color: #F8F988;
     border-radius: 10px;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.07) 0px 20px 30px;
+    width: 150px;
+    height:50px;
 }
 
 .list-wrap {
