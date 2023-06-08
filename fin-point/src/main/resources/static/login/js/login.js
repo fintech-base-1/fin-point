@@ -35,7 +35,7 @@ document.getElementById('googleLogin').addEventListener('click', function () {
     })
         .then(response => response.text())
         .then(data => {
-            window.open(data, '로그인', 'width=600,height=800, top=100, left=700, scrollbars=yes, resizable=yes')
+            window.open(data, '로그인', 'width=600,height=800')
         })
 })
 

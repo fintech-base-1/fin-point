@@ -60,25 +60,25 @@ public class OauthController {
 
     @ResponseBody
     @GetMapping("/finpoint/google/auth")
-    public ResponseEntity<HttpStatus> loginGoogle(@RequestParam(value = "code") String code, HttpServletResponse response) {
+    public String loginGoogle(@RequestParam(value = "code") String code, HttpServletResponse response) {
         String getToken = googleService.oauthLogin(code);
         CookieUtil.setCookieInHeader(response,getToken);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "<script>window.close();</script>";
     }
 
     @ResponseBody
     @GetMapping("/finpoint/naver/auth")
-    public ResponseEntity<HttpStatus> getCode(@RequestParam String code, @RequestParam String state, HttpServletResponse response) {
+    public String getCode(@RequestParam String code, @RequestParam String state, HttpServletResponse response) {
         String getToken = naverService.loginService(code, state);
         CookieUtil.setCookieInHeader(response,getToken);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "<script>window.close();</script>";
     }
 
     @ResponseBody
     @GetMapping("/finpoint/kakao/auth")
-    public ResponseEntity<HttpStatus> getCode(@RequestParam String code, HttpServletResponse response) {
+    public String getCode(@RequestParam String code, HttpServletResponse response) {
         String getToken = kakaoService.loginService(code);
         CookieUtil.setCookieInHeader(response,getToken);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "<script>window.close();</script>";
     }
 }
