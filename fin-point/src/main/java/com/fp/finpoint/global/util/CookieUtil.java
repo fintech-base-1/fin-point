@@ -1,5 +1,7 @@
 package com.fp.finpoint.global.util;
 
+import com.fp.finpoint.global.exception.BusinessLogicException;
+import com.fp.finpoint.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -8,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -39,21 +42,18 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    // 수정 핊요
-    public String getCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies(); // 모든 쿠키 가져오기
+    public static String getEmailToCookie(HttpServletRequest request) throws UnsupportedEncodingException {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie c : cookies) {
-                String name = c.getName(); // 쿠키 이름 가져오기
-                String value = c.getValue(); // 쿠키 값 가져오기
-                if (name.equals("refreshToken")) {
-                    return value;
+                String name = c.getName();
+                if (name.equals("Authorization")) {
+                    return JwtUtil.getEmail(c.getValue());
                 }
             }
         }
-        return null;
+        throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND);
     }
-
     // 수정 핊요
     public void deleteCookie(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from("refreshToken", null)

@@ -4,10 +4,9 @@ import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.openbank.BankingFeign;
 import com.fp.finpoint.domain.openbank.Entity.Token;
-import com.fp.finpoint.domain.openbank.repository.TokenRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.util.JwtUtil;
+import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.web.openbank.dto.AccountResponseDto;
 import com.fp.finpoint.web.openbank.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 
 @Service
@@ -24,7 +23,6 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 public class TokenService {
 
-    private final TokenRepository tokenRepository;
     private final BankingFeign bankingFeign;
     private final MemberRepository memberRepository;
 
@@ -60,30 +58,32 @@ public class TokenService {
     }
 
     public void setTokenToMember(Token token, HttpServletRequest request) throws UnsupportedEncodingException {
-        Cookie[] cookies = request.getCookies();
-        String accessToken = JwtUtil.getAccessToken(cookies);
-        String email = JwtUtil.getEmail(accessToken);
-        log.info("email = {}", email);
-        Member savedMember = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        String email = CookieUtil.getEmailToCookie(request);
+        Member savedMember = getMember(email);
         savedMember.setToken(token);
         memberRepository.save(savedMember);
     }
 
-    public void getAccountList(Long memberId) {
-        Member savedMember = memberRepository.findById(memberId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    @Transactional
+    public void getAccountList(HttpServletRequest request) throws UnsupportedEncodingException {
+        String email = CookieUtil.getEmailToCookie(request);
+        Member savedMember = getMember(email);
         Token savedToken = savedMember.getToken();
-        String token = createToken(savedToken.getToken_type(), savedToken.getAccess_token());
+        String bankToken = createBankToken(savedToken.getToken_type(), savedToken.getAccess_token());
         AccountResponseDto accountResponseDto =
-                bankingFeign.getAccountList(token, savedToken.getUserSeqNo(), "N", "D");
+                bankingFeign.getAccountList(bankToken, savedToken.getUserSeqNo(), "N", "D");
         // 등록된 계좌중 첫번째 계좌의 Fintech_use_num 을 가져와서 저장
         String finUseNum = accountResponseDto.getRes_list().get(0).getFintech_use_num();
         savedMember.setFintech_use_num(finUseNum);
         log.info("fin_use_num={}", savedMember.getFintech_use_num());
     }
 
-    public String createToken(String type, String accessToken) {
+    private Member getMember(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    private String createBankToken(String type, String accessToken) {
         StringBuilder sb = new StringBuilder();
         sb.append(type).append(" ").append(accessToken);
         return sb.toString();

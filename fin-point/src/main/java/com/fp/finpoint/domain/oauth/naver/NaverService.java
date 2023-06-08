@@ -43,7 +43,7 @@ public class NaverService {
         String email = naverProfileResponseDto.getResponse().getEmail();
         log.info("email = {}", naverProfileResponseDto.getResponse().getEmail());
         log.info("nickname = {}", naverProfileResponseDto.getResponse().getNickname());
-        memberService.oauthJoin(email, OauthClient.NAVER);
+        memberService.manageDuplicateOAuthLogin(email, OauthClient.NAVER);
         return JwtUtil.createAccessToken(email);
     }
 

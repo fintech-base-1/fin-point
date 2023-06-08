@@ -1,6 +1,5 @@
 package com.fp.finpoint.domain.member.service;
 
-import com.fp.finpoint.domain.invest.entity.DataNotFoundException;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.entity.Role;
@@ -9,7 +8,6 @@ import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.EmailSenderService;
-import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.global.util.PasswordEncoder;
 import com.fp.finpoint.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +16,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +54,14 @@ public class MemberService {
         log.info("# Successful Member Registration!");
     }
 
+    public void manageDuplicateOAuthLogin(String email, OauthClient oauthClient) {
+        memberRepository.findByEmail(email)
+                .ifPresentOrElse(
+                        member -> log.info("# {} OAuth Member Login Complete!", oauthClient),
+                        () -> this.oauthJoin(email, oauthClient)
+                );
+    }
+
     public void oauthJoin(String email, OauthClient oauthClient) {
         isExistEmail(email);
         Set<Role> roles = new HashSet<>();
@@ -68,6 +73,14 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
+        log.info("# {} OAuth Member Registration & Login Complete!", oauthClient);
+    }
+
+    private void isExistEmail(String email) {
+        memberRepository.findByEmail(email)
+                .ifPresent(member -> {
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
+                });
     }
 
     public void doLogin(MemberDto memberDto) {
@@ -135,28 +148,9 @@ public class MemberService {
     private void setMemberInRedisWithCode(Member member, String code) {
         String email = member.getEmail();
         ValueOperations<String, String> operations = redisUtil.getValueOperations();
-        redisUtil.setRedisValue(operations, code, email, 10, TimeUnit.MINUTES);
+        redisUtil.setRedisValue(operations, code, email, 3, TimeUnit.MINUTES);
         log.info("# Code set in Redis!");
     }
-
-    private void isExistEmail(String email) {
-        memberRepository.findByEmail(email)
-                .ifPresent(member -> {
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
-                });
-    }
-
-//    //좋아요 기능
-//    public Member getMember(Member token){
-//        Optional<Member> member=this.memberRepository.findByToken(token);
-//        if(member.isPresent()) {
-//            return member.get();
-//        }else{
-//            throw new DataNotFoundException("member not found");
-//        }
-//
-//    }
-
 
 
 }

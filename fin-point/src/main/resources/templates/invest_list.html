@@ -20,35 +20,20 @@
 <!--            </tr>-->
 <!--        </tbody>-->
 <!--    </table>-->
-
-
-    <div>
-        <h1>뷰 작업 시작</h1>
     </div>
 
-        <div class="nav-bar" >
-        <div>
-            <a href="/">
-                <img src="../static/images/finpoint-logo.png" class="logo"  alt="image"/>
-            </a>
-        </div>
-        <div class="services">
-            <a >홈</a>
-            <a th:href="@{/invest/list}" >조각투자</a>
-            <a th:href="@{/invest/create}" >투자 등록</a>
-        </div>
-        <div class="mypage-logout">
-            <button class="mypage">마이페이지</button>
-            <button th:onclick="|location.href='/login'|" class="logout">로그인</button>
-        </div>
-    </div>
 
+
+        <div class="add-invest">
+            <button th:onclick="|location.href='@{/invest/create}'|">            <a th:href="@{/invest/create}" >투자 등록</a>
+            </button>
+        </div>
 
     <th:block class="list-wrap">
         <div class="list-container" >
             <div th:each="invest, loop : ${list}" class="list-each">
                 <a th:href="@{|/invest/list/detail/${invest.id}|}">
-                    <div class="invest-logo" th:text="${loop.count}"></div>
+                    <div class="invest-logo" th:text="${invest.imgUrl}"></div>
                     <div class="invest-subject">
                         <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
                     </div>
@@ -57,6 +42,61 @@
             </div>
         </div>
     </th:block>
+
+
+        <div class="list-container">
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+            <div class="list-each">
+                <div class="invest-logo">logo</div>
+                <div class="invest-subject">subject</div>
+                <div class="invest-content">content</div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
 
 
 
