@@ -1,18 +1,14 @@
 package com.fp.finpoint.web.oauth;
 
-import com.fp.finpoint.domain.oauth.OauthService;
 import com.fp.finpoint.domain.oauth.google.GoogleService;
 import com.fp.finpoint.domain.oauth.kakao.KakaoService;
 import com.fp.finpoint.domain.oauth.naver.NaverService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -23,7 +19,6 @@ public class OauthController {
     private final NaverService naverService;
     private final KakaoService kakaoService;
     private final GoogleService googleService;
-    private final OauthService oauthService;
 
     /* 임시 view */
     @GetMapping("/login")
