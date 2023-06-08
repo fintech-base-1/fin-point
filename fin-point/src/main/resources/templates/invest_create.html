@@ -44,7 +44,7 @@
   <div class="create-container">
     <form
             th:action="@{/invest/create}"
-            th:object="${investDto}"
+            th:object="${invest}"
             method="post"
     >
       <div class="input-each">
@@ -63,6 +63,11 @@
       <div class="input-each">
         <lable class="input-lable-font">투자상품명</lable>
         <input class="input-class" type="text" th:field="*{subject}" />
+      </div>
+
+      <div class="input-each">
+        <lable class="input-lable-font">판매자</lable>
+<!--        <div th:text="${member.getEmail()}" />-->
       </div>
 
       <div class="input-each">

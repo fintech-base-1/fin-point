@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,27 +39,14 @@ public class InvestService {
         return investRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
     }
 
+
+
     //게시글 생성.
-//    public void create(String subject, String content , Long id) {
-//        InvestDto investDto = new InvestDto(subject, content, id);
-//        investRepository.save(investDto.toEntity());
-//
-//    }
-    //게시글 생성.
-    public void create(InvestDto investDto, MemberDto memberDto) {
-        Member findMember = memberRepository.findByEmail(memberDto.getEmail()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    public void create(InvestDto investDto, String email) {
+        //MemberDto memberDto > null?
+        Member findMember = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         investDto.setMember(findMember);
-//        if(!findMember.isPresent()) {
-//            throw new IllegalArgumentException();
-//        }
-
         investRepository.save(investDto.toEntity());
-
-    }
-
-
-    public void save(InvestDto investDto) {
-        investRepository.save(investDto.toEntity()).getId();
     }
 
     //게시글 삭제.
@@ -84,26 +72,6 @@ public class InvestService {
         return investRepository.findBySubjectContaining(SearchKeyword,pageable);
 
     }
-
-//    //좋아요 기능
-//    public void liked(Invest invest, Member token){
-//        invest.getLiked().add(token);
-//        log.info("invest = {]" , invest.getLiked().size());
-//        this.investRepository.save(invest);
-//    }
-//
-//    //좋아요 기능
-//    public Invest getInvest(long id){
-//        Optional<Invest> invest=this.investRepository.findById(id);
-//        if(invest.isPresent()) {
-//            return invest.get();
-//        }else{
-//            throw new DataNotFoundException("invest not found");
-//        }
-//    }
-
-
-
 
 
 }

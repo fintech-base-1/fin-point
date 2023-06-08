@@ -19,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -66,19 +68,21 @@ public class InvestController {
         return "invest_detail";
     }
 
-    // 글 작성.
+
+
     @GetMapping("/create")
-    public String listCreate(@CookieValue(name = "memberId", required = false) MemberDto memberDto, Model model, @ModelAttribute InvestDto investDto) {
+    public String listCreate(HttpServletRequest request, MemberDto memberDto, Model model, @ModelAttribute InvestDto investDto) throws UnsupportedEncodingException {
 
         model.addAttribute("invest", investDto);
+        CookieUtil.getEmailToCookie(request);
         addMember(memberDto, model);
         return "invest_create";
     }
 
     @PostMapping("/create")
-    public String listCreate(Model model, @ModelAttribute InvestDto investDto,@CookieValue(name = "memberId", required = false)
-    MemberDto memberDto) {
-        investService.create(investDto, memberDto);
+    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) throws UnsupportedEncodingException {
+        String email = CookieUtil.getEmailToCookie(request);
+        investService.create(investDto, email);
         return "redirect:/invest/list";
     }
 
@@ -133,23 +137,7 @@ public class InvestController {
         return  "Message";
     }
 
-//    //좋아요 기능
-//    @GetMapping ("/list/detail/{id}/{tokenId}")
-//    public String investLiked(@PathVariable("id") long id, @PathVariable("tokenId") Member token){
-//
-//        Invest invest= this.investService.getInvest(id);
-//        log.info("invest id = {}", invest.getSubject());
-//        Member member= this.memberService.getMember(token);
-////        log.info("member = {}", member.getToken());
-////        log.info("member = {}", member.getEmail());
-//
-//        this.investService.liked(invest, member);
-//
-//        return String.format("redirect:/invest/list/detail/%s",id);
-////        return "redirect:/invest/list";
-//        //return "redirect:/invest/list/detail/%s";
-//        //Principal principal,
-//    }
+
 
 
 }
