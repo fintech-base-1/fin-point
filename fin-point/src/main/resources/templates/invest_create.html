@@ -7,18 +7,14 @@
 
 <body>
 <div layout:fragment="content" class="container">
-  <div id="editor"></div>
+  <div id="memberId" action="/signup" method="post" th:object="${member}"></div>
   <h5 class="my-3 border-bottom pb-2">Invest 등록</h5>
-  <form th:action="@{/invest/create}" th:object="${investDto}" method="post">
-    <div class="mb-3">
+  <form id="invest" action="/create" method="post" th:object="${invest}">
       <label for="subject" class="form-label">제목</label>
-      <input type="text" th:field="*{subject}" class="form-control">
-    </div>
-    <div class="mb-3">
+      <input type="text" name="subject" id="subject" class="form-control">
       <label for="content" class="form-label">내용</label>
-      <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
-    </div>
-    <input type="submit" value="저장하기" class="btn btn-primary my-2">
+      <input name="content" id="content" type="text">
+    <button type="submit">제출</button>
   </form>
 </div>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>.

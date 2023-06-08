@@ -3,8 +3,12 @@ package com.fp.finpoint.web.invest.controller;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.domain.openbank.Entity.Token;
+import com.fp.finpoint.global.util.CookieUtil;
+import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -63,15 +68,41 @@ public class InvestController {
 
     // 글 작성.
     @GetMapping("/create")
-    public String listCreate(InvestDto investDto) {
+    public String listCreate(@CookieValue(name = "memberId", required = false) MemberDto memberDto, Model model, @ModelAttribute InvestDto investDto) {
+
+        model.addAttribute("invest", investDto);
+        addMember(memberDto, model);
         return "invest_create";
     }
 
     @PostMapping("/create")
-    public String listCreate(Model model, InvestDto investDto) {
-        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId(), investDto.getLiked());
+    public String listCreate(Model model, @ModelAttribute InvestDto investDto,@CookieValue(name = "memberId", required = false)
+    MemberDto memberDto) {
+        investService.create(investDto, memberDto);
         return "redirect:/invest/list";
     }
+
+    public void addMember(MemberDto memberDto, Model model){
+        if(memberDto == null) {
+            model.addAttribute("member", new MemberDto());
+            return;
+        }
+        model.addAttribute("member", memberDto);
+        return;
+
+    }
+
+//    // 글 작성.
+//    @GetMapping("/create")
+//    public String listCreate(InvestDto investDto) {
+//        return "invest_create";
+//    }
+//
+//    @PostMapping("/create")
+//    public String listCreate(Model model, InvestDto investDto) {
+//        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId());
+//        return "redirect:/invest/list";
+//    }
 
     // 글 삭제.
     @GetMapping ("/delete/{id}")
@@ -102,17 +133,23 @@ public class InvestController {
         return  "Message";
     }
 
-    //좋아요 기능
-    @GetMapping("/liked/{id}")
-    public String investLiked(Principal principal, @PathVariable("id") long id){
-        Invest invest= this.investService.getInvest(id);
-        log.info("invest id = {}", invest.getSubject());
-        Member member= this.memberService.getMember(principal.getName());
-        log.info("member = {}", member.getEmail());
-        this.investService.liked(invest, member);
+//    //좋아요 기능
+//    @GetMapping ("/list/detail/{id}/{tokenId}")
+//    public String investLiked(@PathVariable("id") long id, @PathVariable("tokenId") Member token){
+//
+//        Invest invest= this.investService.getInvest(id);
+//        log.info("invest id = {}", invest.getSubject());
+//        Member member= this.memberService.getMember(token);
+////        log.info("member = {}", member.getToken());
+////        log.info("member = {}", member.getEmail());
+//
+//        this.investService.liked(invest, member);
+//
+//        return String.format("redirect:/invest/list/detail/%s",id);
+////        return "redirect:/invest/list";
+//        //return "redirect:/invest/list/detail/%s";
+//        //Principal principal,
+//    }
 
-        return String.format("redirect:/invest/list/detail/%s",id);
-        //return "redirect:/invest/list/detail/%s";
-    }
 
 }

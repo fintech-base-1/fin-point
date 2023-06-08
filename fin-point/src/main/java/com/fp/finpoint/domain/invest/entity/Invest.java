@@ -1,5 +1,7 @@
 package com.fp.finpoint.domain.invest.entity;
 
+//import com.fp.finpoint.domain.like.Like;
+import com.fp.finpoint.domain.like.Like;
 import com.fp.finpoint.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -33,22 +38,31 @@ public class Invest {
 
     private LocalDateTime deadline;
 
-    private Integer read_count;
+    private Integer read_count;//조화수
 
-    private Integer like_count;
+    private Integer liked_cnt;//좋아요 수
 
     private String category;
 
+
+//    @ManyToMany
+//    Set<Member> liked;// 좋아요
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member; //회원
+
     private Long seller_id;//작성자
 
-    @ManyToMany
-    Set<Member> liked;// 좋아요
+    @OneToMany(mappedBy = "invest")
+    private List<Like> likes = new ArrayList<>();//좋아요
 
-    public Invest(String subject, String content, Long id, Set<Member> liked) {
+    public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
         this.content = content;
         this.id = id;
-        this.liked=liked;
+        this.member = member;
     }
+
 
 }
