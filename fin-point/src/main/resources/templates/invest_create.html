@@ -2,7 +2,7 @@
 <html layout:decorate="~{layout}">
 
 <body>
-<div layout:fragment="content" class="container">
+<div layout:fragment="content" >
 <!--  <div id="editor"></div>-->
 <!--  &lt;!&ndash; !!여기!! 에디터 내용을 받을 div태그&ndash;&gt;-->
 <!--  <div id="contents"></div>-->
@@ -23,21 +23,64 @@
 <!--  </form>-->
 <!--</div>-->
 
-  <h5 class="my-3 border-bottom pb-2">Invest 등록</h5>-->
-    <form th:action="@{/invest/create}" th:object="${investDto}" method="post">
-      <input accept="image/*"
-             class="hidden"
-             type="file"/>
-      <div class="mb-3">
-        <label for="subject" class="form-label">제목</label>
-        <input type="text" th:field="*{subject}" class="form-control">
+<!--  <h5 class="my-3 border-bottom pb-2">Invest 등록</h5>-->
+<!--    <form th:action="@{/invest/create}" th:object="${investDto}" method="post">-->
+<!--      <input accept="image/*"-->
+<!--             class="hidden"-->
+<!--             type="file"/>-->
+<!--      <div class="mb-3">-->
+<!--        <label for="subject" class="form-label">제목</label>-->
+<!--        <input type="text" th:field="*{subject}" class="form-control">-->
+<!--      </div>-->
+<!--      <div class="mb-3">-->
+<!--        <label for="content" class="form-label">내용</label>-->
+<!--        <textarea th:field="*{content}" class="form-control" rows="10"></textarea>-->
+<!--      </div>-->
+<!--      <input type="submit" value="저장하기" class="btn btn-primary my-2">-->
+<!--    </form>-->
+
+
+
+  <div class="create-container">
+    <form
+            th:action="@{/invest/create}"
+            th:object="${investDto}"
+            method="post"
+    >
+      <div class="input-each">
+        <label for="file">
+          <div class="btn-upload">이미지추가</div>
+        </label>
+        <input
+                type="file"
+                name="file"
+                id="file"
+                class="input-class"
+                accept="image/*"
+        />
       </div>
-      <div class="mb-3">
-        <label for="content" class="form-label">내용</label>
-        <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+
+      <div class="input-each">
+        <lable class="input-lable-font">투자상품명</lable>
+        <input class="input-class" type="text" th:field="*{subject}" />
       </div>
-      <input type="submit" value="저장하기" class="btn btn-primary my-2">
+
+      <div class="input-each">
+        <lable for="content" class="input-lable-font">상품설명</lable>
+        <textarea
+                class="textarea-class"
+                th:field="*{content}"
+                rows="10"
+        ></textarea>
+      </div>
+
+      <div class="input-each">
+        <button type="submit" class="create-button">등록하기</button>
+      </div>
     </form>
+  </div>
+
+
   </div>
 
 </body>

@@ -1,3 +1,86 @@
-.container {
-    margin-top: 150px;
+.create-container {
+    background-color: #ffffff;
+    width: 600px;
+    height: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 15px;
+    margin-top: 200px;
 }
+
+.input-each {
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-lable-font {
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.input-class {
+    border: 0 solid black;
+    width: 300px;
+    height: 30px;
+    background-color: rgb(244, 242, 242);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+}
+
+.textarea-class {
+    border: 0 solid black;
+    width: 300px;
+    height: 60px;
+    background-color: rgb(243, 243, 243);
+}
+
+.create-button {
+    width: 150px;
+    height: 50px;
+    background-color: #f8f988;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 20px 30px;
+}
+
+.btn-upload {
+    width: 150px;
+    height: 30px;
+    background: #e6e1e1;
+    border: 0px solid rgb(77, 77, 77);
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 100;
+
+}
+
+.btn-upload:hover {
+     background: rgb(77, 77, 77);
+     color: #fff;
+ }
+
+#file {
+    display: none;
+}
+
+input[type="file"]::file-selector-button {
+    width: 150px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid rgb(77, 77, 77);
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+input[type="file"]:hover {
+     background: rgb(77, 77, 77);
+     color: #fff;
+ }

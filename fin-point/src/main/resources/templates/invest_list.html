@@ -20,14 +20,30 @@
 <!--            </tr>-->
 <!--        </tbody>-->
 <!--    </table>-->
+    </div>
 
 
-    <div>
-        <h1>뷰 작업 시작</h1>
+
         <div class="add-invest">
-            <button>            <a th:href="@{/invest/create}" >투자 등록</a>
+            <button th:onclick="|location.href='@{/invest/create}'|">            <a th:href="@{/invest/create}" >투자 등록</a>
             </button>
         </div>
+
+    <th:block class="list-wrap">
+        <div class="list-container" >
+            <div th:each="invest, loop : ${list}" class="list-each">
+                <a th:href="@{|/invest/list/detail/${invest.id}|}">
+                    <div class="invest-logo" th:text="${invest.imgUrl}"></div>
+                    <div class="invest-subject">
+                        <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
+                    </div>
+                    <div class="invest-content" th:text="${invest.content}"></div>
+                </a>
+            </div>
+        </div>
+    </th:block>
+
+
         <div class="list-container">
             <div class="list-each">
                 <div class="invest-logo">logo</div>
@@ -75,22 +91,12 @@
                 <div class="invest-content">content</div>
             </div>
         </div>
+
+
     </div>
 
 
-    <th:block class="list-wrap">
-        <div class="list-container" >
-            <div th:each="invest, loop : ${list}" class="list-each">
-                <a th:href="@{|/invest/list/detail/${invest.id}|}">
-                    <div class="invest-logo" th:text="${loop.count}"></div>
-                    <div class="invest-subject">
-                        <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
-                    </div>
-                    <div class="invest-content" th:text="${invest.content}"></div>
-                </a>
-            </div>
-        </div>
-    </th:block>
+
 
 
 
