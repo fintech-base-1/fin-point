@@ -54,12 +54,20 @@ public class CookieUtil {
         }
         throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND);
     }
-    // 수정 핊요
-    public void deleteCookie(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", null)
-                .maxAge(0) // 쿠키 유효기간 설정 (3일)
-                .build();
 
-        response.setHeader(SET_COOKIE, String.valueOf(cookie));
+    public void deleteCookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("Authorization")) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    cookie.setSecure(true);
+                    cookie.setHttpOnly(true);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        }
     }
 }

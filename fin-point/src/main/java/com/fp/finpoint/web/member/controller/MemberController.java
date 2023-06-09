@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final CookieUtil cookieUtil;
 
     @PostMapping("/finpoint/join")
     public ResponseEntity<HttpStatus> join(@Valid @RequestBody MemberDto memberDto) {
@@ -56,4 +58,13 @@ public class MemberController {
         memberService.addSeller(loginUserEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/finpoint/logout")
+    public ResponseEntity<HttpStatus> logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        cookieUtil.deleteCookie(request,response);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
 }
