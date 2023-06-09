@@ -36,7 +36,6 @@ public class InvestService {
 
     //게시글 생성.
     public void create(InvestDto investDto, String email) {
-        //MemberDto memberDto > null?
         Member findMember = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         investDto.setMember(findMember);
         investRepository.save(investDto.toEntity());
