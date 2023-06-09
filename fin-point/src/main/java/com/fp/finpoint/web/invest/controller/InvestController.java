@@ -3,7 +3,10 @@ package com.fp.finpoint.web.invest.controller;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,15 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @RequestMapping("/invest")
 @Controller
 @RequiredArgsConstructor // DI 주입. (InvestService)
+@Slf4j
 public class InvestController {
 
     private final InvestService investService;
+    private final MemberService memberService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -49,21 +54,22 @@ public class InvestController {
     // 디테일 페이지.
     @GetMapping(value = "/list/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
-        Invest readInvestDetail = this.investService.readInvestDetail(id);
-        model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
+        Invest investDetail = investService.investDetail(id);
+        model.addAttribute("investDetail", investDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
 
         return "invest_detail";
     }
 
-    // 글 작성.
-    @GetMapping("/create")
-    public String listCreate(InvestDto investDto) {
+    @GetMapping("/form")
+    public String getList(@ModelAttribute InvestDto investDto, Model model) throws UnsupportedEncodingException {
+        model.addAttribute("invest", investDto);
         return "invest_create";
     }
 
     @PostMapping("/create")
-    public String listCreate(Model model, InvestDto investDto) {
-        this.investService.create(investDto);
+    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) throws UnsupportedEncodingException {
+        String email = CookieUtil.getEmailToCookie(request);
+        investService.create(investDto, email);
         return "redirect:/invest/list";
     }
 
@@ -75,11 +81,10 @@ public class InvestController {
         return "redirect:/invest/list";
     }
 
-
     // 글 수정.
     @GetMapping("/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
-        Invest modifyInvest = investService.readInvestDetail(id);
+        Invest modifyInvest = investService.investDetail(id);
         model.addAttribute("modify", modifyInvest);
 
         return "invest_modify";
@@ -95,5 +100,8 @@ public class InvestController {
 
         return  "Message";
     }
+
+
+
 
 }
