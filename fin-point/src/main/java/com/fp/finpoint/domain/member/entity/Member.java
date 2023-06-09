@@ -41,8 +41,7 @@ public class Member extends Auditable {
     @Enumerated(EnumType.STRING)
     private OauthClient oauthClient;
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-    @ElementCollection()
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
   
