@@ -3,12 +3,8 @@ package com.fp.finpoint.web.invest.controller;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
-import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.service.MemberService;
-import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.global.util.CookieUtil;
-import com.fp.finpoint.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,11 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/invest")
 @Controller
@@ -62,20 +54,15 @@ public class InvestController {
     // 디테일 페이지.
     @GetMapping(value = "/list/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
-        Invest investDetail = this.investService.investDetail(id);
+        Invest investDetail = investService.investDetail(id);
         model.addAttribute("investDetail", investDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
 
         return "invest_detail";
     }
 
-
-
-    @GetMapping("/create")
-    public String listCreate(HttpServletRequest request, MemberDto memberDto, Model model, @ModelAttribute InvestDto investDto) throws UnsupportedEncodingException {
-
+    @GetMapping("/form")
+    public String getList(@ModelAttribute InvestDto investDto, Model model) throws UnsupportedEncodingException {
         model.addAttribute("invest", investDto);
-        CookieUtil.getEmailToCookie(request);
-        addMember(memberDto, model);
         return "invest_create";
     }
 
@@ -86,28 +73,6 @@ public class InvestController {
         return "redirect:/invest/list";
     }
 
-    public void addMember(MemberDto memberDto, Model model){
-        if(memberDto == null) {
-            model.addAttribute("member", new MemberDto());
-            return;
-        }
-        model.addAttribute("member", memberDto);
-        return;
-
-    }
-
-//    // 글 작성.
-//    @GetMapping("/create")
-//    public String listCreate(InvestDto investDto) {
-//        return "invest_create";
-//    }
-//
-//    @PostMapping("/create")
-//    public String listCreate(Model model, InvestDto investDto) {
-//        this.investService.create(investDto.getSubject(), investDto.getContent(), investDto.getId());
-//        return "redirect:/invest/list";
-//    }
-
     // 글 삭제.
     @GetMapping ("/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id){
@@ -115,7 +80,6 @@ public class InvestController {
 
         return "redirect:/invest/list";
     }
-
 
     // 글 수정.
     @GetMapping("/modify/{id}")

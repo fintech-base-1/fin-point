@@ -1,10 +1,8 @@
 package com.fp.finpoint.domain.invest.service;
 
-import com.fp.finpoint.domain.invest.entity.DataNotFoundException;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
-import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
@@ -15,10 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +31,8 @@ public class InvestService {
 
     // 특정 게시글.
     public Invest investDetail(Long id) {
-        return investRepository.findById(id).orElseThrow(() -> new RuntimeException("error"));
+        return investRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
     }
-
-
 
     //게시글 생성.
     public void create(InvestDto investDto, String email) {
