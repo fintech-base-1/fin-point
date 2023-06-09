@@ -54,12 +54,14 @@ public class CookieUtil {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND));
     }
 
-    public static void deleteCookie(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from(REFRESH, null)
+    public static void deleteCookie(String name, HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from(name, null)
+                .maxAge(0)
                 .path("/")
                 .httpOnly(true)
                 .build();
-        
+
         response.setHeader(SET_COOKIE, cookie.toString());
     }
+ 
 }
