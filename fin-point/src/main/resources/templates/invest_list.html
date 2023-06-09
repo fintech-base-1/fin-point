@@ -34,8 +34,8 @@
             <div th:each="invest, loop : ${list}" class="list-each">
                 <a th:href="@{|/invest/list/detail/${invest.id}|}">
                     <div class="invest-logo" th:text="${invest.imgUrl}"></div>
-                    <div class="invest-subject" th:text="${invest.subject}">
-<!--                        <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>-->
+                    <div class="invest-subject">
+                        <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
                     </div>
                     <div class="invest-content" th:text="${invest.content}"></div>
                 </a>

@@ -7,11 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +29,7 @@ public class InvestService {
 
     //게시글 생성.
     public void create(InvestDto investDto) {
+//        InvestDto investDto = new InvestDto(subject, content, id);
         investRepository.save(investDto.toEntity());
     }
 

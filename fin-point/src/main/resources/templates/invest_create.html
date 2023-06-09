@@ -43,10 +43,9 @@
 
   <div class="create-container">
     <form
-            enctype="multipart/form-data"
-            method="post"
             th:action="@{/invest/create}"
             th:object="${investDto}"
+            method="post"
     >
       <div class="input-each">
         <label for="file">
@@ -54,8 +53,8 @@
         </label>
         <input
                 type="file"
-                name="image"
-                id="image"
+                name="file"
+                id="file"
                 class="input-class"
                 accept="image/*"
         />
@@ -63,7 +62,7 @@
 
       <div class="input-each">
         <lable class="input-lable-font">투자상품명</lable>
-        <input class="input-class" type="text" name="subject" th:field="*{subject}" id="subject"/>
+        <input class="input-class" type="text" th:field="*{subject}" />
       </div>
 
       <div class="input-each">
@@ -72,18 +71,17 @@
                 class="textarea-class"
                 th:field="*{content}"
                 rows="10"
-                name="content"
         ></textarea>
       </div>
 
       <div class="input-each">
-        <button type="submit" class="create-button" value="submit">등록하기</button>
+        <button type="submit" class="create-button">등록하기</button>
       </div>
     </form>
   </div>
 
 
   </div>
-<script></script>
+
 </body>
 </html>
