@@ -22,25 +22,6 @@ public class OauthController {
     private final KakaoService kakaoService;
     private final GoogleService googleService;
 
-    /* 임시 view */
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-    @GetMapping("/join")
-    public String join() {
-        return "join";
-    }
-    @GetMapping("/finish")
-    public String finish() {
-        return "finish";
-    }
-    @GetMapping("/mailConfirm")
-    public String mailConfirm() {
-        return "mailConfirm";
-    }
-
-
     @ResponseBody
     @GetMapping("/finpoint/oauth/{id}")
     public String loginUrl(@PathVariable(name = "id") String id) {

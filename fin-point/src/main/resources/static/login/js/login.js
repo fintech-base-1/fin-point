@@ -16,7 +16,7 @@ document.getElementById('login')
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = "/mailConfirm";
+                    window.location.href = "/finpoint/mailconfirm";
                 } else {
                     alert("존재하지 않는 회원입니다.")
                 }
@@ -39,6 +39,7 @@ document.getElementById('googleLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
+                    window.location.href = '/invest/list';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);
@@ -60,6 +61,7 @@ document.getElementById('naverLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
+                    window.location.href = '/invest/list';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);
@@ -81,6 +83,7 @@ document.getElementById('kakaoLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
+                    window.location.href = '/invest/list';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);
