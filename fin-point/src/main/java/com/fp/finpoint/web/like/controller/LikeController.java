@@ -1,14 +1,10 @@
-package com.fp.finpoint.web.like;
+package com.fp.finpoint.web.like.controller;
 
-import com.fp.finpoint.domain.like.LikeResponse;
-import com.fp.finpoint.domain.like.LikeService;
+import com.fp.finpoint.domain.like.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor

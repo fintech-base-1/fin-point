@@ -1,4 +1,4 @@
-package com.fp.finpoint.domain.like;
+package com.fp.finpoint.domain.like.dto;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.member.entity.Member;

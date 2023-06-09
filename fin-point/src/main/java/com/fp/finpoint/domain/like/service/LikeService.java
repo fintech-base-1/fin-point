@@ -1,7 +1,9 @@
-package com.fp.finpoint.domain.like;
+package com.fp.finpoint.domain.like.service;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
+import com.fp.finpoint.domain.like.entity.Like;
+import com.fp.finpoint.domain.like.repository.LikeRepository;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;

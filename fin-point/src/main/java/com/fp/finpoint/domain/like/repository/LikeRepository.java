@@ -1,6 +1,7 @@
-package com.fp.finpoint.domain.like;
+package com.fp.finpoint.domain.like.repository;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
+import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

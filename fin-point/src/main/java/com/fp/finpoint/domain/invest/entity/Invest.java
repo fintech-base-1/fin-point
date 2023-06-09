@@ -1,7 +1,6 @@
 package com.fp.finpoint.domain.invest.entity;
 
-//import com.fp.finpoint.domain.like.Like;
-import com.fp.finpoint.domain.like.Like;
+import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,6 @@
 package com.fp.finpoint.domain.member.entity;
 
-//import com.fp.finpoint.domain.like.Like;
-import com.fp.finpoint.domain.like.Like;
+import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.global.audit.Auditable;
