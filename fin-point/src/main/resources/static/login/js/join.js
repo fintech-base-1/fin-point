@@ -19,6 +19,7 @@ document.getElementById('join')
                 window.location.href = "/login";
             } else {
                 console.log("응답 오류")
+                alert(`Response Status: ${response.status}`);
             }
         })
         .catch(error => {

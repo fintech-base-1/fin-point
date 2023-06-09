@@ -1,0 +1,113 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko">
+<body>
+<div layout:fragment="content">
+    <div class="list-outline">
+
+
+
+            <div class="add-invest">
+                <button onclick="authorizationOpenBank()" style="cursor: pointer; margin-right: 20px;">뱅킹 인증</button>
+                <button style="cursor: pointer;">목표지출금액</button>
+                <button onclick="logout()" style="cursor: pointer;">로그아웃</button>
+        </div>
+
+        <th:block class="list-wrap">
+            <div class="list-container" >
+
+                <div class="container my-5">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-1">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-primary"><i class="fa fa-star"></i></span>
+                                        핀포인트
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-info" th:text="${mypageDto.finpoint}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-success"><i class="fa fa-cubes"></i></span>
+                                        보유조각종류
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-warning" th:text="${mypageDto.pieceKind}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-danger"><i class="fa fa-sort-numeric-up"></i></span>
+                                        보유조각수
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-secondary" th:text="${mypageDto.pieceCnt}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-info"><i class="fa fa-won-sign"></i></span>
+                                        보유조각금액
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary" th:text="${mypageDto.piecePrice}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+        </th:block>
+
+
+
+        <script>
+            function authorizationOpenBank() {
+                fetch("/finpoint/bank/auth", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                    .then((response) => response.text())
+                    .then(function (data) {
+                        window.open(data, "인증", "width=800px, height=800px");
+                    })
+            }
+        </script>
+
+        <script>
+            function logout() {
+                fetch('/finpoint/logout', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("로그아웃 완료")
+                            window.location.href = "/login";
+                        } else {
+                            alert(`Response Status: ${response.status}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("전송 오류")
+                    })
+                }
+        </script>
+    </div>
+</div>
+</body>
+</html>
+
+
