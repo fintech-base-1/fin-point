@@ -16,7 +16,7 @@ document.getElementById('join')
     })
         .then(response => {
             if (response.ok) {
-                window.location.href = "/login";
+                window.location.href = "/finpoint/login";
             } else {
                 console.log("응답 오류")
                 alert(`Response Status: ${response.status}`);
