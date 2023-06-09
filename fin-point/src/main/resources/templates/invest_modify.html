@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- 위에 xmlns 하면 타임리프 문법을 쓸수 있다.-->
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 작성폼</title>
+</head>
+
+<style>
+    .layout{
+        width : 500px;
+        margin: 0 auto;
+        margin-top :40px;
+    }
+
+    .layout  input, textarea {
+        width : 100%;
+        margin-top :10px;
+        box-sizing : border-box;
+    }
+
+    textarea{
+        height : 300px;
+    }
+</style>
+
+<body>
+<H2>게시글 수정 페이지</H2>
+<div class="layout">
+    <form th:action="@{/invest/update/{id}(id = ${modify.id})}" method="post">
+        <input name="title" type="text" th:field="${modify.subject}" >
+        <textarea name="content" th:text ="${modify.content}"></textarea>
+        <button>수정</button>
+    </form>
+</div>
+</body>
+</html>
