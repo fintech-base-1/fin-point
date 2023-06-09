@@ -8,6 +8,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Arrays;
@@ -63,5 +64,10 @@ public class CookieUtil {
 
         response.setHeader(SET_COOKIE, cookie.toString());
     }
- 
+
+    public static String getEmailToCookie(HttpServletRequest request) {
+        String accessToken = getCookieValue(JwtUtil.AUTHORIZATION, request.getCookies());
+        String email = JwtUtil.getEmail(accessToken);
+        return email;
+    }
 }

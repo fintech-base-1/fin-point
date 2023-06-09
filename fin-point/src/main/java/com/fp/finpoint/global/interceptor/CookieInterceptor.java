@@ -7,6 +7,7 @@ import com.fp.finpoint.global.exception.response.ErrorResponse;
 import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.global.util.RedisUtil;
+import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class CookieInterceptor implements HandlerInterceptor {
                     CookieUtil.setAccessTokenInCookie(response, JwtUtil.AUTHORIZATION, newAccessToken);
                     return true;
                 } catch (BusinessLogicException e1) {
-                    CookieUtil.deleteCookie(response);
+                    CookieUtil.deleteCookie(JwtUtil.REFRESH, response);
                     RedisUtil.deleteKey(email);
                     response.sendRedirect("/login");
                     log.info("refresh error message = {}", e1.getExceptionCode().getMessage());
