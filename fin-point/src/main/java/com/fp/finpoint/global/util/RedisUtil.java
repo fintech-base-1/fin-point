@@ -3,38 +3,43 @@ package com.fp.finpoint.global.util;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import io.lettuce.core.RedisCommandExecutionException;
-import io.lettuce.core.RedisConnectionException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
-@RequiredArgsConstructor
 public class RedisUtil {
 
-    private final RedisTemplate<String, String> redisTemplate;
-    public ValueOperations<String, String> getValueOperations() {
-        try {
-            return redisTemplate.opsForValue();
-        } catch (RedisConnectionException e) {
-            throw new BusinessLogicException(ExceptionCode.REDIS_CONNECTION_ERROR);
-        }
+    private static StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    public RedisUtil(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    public String getRedisValue(ValueOperations<String, String> operations, String key) {
+    public static String getRedisValue(String key) {
         try {
-            return operations.get(key);
+            return stringRedisTemplate.opsForValue().get(key);
         } catch (RedisCommandExecutionException e) {
             throw new BusinessLogicException(ExceptionCode.REDIS_COMMAND_ERROR);
         }
     }
 
-    public void setRedisValue(ValueOperations<String, String> operations, String key, String value, int timeout, TimeUnit timeUnit) {
+    public static void setRedisValue(String key, String value, int timeout, TimeUnit timeUnit) {
         try {
-            operations.set(key, value, timeout, timeUnit);
+            stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
+        } catch (RedisCommandExecutionException e) {
+            throw new BusinessLogicException(ExceptionCode.REDIS_COMMAND_ERROR);
+        }
+    }
+
+    public static void deleteKey(String key) {
+        try {
+            stringRedisTemplate.delete(key);
         } catch (RedisCommandExecutionException e) {
             throw new BusinessLogicException(ExceptionCode.REDIS_COMMAND_ERROR);
         }
