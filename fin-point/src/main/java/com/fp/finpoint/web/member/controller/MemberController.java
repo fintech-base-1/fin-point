@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.global.util.JwtUtil;
+import com.fp.finpoint.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RedisUtil redisUtil;
 
     @PostMapping("/finpoint/join")
     public ResponseEntity<HttpStatus> join(@Valid @RequestBody MemberDto memberDto) {
@@ -39,19 +41,16 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // url mail-confirm 수정필요
     @PostMapping("/finpoint/mailconfirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
-        String email = memberService.checkCode(code.getCode());
-        CookieUtil.setCookieInHeader(response, JwtUtil.createAccessToken(email));
-//        CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));
+        String loginUserEmail = memberService.checkCode(code.getCode().trim());
+        memberService.registerTokenInCookie(loginUserEmail, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 권한 추가 컨트롤러
     @PostMapping("/finpoint/assign-seller")
     public ResponseEntity<HttpStatus> assignSeller(HttpServletRequest request) throws UnsupportedEncodingException {
-        String accessToken = JwtUtil.getAccessToken(request.getCookies());
+        String accessToken = CookieUtil.getAccessToken(request.getCookies());
         String loginUserEmail = JwtUtil.getEmail(accessToken);
         memberService.addSeller(loginUserEmail);
         return new ResponseEntity<>(HttpStatus.OK);

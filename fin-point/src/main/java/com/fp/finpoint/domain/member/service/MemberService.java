@@ -7,14 +7,12 @@ import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
-import com.fp.finpoint.global.util.EmailSenderService;
-import com.fp.finpoint.global.util.PasswordEncoder;
-import com.fp.finpoint.global.util.RedisUtil;
+import com.fp.finpoint.global.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -84,6 +82,7 @@ public class MemberService {
     }
 
     public void doLogin(MemberDto memberDto) {
+        //TODO: REFRESH TOKEN CHECK
         Member savedMember = inspectEmailExistence(memberDto.getEmail());
         OauthClient oauthClient = savedMember.getOauthClient();
         switch (oauthClient) {
@@ -102,16 +101,19 @@ public class MemberService {
     }
 
     public String checkCode(String code) {
-        ValueOperations<String, String> operations = redisUtil.getValueOperations();
-        String value = redisUtil.getRedisValue(operations, code);
-        isCodeExpired(value);
-        return value;
-    }
-
-    private static void isCodeExpired(String value) {
+        String value = redisUtil.getRedisValue(code);
         if (value == null) {
             throw new BusinessLogicException(ExceptionCode.CODE_EXPIRED);
         }
+        return value;
+    }
+
+    public void registerTokenInCookie(String email, HttpServletResponse response) {
+        String accessToken = JwtUtil.createAccessToken(email);
+        String refreshToken = JwtUtil.createRefreshToken();
+        redisUtil.setRedisValue(email, refreshToken, 10, TimeUnit.DAYS);
+        CookieUtil.setAccessTokenInCookie(response, JwtUtil.AUTHORIZATION, accessToken);
+        CookieUtil.addRefreshInCookie(response, JwtUtil.REFRESH, refreshToken);
     }
 
     public void addSeller(String loginUserEmail) {
@@ -141,16 +143,14 @@ public class MemberService {
         String code = UUID.randomUUID().toString();
         emailSenderService.sendHtmlMessageWithInlineImage(email, code);
         log.info("# Authentication Mail Transfer!");
-        log.info("# Code = {}", code);
+        log.info("# Code={}", code);
         return code;
     }
 
     private void setMemberInRedisWithCode(Member member, String code) {
         String email = member.getEmail();
-        ValueOperations<String, String> operations = redisUtil.getValueOperations();
-        redisUtil.setRedisValue(operations, code, email, 3, TimeUnit.MINUTES);
+        redisUtil.setRedisValue(code, email, 3, TimeUnit.MINUTES);
         log.info("# Code set in Redis!");
     }
-
 
 }
