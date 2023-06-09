@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
@@ -48,7 +49,7 @@ public class TokenService {
                 + "&state="
                 + state
                 + "&auth_type=0";
-        log.info("URL = {}" , requireUrl);
+        log.info("URL = {}", requireUrl);
         return requireUrl;
     }
     public void saveToken(String requestToken, HttpServletRequest request) throws UnsupportedEncodingException {
@@ -65,7 +66,7 @@ public class TokenService {
     }
 
     @Transactional
-    public void getAccountList(HttpServletRequest request) throws UnsupportedEncodingException {
+    public void getAccountList(HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         Member savedMember = getMember(email);
         Token savedToken = savedMember.getToken();

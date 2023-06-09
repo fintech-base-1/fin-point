@@ -78,7 +78,8 @@ public class MemberController {
     @ResponseBody
     @GetMapping("/finpoint/logout")
     public ResponseEntity<HttpStatus> logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        cookieUtil.deleteCookie(request,response);
+        cookieUtil.deleteCookie(JwtUtil.AUTHORIZATION,response);
+        cookieUtil.deleteCookie(JwtUtil.REFRESH,response);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 
