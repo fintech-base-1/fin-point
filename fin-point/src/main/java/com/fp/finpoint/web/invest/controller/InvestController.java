@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -65,14 +64,9 @@ public class InvestController {
         return "invest_create";
     }
 
-    @CrossOrigin (origins = {"http://localhost:8080"})// 다른 Origin 으로부터의 자원 공유가 필요한 경우 ( TODO: 보안상 안전한지 이유 찾기)
-    @PostMapping(value = "/create" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String listCreate(InvestDto investDto ,
-                             @Valid @RequestParam("subject") String subject,
-                             @Valid @RequestParam("content") String content,
-                             MultipartHttpServletRequest multipartHttpServletRequest
-                             ) throws IOException {
-        this.investService.create(investDto, subject, content, multipartHttpServletRequest);
+    @PostMapping("/create")
+    public String listCreate(Model model, InvestDto investDto) {
+        this.investService.create(investDto);
         return "redirect:/invest/list";
     }
 

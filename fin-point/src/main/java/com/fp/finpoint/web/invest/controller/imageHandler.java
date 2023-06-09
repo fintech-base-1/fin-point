@@ -72,13 +72,13 @@
 //                // 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
 //                String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
 //                // 생성 후 리스트에 추가
-//                Invest invest = Invest.builder()
-//                        .boardIdx(boardID)
+//                Invest boardPicture = Invest.builder()
+//                        .id(investId)
 //                        .original_file_name(multipartFile.getOriginalFilename())
 //                        .stored_file_path(path + "/" + new_file_name)
 //                        .file_size(multipartFile.getSize())
 //                        .build();
-//                fileList.add(Invest);
+//                fileList.add(boardPicture);
 //
 //                // 저장된 파일로 변경하여 이를 보여주기 위함
 //                file = new File(absolutePath + path + "/" + new_file_name);

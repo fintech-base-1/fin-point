@@ -30,7 +30,7 @@ public class InvestService {
     }
 
     //게시글 생성.
-    public void create(InvestDto investDto, String subject,  String content, MultipartHttpServletRequest multipartHttpServletRequest) {
+    public void create(InvestDto investDto) {
         investRepository.save(investDto.toEntity());
     }
 
