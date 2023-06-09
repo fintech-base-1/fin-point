@@ -12,7 +12,7 @@ public class LikeController {
     private final LikeService likeService;
 
 
-    @PostMapping("/")
+    @PostMapping("/{memberId}/like")
     public void likeInvest(@RequestParam Long id,
                            @RequestParam String email){
 
