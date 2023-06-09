@@ -9,10 +9,12 @@ public class InvestDto {
 
     public String subject;//제목
     public String content;//내용
+    public String imgUrl;
+
 
     // 여기서 Invest는 return 타입
     public Invest toEntity() {
 
-        return new Invest(this.subject, this.content);
+        return new Invest(this.subject, this.content, this.imgUrl);
     }
 }

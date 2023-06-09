@@ -25,6 +25,8 @@ public class Invest {
 
     private String imgUrl;
 
+    private Long imgSize;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
@@ -39,8 +41,9 @@ public class Invest {
 
     private Long seller_id;//작성자
 
-    public Invest(String subject, String content) {
+    public Invest(String subject, String content, String imgUrl) {
         this.subject = subject;
         this.content = content;
+        this.imgUrl = imgUrl;
     }
 }
