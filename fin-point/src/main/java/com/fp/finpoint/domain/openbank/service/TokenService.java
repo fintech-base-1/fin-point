@@ -7,6 +7,7 @@ import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.domain.openbank.repository.TokenRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
+import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.global.util.JwtUtil;
 import com.fp.finpoint.web.openbank.dto.AccountResponseDto;
 import com.fp.finpoint.web.openbank.dto.TokenResponseDto;
@@ -53,6 +54,7 @@ public class TokenService {
         log.info("URL = {}" , requireUrl);
         return requireUrl;
     }
+
     public void saveToken(String requestToken, HttpServletRequest request) throws UnsupportedEncodingException {
         TokenResponseDto tokenResponseDto =
                 bankingFeign.requestToken(requestToken, clientId, clientSecret, redirectUri, grantType);
@@ -61,7 +63,7 @@ public class TokenService {
 
     public void setTokenToMember(Token token, HttpServletRequest request) throws UnsupportedEncodingException {
         Cookie[] cookies = request.getCookies();
-        String accessToken = JwtUtil.getAccessToken(cookies);
+        String accessToken = CookieUtil.getAccessToken(cookies);
         String email = JwtUtil.getEmail(accessToken);
         log.info("email = {}", email);
         Member savedMember = memberRepository.findByEmail(email)
