@@ -66,7 +66,7 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) {
+    public String listCreate(@RequestBody InvestDto investDto, HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
@@ -100,7 +100,12 @@ public class InvestController {
         return  "Message";
     }
 
-
+    @PostMapping("/test")
+    @ResponseBody
+    public String test(@RequestParam(name = "id") Long id, HttpServletRequest request, @RequestParam(name = "count") Long count) {
+        investService.purchase(id, request, count);
+        return "success";
+    }
 
 
 }
