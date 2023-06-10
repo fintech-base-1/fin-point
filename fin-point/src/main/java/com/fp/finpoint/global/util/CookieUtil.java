@@ -3,6 +3,7 @@ package com.fp.finpoint.global.util;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
@@ -10,64 +11,63 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
+import static com.fp.finpoint.global.util.JwtUtil.AUTHORIZATION;
+import static com.fp.finpoint.global.util.JwtUtil.REFRESH;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CookieUtil {
-
-    public static void setCookieInHeader(HttpServletResponse response, String accessToken) {
-
-        ResponseCookie cookie = ResponseCookie.from("Authorization", accessToken)
-//                .maxAge(3 * 24 * 60 * 60) // 쿠키 유효기간 설정 (3일)
+    public static void setAccessTokenInCookie(HttpServletResponse response, String name, String accessToken) {
+        ResponseCookie cookie = ResponseCookie.from(name, accessToken)
                 .path("/")
-                .secure(true)
-//                .httpOnly(true)
-                .sameSite("None")
+                .httpOnly(true)
                 .build();
 
-        response.setHeader(SET_COOKIE, String.valueOf(cookie));
+        response.setHeader(SET_COOKIE, cookie.toString());
     }
 
-    public static void setCookie(HttpServletResponse response, String accessToken) {
-        String encodedValue = URLEncoder.encode(accessToken, StandardCharsets.UTF_8);
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION, encodedValue);
-//        cookie.setMaxAge(3 * 24 * 60 * 60); // 유효기간 max: 3일
-//        cookie.setHttpOnly(true); // XSS 공격 방지
-//        cookie.setSecure(true); // HTTPS 적용 시
-        response.addCookie(cookie);
+    public static void addRefreshInCookie(HttpServletResponse response, String name, String accessToken) {
+        ResponseCookie cookie = ResponseCookie.from(name, accessToken)
+                .path("/")
+                .httpOnly(true)
+                .build();
+
+        response.addHeader(SET_COOKIE, cookie.toString());
     }
 
-    public static String getEmailToCookie(HttpServletRequest request) throws UnsupportedEncodingException {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                String name = c.getName();
-                if (name.equals("Authorization")) {
-                    return JwtUtil.getEmail(c.getValue());
-                }
-            }
-        }
-        throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND);
+    public static String getAccessToken(Cookie[] cookies) {
+        return getCookieValue(AUTHORIZATION, cookies);
     }
 
-    public void deleteCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("Authorization")) {
-                    cookie.setMaxAge(0);
-                    cookie.setPath("/");
-                    cookie.setSecure(true);
-                    cookie.setHttpOnly(true);
-                    response.addCookie(cookie);
-                    break;
-                }
-            }
-        }
+    public static String getRefreshToken(Cookie[] cookies) {
+        return getCookieValue(REFRESH, cookies);
+    }
+
+    private static String getCookieValue(String name, Cookie[] cookies) {
+        return Arrays.stream(cookies)
+                .filter(c -> c.getName().equals(name))
+                .findFirst()
+                .map(Cookie::getValue)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND));
+    }
+
+    public static void deleteCookie(String name, HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from(name, null)
+                .maxAge(0)
+                .path("/")
+                .httpOnly(true)
+                .build();
+
+        response.setHeader(SET_COOKIE, cookie.toString());
+    }
+
+    public static String getEmailToCookie(HttpServletRequest request) {
+        String accessToken = getCookieValue(JwtUtil.AUTHORIZATION, request.getCookies());
+        String email = JwtUtil.getEmail(accessToken);
+        return email;
     }
 }

@@ -10,8 +10,6 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@Table(name = "invest")
 public class InvestDto extends Invest {
 
 //    private Long id;

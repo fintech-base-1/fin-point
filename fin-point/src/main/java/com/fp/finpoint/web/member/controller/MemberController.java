@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.global.util.JwtUtil;
+import com.fp.finpoint.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,6 @@ public class MemberController {
 
     private final MemberService memberService;
     private final CookieUtil cookieUtil;
-
 
     @GetMapping("/finpoint/join")
     public String join() {
@@ -55,21 +55,18 @@ public class MemberController {
     @GetMapping("/finpoint/mailconfirm")
     public String mailconfirm(){return "mailconfirm";}
 
-    // url mail-confirm 수정필요
     @ResponseBody
-    @PostMapping("/finpoint/mailconfirm")
+    @PostMapping("/finpoint/mail-confirm")
     public ResponseEntity<HttpStatus> code(@Valid @RequestBody MemberDto.Code code, HttpServletResponse response) {
-        String email = memberService.checkCode(code.getCode());
-        CookieUtil.setCookieInHeader(response, JwtUtil.createAccessToken(email));
-//        CookieUtil.setCookie(response, JwtUtil.createAccessToken(email));
+        String loginUserEmail = memberService.checkCode(code.getCode().trim());
+        memberService.registerTokenInCookie(loginUserEmail, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 권한 추가 컨트롤러
     @ResponseBody
     @PostMapping("/finpoint/assign-seller")
     public ResponseEntity<HttpStatus> assignSeller(HttpServletRequest request) throws UnsupportedEncodingException {
-        String accessToken = JwtUtil.getAccessToken(request.getCookies());
+        String accessToken = CookieUtil.getAccessToken(request.getCookies());
         String loginUserEmail = JwtUtil.getEmail(accessToken);
         memberService.addSeller(loginUserEmail);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -82,7 +79,5 @@ public class MemberController {
         cookieUtil.deleteCookie(JwtUtil.REFRESH,response);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 }
