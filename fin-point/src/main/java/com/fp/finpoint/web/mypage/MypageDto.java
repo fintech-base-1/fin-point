@@ -9,7 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MypageDto {
 
+    public String nickname;
+
+    public String email;
+
+    public Long goal;
+
     public Long finpoint;
+
+    public Long spend;
 
     public Long pieceKind;
 

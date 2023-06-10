@@ -24,10 +24,15 @@ public class MypageController {
         mypageDto.setPieceCnt(27L);
         mypageDto.setPieceKind(5L);
         mypageDto.setPiecePrice(570000L);
+        mypageDto.setEmail("test@gmail.com");
+        mypageDto.setGoal(50000L);
+        mypageDto.setNickname("테스트");
+        mypageDto.setSpend(47000L);
 
         model.addAttribute("mypageDto",mypageDto);
-        return "myPage";
+        return "mypage";
     }
+
 
 
 
