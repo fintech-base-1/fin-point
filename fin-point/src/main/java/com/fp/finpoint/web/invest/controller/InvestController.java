@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @RequestMapping("/invest")
 @Controller
@@ -61,13 +60,13 @@ public class InvestController {
     }
 
     @GetMapping("/form")
-    public String getList(@ModelAttribute InvestDto investDto, Model model) throws UnsupportedEncodingException {
+    public String getList(@ModelAttribute InvestDto investDto, Model model) {
         model.addAttribute("invest", investDto);
         return "invest_create";
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
