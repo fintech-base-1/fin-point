@@ -30,15 +30,15 @@ public class FileService {
         if (files.isEmpty()) {
             return null;
         }
-        String origName = files.getOriginalFilename();
+        String originName = files.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
-        String extension = origName.substring(origName.lastIndexOf("."));
+        String extension = originName.substring(originName.lastIndexOf("."));
         String savedName = uuid + extension;
         String savedPath = fileDirectory + savedName;
         String email = CookieUtil.getEmailToCookie(request);
         FileEntity existingFile = fileRepository.findByEmail(email);
         if (existingFile != null) {
-            existingFile.setOriginName(origName);
+            existingFile.setOriginName(originName);
             existingFile.setSavedName(savedName);
             existingFile.setSavedPath(savedPath);
             files.transferTo(new File(savedPath));
@@ -46,7 +46,7 @@ public class FileService {
             return savedFile.getId();
         }
         FileEntity file = FileEntity.builder()
-                .originName(origName)
+                .originName(originName)
                 .savedName(savedName)
                 .savedPath(savedPath)
                 .email(email)
