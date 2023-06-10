@@ -1,0 +1,18 @@
+@keyframes colorTransition {
+    0% { color: black; }
+    50% { color: #ff3d3d; }
+    100% { color: #ff0000; }
+}
+p:hover {
+    cursor: pointer;
+    animation: colorTransition 1s infinite;
+}
+p:active {
+    animation: none;
+    color: #de5353;
+    transition: color 0.3s ease;
+}
+
+.selected {
+    color: blue;
+}

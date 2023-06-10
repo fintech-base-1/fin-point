@@ -36,3 +36,23 @@
             console.log('이미지를 선택하세요');
         }
     }
+
+    function toggleSection(sectionId, element) {
+        const sections = document.querySelectorAll('section[id^="piece-section-"]');
+        const clickedSection = document.getElementById('piece-section-' + sectionId);
+        sections.forEach(section => {
+            if (section === clickedSection) {
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            } else {
+                section.style.display = 'none';
+            }
+        })
+        const paragraphs = document.querySelectorAll('p[id^="piece-"]');
+        paragraphs.forEach(paragraph => {
+            if (paragraph === element) {
+                paragraph.classList.add('selected');
+            } else {
+                paragraph.classList.remove('selected');
+            }
+        })
+    }
