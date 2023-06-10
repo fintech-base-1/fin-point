@@ -5,6 +5,7 @@ import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
+import com.fp.finpoint.domain.piece.Entity.Piece;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -35,10 +37,16 @@ public class InvestService {
     }
 
     //게시글 생성.
+    @Transactional
     public void create(InvestDto investDto, String email) {
         Member findMember = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        investDto.setMember(findMember);
-        investRepository.save(investDto.toEntity());
+//        investDto.setMember(findMember);
+//        investRepository.save(investDto.toEntity());
+        Invest invest = investDto.toEntity();
+        invest.setMember(findMember);
+        Piece piece = new Piece(investDto.getPieceName(), investDto.getPiecePrice(), investDto.getPieceCount());
+        invest.setPiece(piece);
+        investRepository.save(invest);
     }
 
     //게시글 삭제.
