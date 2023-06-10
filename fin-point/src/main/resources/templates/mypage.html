@@ -32,7 +32,8 @@
                 <br>
                 <p>finpoint : <span th:text="${mypageDto.finpoint}"></span></p>
                 <br>
-                <button> 프로필 이미지 변경 </button>
+                <input id="single-file-input" type="file" name="file">
+                <button onclick="openProfileWindow()"> 프로필 이미지 변경 </button>
             </header>
             <a href="#assets" class="jumplink pic">
                 <span class="arrow icon solid fa-chevron-right"><span>See my work</span></span>
@@ -89,33 +90,15 @@
                 </div>
             </form>
         </article>
-
     </div>
-
 </div>
 
-<!-- Scripts -->
 <script src="mypage/js/jquery.min.js"></script>
 <script src="mypage/js/browser.min.js"></script>
 <script src="mypage/js/breakpoints.min.js"></script>
 <script src="mypage/js/util.js"></script>
 <script src="mypage/js/main.js"></script>
-
-<script>
-    function authorizationOpenBank() {
-        fetch("/finpoint/bank/auth", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.text())
-            .then(function (data) {
-                window.open(data, "인증", "width=800px, height=800px");
-            })
-    }
-</script>
-
+<script src="mypage/js/mypage.js"></script>
 
 </body>
 </html>

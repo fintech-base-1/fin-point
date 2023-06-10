@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <style></style>
+</head>
+<body>
+<h2>프로필 이미지 변경</h2>
+<form id="profile-form" enctype="multipart/form-data">
+  <input id="profile-input" type="file" name="file" accept="image/*">
+  <button type="button" onclick="confirmProfileImage()">확인</button>
+</form>
+
+<script>
+  function confirmProfileImage() {
+    const fileInput = document.getElementById('profile-input');
+    if (fileInput.files && fileInput.files[0]) {
+      const formData = new FormData();
+      formData.append('profileImage', fileInput.files[0]);
+
+      fetch('/update-profile', {
+        method: 'POST',
+        body: formData
+      })
+              .then(response => response.json())
+              .then(data => {
+                alert(data.message)
+                window.close()
+              })
+              .catch(error => {
+                console.error('이미지 업데이트 실패:', error);
+              });
+    } else {
+      console.log('이미지를 선택하세요');
+    }
+  }
+</script>
+</body>
+</html>
