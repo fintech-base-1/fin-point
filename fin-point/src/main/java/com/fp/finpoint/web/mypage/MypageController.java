@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.file.service.FileService;
 import com.fp.finpoint.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +31,7 @@ public class MypageController {
     private final FileService fileService;
 
     @GetMapping("/mypage")
-    public String mailConfirm(Model model)
-    {
+    public String myPage(Model model) throws MalformedURLException {
         MypageDto mypageDto = new MypageDto();
         mypageDto.setFinpoint(47000L);
         mypageDto.setPieceCnt(27L);
@@ -41,6 +43,12 @@ public class MypageController {
         mypageDto.setSpend(47000L);
         model.addAttribute("mypageDto",mypageDto);
         return "mypage";
+    }
+
+    @GetMapping("/image")
+    @ResponseBody
+    public Resource image(HttpServletRequest request) throws MalformedURLException {
+     return fileService.getImageUrl(request);
     }
 
     @PostMapping("/update-profile")

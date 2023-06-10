@@ -56,3 +56,8 @@
             }
         })
     }
+
+    const imageElement = document.getElementById('image');
+    imageElement.onerror = function() {
+        this.src = '/images/default.jpg';
+    };

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -18,7 +18,7 @@ public class FileEntity {
     @Column(name="file_id")
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String email;
 
     private String originName;

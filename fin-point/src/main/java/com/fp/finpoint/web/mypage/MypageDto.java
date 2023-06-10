@@ -3,6 +3,7 @@ package com.fp.finpoint.web.mypage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.Resource;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,5 @@ public class MypageDto {
 
     public Long piecePrice;
 
+    public Resource profileImg;
 }

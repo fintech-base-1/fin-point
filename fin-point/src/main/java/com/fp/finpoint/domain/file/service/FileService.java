@@ -1,18 +1,20 @@
 package com.fp.finpoint.domain.file.service;
 
-
 import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.file.repository.FileRepository;
 import com.fp.finpoint.global.util.CookieUtil;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.UUID;
 
 @Slf4j
@@ -53,4 +55,12 @@ public class FileService {
         FileEntity savedFile = fileRepository.save(file);
         return savedFile.getId();
     }
+
+    public Resource getImageUrl(HttpServletRequest request) throws MalformedURLException {
+        String email = CookieUtil.getEmailToCookie(request);
+        FileEntity file = fileRepository.findByEmail(email);
+        return new UrlResource("file:"+file.getSavedPath());
+
+    }
+
 }
