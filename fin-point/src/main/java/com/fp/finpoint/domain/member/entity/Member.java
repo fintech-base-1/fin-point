@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.openbank.Entity.Token;
+import com.fp.finpoint.domain.piece.Entity.PieceMember;
 import com.fp.finpoint.global.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,6 +70,9 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member")
     private List<Like> likes = new ArrayList<>(); //좋아요
+
+    @OneToMany(mappedBy = "member")
+    private List<PieceMember> pieceMembers = new ArrayList<>();
 
 
 }

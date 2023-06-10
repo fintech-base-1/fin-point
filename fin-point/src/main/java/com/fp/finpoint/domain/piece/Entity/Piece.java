@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +24,9 @@ public class Piece {
 
     @OneToOne(mappedBy = "piece")
     private Invest invest;
+
+    @OneToMany(mappedBy = "piece")
+    private List<PieceMember> pieceMembers = new ArrayList<>();
 
     public Piece(String name, Long price, Long count) {
         this.name = name;
