@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,8 +44,9 @@ public class MypageController {
     }
 
     @PostMapping("/update-profile")
-    public ResponseEntity<?> uploadFile(@RequestParam("profileImage") MultipartFile file) throws IOException {
-        fileService.saveFile(file);
+    public ResponseEntity<?> uploadFile(@RequestParam("profileImage") MultipartFile file,
+                                        HttpServletRequest request) throws IOException {
+        fileService.saveFile(file, request);
         Map<String, String> response = new HashMap<>();
         response.put("message", "프로필 이미지 업데이트 성공");
         return ResponseEntity.ok(response);
