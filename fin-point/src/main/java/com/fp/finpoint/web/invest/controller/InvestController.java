@@ -1,9 +1,8 @@
 package com.fp.finpoint.web.invest.controller;
 
+import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
-import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 @RequestMapping("/invest")
 @Controller
@@ -25,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 public class InvestController {
 
     private final InvestService investService;
-    private final MemberService memberService;
+//    private final MemberService memberService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -61,13 +59,13 @@ public class InvestController {
     }
 
     @GetMapping("/form")
-    public String getList(@ModelAttribute InvestDto investDto, Model model) throws UnsupportedEncodingException {
+    public String getList(@ModelAttribute InvestDto investDto, Model model) {
         model.addAttribute("invest", investDto);
         return "invest_create";
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
