@@ -1,23 +1,17 @@
 package com.fp.finpoint.web.ranking.controller;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.ranking.service.RankingService;
-import com.fp.finpoint.web.ranking.RankingDto.RankingResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +30,11 @@ public class RankingController {
         for (int i = 0; i < 50; i++) {
             String email = "test" + (i + 1) + "@test.com";
             String nickname = "테스트" + (i + 1);
+            Integer totalPrice =  (1000000-10000*i);
             MemberDto memberDto = new MemberDto();
             memberDto.setEmail(email);
             memberDto.setNickname(nickname);
+            memberDto.setTotalPrice(totalPrice);
             members.add(memberDto);
         }
         int pageSize = 5;
@@ -54,20 +50,20 @@ public class RankingController {
         return "ranking";
     }
 
-    @GetMapping("/ranking-asset")
-    public String rankingAsset(){
-        return "ranking";
-    }
+//    @GetMapping("/ranking-asset")
+//    public String rankingAsset(){
+//        return "ranking";
+//    }
 
-    @ResponseBody
-    @PostMapping("/ranking-asset")
-    public ResponseEntity<RankingResponseDto> rankingAsset(@RequestParam(defaultValue = "0") int page,
-                                                      HttpServletRequest request) {
-        Integer myRanking = rankingService.getMyAssetRankingByEmail(request);
-        Page<Member> memberPage = rankingService.getMemberSortByAssets(page);
-        RankingResponseDto rankingResponseDto = new RankingResponseDto(myRanking, memberPage);
-        return ResponseEntity.ok(rankingResponseDto);
-    }
+//    @ResponseBody
+//    @PostMapping("/ranking-asset")
+//    public ResponseEntity<RankingResponseDto> rankingAsset(@RequestParam(defaultValue = "0") int page,
+//                                                      HttpServletRequest request) {
+//        Integer myRanking = rankingService.getMyAssetRankingByEmail(request);
+//        Page<Member> memberPage = rankingService.getMemberSortByAssets(page);
+//        RankingResponseDto rankingResponseDto = new RankingResponseDto(myRanking, memberPage);
+//        return ResponseEntity.ok(rankingResponseDto);
+//    }
 
 //    @ResponseBody
 //    @PostMapping("/ranking")

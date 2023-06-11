@@ -27,7 +27,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MypageController {
 
-    private final MemberService memberService;
     private final FileService fileService;
 
     @GetMapping("/mypage")
@@ -61,7 +60,7 @@ public class MypageController {
     }
 
     @GetMapping("/profile")
-    public String image(){
+    public String profile(){
         return "profile";
     }
 

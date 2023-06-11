@@ -17,6 +17,8 @@ public class MemberDto {
 
     private String nickname;
 
+    private Integer totalPrice;
+
     public static class Code {
         @Getter
         @NotBlank

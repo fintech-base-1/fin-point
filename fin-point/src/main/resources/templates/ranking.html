@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="ranking/css/ranking.css" />
 </head>
 <body>
-
 <ol id="memberList" style="--length: 5" role="list">
     <li th:each="member, i : ${memberPage.content}">
         <h3><span th:text="${member.nickname}"></span></h3>
         <span th:text="${member.email}"></span>
+        <span th:text="${member.totalPrice}"></span>
     </li>
 </ol>
 

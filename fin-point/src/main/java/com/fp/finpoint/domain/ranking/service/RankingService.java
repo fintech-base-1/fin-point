@@ -21,31 +21,18 @@ public class RankingService {
 
     private final MemberRepository memberRepository;
 
-
-    public Page<Member> getMemberSortByFinpoint(int pageNumber) {
-        Sort sortByFinpoint = Sort.by("finpoint").descending();
-        PageRequest pageable = PageRequest.of(pageNumber, 5, sortByFinpoint);
+    public Page<Member> getMemberRankingByPieceCount(int pageNumber){
+        Sort sortByPieceCount = Sort.by("totalCount").descending();
+        PageRequest pageable = PageRequest.of(pageNumber,5,sortByPieceCount);
         return memberRepository.findAll(pageable);
     }
 
-    public int getMyFinpointRankingByEmail(HttpServletRequest request) {
-        List<Member> allMembersSortedByFinpoint = memberRepository.findAll(Sort.by(Sort.Direction.DESC, "finpoint"));
-        String email = CookieUtil.getEmailToCookie(request);
-        Optional<Member> member = memberRepository.findByEmail(email);
-        return allMembersSortedByFinpoint.indexOf(member.get()) + 1;
-    }
-
-    public Page<Member> getMemberSortByAssets(int pageNumber) {
-        Sort sortByAssets = Sort.by("assets").descending();
-        PageRequest pageable = PageRequest.of(pageNumber, 5, sortByAssets);
+    public Page<Member> getMemberRankingByAllPiecesPrice(int pageNumber){
+        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
+        PageRequest pageable = PageRequest.of(pageNumber,5,sortByAllPiecesPrice);
         return memberRepository.findAll(pageable);
     }
 
-    public int getMyAssetRankingByEmail(HttpServletRequest request) {
-        List<Member> allMembersSortedByAssets = memberRepository.findAll(Sort.by(Sort.Direction.DESC, "assets"));
-        String email = CookieUtil.getEmailToCookie(request);
-        Optional<Member> member = memberRepository.findByEmail(email);
-        return allMembersSortedByAssets.indexOf(member.get()) + 1;
-    }
+
 
 }
