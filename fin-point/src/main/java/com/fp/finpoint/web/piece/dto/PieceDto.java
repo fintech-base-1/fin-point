@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PieceDto {
 
+    public String name;
     public Long price;
     public Long count;
 
     public Piece toEntity() {
-        return new Piece(this.price, this.count);
+        return new Piece(this.name, this.price, this.count);
     }
 }

@@ -2,6 +2,7 @@ package com.fp.finpoint.domain.invest.entity;
 
 import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.piece.Entity.Piece;
 import com.fp.finpoint.global.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class Invest extends Auditable {
 
     private LocalDateTime deadline;
 
-    private Integer read;//조회수
+    private Integer read_count;//조회수
 
     private String category;
 
@@ -42,13 +43,26 @@ public class Invest extends Auditable {
     @OneToMany(mappedBy = "invest")
     private List<Like> likes = new ArrayList<>();//좋아요
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "piece_id")
+    private Piece piece;
+
+    public Invest(String subject, String content) {
+
+    }
     private Integer likecnt;
 
     public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
         this.content = content;
-        this.id = id;
-        this.member = member;
     }
 
+    public void setMember(Member member) {
+        this.member = member;
+        member.getInvests().add(this);
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
 }
