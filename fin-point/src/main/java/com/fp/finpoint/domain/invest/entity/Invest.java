@@ -42,6 +42,8 @@ public class Invest extends Auditable {
     @OneToMany(mappedBy = "invest")
     private List<Like> likes = new ArrayList<>();//좋아요
 
+    private Integer likecnt;
+
     public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
         this.content = content;
