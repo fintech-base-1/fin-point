@@ -1,8 +1,9 @@
 package com.fp.finpoint.web.invest.controller;
 
-import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
+import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class InvestController {
 
     private final InvestService investService;
-//    private final MemberService memberService;
+    private final MemberService memberService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -65,7 +66,7 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) {
+    public String listCreate(@RequestBody InvestDto investDto, HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
@@ -99,7 +100,13 @@ public class InvestController {
         return  "Message";
     }
 
-
+    @PostMapping("/test")
+    @ResponseBody
+    public String test(@RequestParam(name = "id") Long id, HttpServletRequest request, @RequestParam(name = "count") Long count) {
+        //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
+        investService.purchase(id, request, count);
+        return "success";
+    }
 
 
 }

@@ -22,6 +22,7 @@ public enum ExceptionCode {
     // piece
     PIECE_NOT_FOUND(404, "존재하지 않는 조각입니다."),
     PIECE_NOT_ENOUGH(400, "조각이 모자랍니다."),
+    NOT_ENOUGH_POINT(400, "포인트가 모자랍니다."),
 
     // token
     TOKEN_NOT_FOUND(404, "존재하지 않는 토큰입니다."),
