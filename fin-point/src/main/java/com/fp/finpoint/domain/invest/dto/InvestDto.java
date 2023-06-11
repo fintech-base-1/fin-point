@@ -1,5 +1,6 @@
-package com.fp.finpoint.domain.invest.entity;
+package com.fp.finpoint.domain.invest.dto;
 
+import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.member.entity.Member;
 import lombok.*;
 

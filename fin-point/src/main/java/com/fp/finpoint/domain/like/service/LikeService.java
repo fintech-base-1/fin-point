@@ -19,24 +19,62 @@ public class LikeService {
     private final MemberRepository memberRepository;
     private final InvestRepository investRepository;
 
-    public String goodInvest(Long id, String email) {
-        Member member = memberRepository
-                .findByEmail(email)
+//    public String likeInvest(Long id, String email) {
+//        Member member = memberRepository
+//                .findByEmail(email)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+//        Invest invest = investRepository
+//                .findById(id)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+//
+//
+////        LikeResponse goodResponse= new LikeReponse();
+//        if (member.getLikes().stream().anyMatch(like -> like.getInvest().equals(invest))) {
+//            likeRepository.deleteByMemberAndInvest(member, invest);
+////            goodResponse.setmessage("좋아요 취소");
+//        } else {
+//            likeRepository.save(Like.builder().invest(invest).member(member).build());
+////            goodResponse.setmessage("좋아요 성공");
+//        }
+//        return "success";
+//    }
+
+    //특정 게시물 유저 좋아요 확인
+    public boolean findLike(Long invest_id, String email) {
+        memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        Invest invest = investRepository
-                .findById(id)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+        return likeRepository.existsByInvest_IdAndMember_Email(invest_id, email);
+
+    }
+
+    //좋아요 저장
+    public boolean saveLike(Long invest_id, String email){
+
+        //로그인한 유저가 해당 게시물을 좋아요 했는지 안 했는지 확인
+        if(!findLike(invest_id,email)) {
+
+            //좋아요 하지 않은 게시물이면 좋아요 추가, true 반환
+            Member member = memberRepository.findByEmail(email)
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+            Invest invest = investRepository.findById(invest_id)
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+
+            //좋아요 엔티티 생성
+            Like like = new Like(member, invest);
+            likeRepository.save(like);
+            investRepository.okLike(invest_id);
+
+            return true;
+        }else{
+            //좋아요 한 게시물이면 좋아요 삭제, false 반환
+            likeRepository.deleteByInvest_IdAndMember_Email(invest_id,email);
+            investRepository.noLike(invest_id);
+
+            return false;
 
 
-//        LikeResponse goodResponse= new LikeReponse();
-        if (member.getLikes().stream().anyMatch(like -> like.getInvest().equals(invest))) {
-            likeRepository.deleteByMemberAndInvest(member, invest);
-//            goodResponse.setmessage("좋아요 취소");
-        } else {
-            likeRepository.save(Like.builder().invest(invest).member(member).build());
-//            goodResponse.setmessage("좋아요 성공");
         }
-        return "success";
+
     }
 }
 
