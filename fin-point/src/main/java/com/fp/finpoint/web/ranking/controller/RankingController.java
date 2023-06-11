@@ -1,21 +1,14 @@
 package com.fp.finpoint.web.ranking.controller;
 
 import com.fp.finpoint.domain.member.dto.MemberDto;
-import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.ranking.service.RankingService;
-import com.sun.javadoc.MemberDoc;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -24,14 +17,15 @@ public class RankingController {
 
     private final RankingService rankingService;
 
-    /* 랭킹 테스트 데이터 */
     @GetMapping("/ranking")
-    public String ranking(@RequestParam(defaultValue = "0") int page, Model model) {
-        Page<MemberDto> memberPage = rankingService.getMemberRankingByAllPiecesPriceTest(page);
-        model.addAttribute("memberPage", memberPage);
+    public String rankingView() {
         return "ranking";
     }
-
+    @ResponseBody
+    @GetMapping("/ranking/data")
+    public Page<MemberDto> ranking(@RequestParam(defaultValue = "0") int page) {
+        return rankingService.getMemberRankingByAllPiecesPriceTest(page);
+    }
 
 //    @ResponseBody
 //    @PostMapping("/ranking")
