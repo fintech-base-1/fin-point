@@ -2,14 +2,11 @@ package com.fp.finpoint.domain.like.entity;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.member.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -33,6 +30,13 @@ public class Like {
 
     public Like(Long id,Member member,Invest invest){
         this.id=id;
+        this.member=member;
+        this.invest=invest;
+
+    }
+
+
+    public Like(Member member,Invest invest){
         this.member=member;
         this.invest=invest;
 
