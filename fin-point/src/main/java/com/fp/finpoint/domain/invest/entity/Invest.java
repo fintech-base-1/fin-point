@@ -48,6 +48,11 @@ public class Invest extends Auditable {
     private Piece piece;
 
     public Invest(String subject, String content) {
+
+    }
+    private Integer likecnt;
+
+    public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
         this.content = content;
     }
