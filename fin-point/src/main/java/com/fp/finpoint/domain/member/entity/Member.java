@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.member.entity;
 
+import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.oauth.OauthClient;
 import com.fp.finpoint.domain.openbank.Entity.Token;
 import com.fp.finpoint.global.audit.Auditable;
@@ -11,7 +12,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,4 +61,9 @@ public class Member extends Auditable {
     public void setToken(Token token) {
         this.token = token;
     }
+
+
+    @OneToMany(mappedBy = "member")
+    private List<Like> likes = new ArrayList<>(); //좋아요
+
 }

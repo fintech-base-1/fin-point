@@ -1,15 +1,22 @@
 package com.fp.finpoint.domain.invest.entity;
 
-import lombok.*;
+import com.fp.finpoint.domain.like.entity.Like;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.global.audit.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Invest {
+public class Invest extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,22 +29,26 @@ public class Invest {
 
     private String imgUrl;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime modifiedAt;
-
     private LocalDateTime deadline;
 
-    private Integer read_count;
-
-    private Integer like_count;
+    private Integer read;//조회수
 
     private String category;
 
-    private Long seller_id;//작성자
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member; //회원
 
-    public Invest(String subject, String content) {
+    @OneToMany(mappedBy = "invest")
+    private List<Like> likes = new ArrayList<>();//좋아요
+
+    private Integer likecnt;
+
+    public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
         this.content = content;
+        this.id = id;
+        this.member = member;
     }
+
 }

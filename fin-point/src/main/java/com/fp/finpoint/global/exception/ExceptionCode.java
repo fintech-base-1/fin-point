@@ -35,7 +35,10 @@ public enum ExceptionCode {
 
     // redis
     REDIS_CONNECTION_ERROR(500, "Redis 서버와의 연결에 문제가 있습니다."),
-    REDIS_COMMAND_ERROR(500, "Redis 명령어 실행에 문제가 있습니다.");
+    REDIS_COMMAND_ERROR(500, "Redis 명령어 실행에 문제가 있습니다."),
+
+    //invset
+    INVEST_NOT_FOUND(404, "존재하지 않는 상품입니다.");
 
     @Getter
     final int code;

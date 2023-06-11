@@ -1,8 +1,10 @@
 package com.fp.finpoint.web.invest.controller;
 
+import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,7 +79,7 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(Model model, InvestDto investDto , HttpServletRequest httpServletRequest) throws ServletException, IOException {
+    public String listCreate(@ModelAttribute, InvestDto investDto , HttpServletRequest httpServletRequest) throws ServletException, IOException {
         log.info("request={}", httpServletRequest);
 
         String itemName = httpServletRequest.getParameter("itemName");
@@ -111,7 +113,8 @@ public class InvestController {
             }
         }
 
-        this.investService.create(investDto);
+        String email = CookieUtil.getEmailToCookie(httpServletRequest);
+        investService.create(investDto, email);
         return "redirect:/invest/list";
     }
 

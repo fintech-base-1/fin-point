@@ -52,8 +52,8 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/finpoint/mailconfirm")
-    public String mailconfirm(){return "mailconfirm";}
+    @GetMapping("/finpoint/mail-confirm")
+    public String mailconfirm(){return "mail-confirm";}
 
     @ResponseBody
     @PostMapping("/finpoint/mail-confirm")

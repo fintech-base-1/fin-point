@@ -1,0 +1,29 @@
+@keyframes colorTransition {
+    0% { color: black; }
+    50% { color: #ff3d3d; }
+    100% { color: #ff0000; }
+}
+
+[id^="piece-"]:hover {
+    cursor: pointer;
+    animation: colorTransition 1s infinite;
+}
+
+[id^="piece-"]:active {
+    animation: none;
+    color: #de5353;
+    transition: color 0.3s ease;
+}
+
+[id^="piece-"].selected {
+    color: blue;
+}
+
+#image {
+    max-width: 533.33px;
+    max-height: 533.33px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    background-color: #eaeaea;
+}
