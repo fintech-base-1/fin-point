@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +50,7 @@ public class InvestService {
 //        investRepository.save(investDto.toEntity());
         Invest invest = investDto.toEntity();
         invest.setMember(findMember);
-        Piece piece = new Piece(investDto.getPieceName(), investDto.getPiecePrice(), investDto.getPieceCount());
+        Piece piece = new Piece(investDto.getPieceName(), investDto.getPiecePrice(), investDto.getPieceCount(), generateUuid());
         invest.setPiece(piece);
         investRepository.save(invest);
     }
@@ -89,9 +90,27 @@ public class InvestService {
         if (savedPiece.getCount() < count) {
             throw new BusinessLogicException(ExceptionCode.PIECE_NOT_ENOUGH);
         }
+        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
+            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
+        }
         savedPiece.updateCount(count);
-        Piece newPiece = new Piece(savedPiece.getName(), savedPiece.getPrice(), count);
+        Piece newPiece = getNewPiece(count, savedMember, savedPiece);
         mapPieceAndMember(newPiece, savedMember);
+    }
+
+    private Piece getNewPiece(Long count, Member savedMember, Piece savedPiece) {
+        String pieceSerial = savedPiece.getUuid();
+        Piece newPiece = new Piece(savedPiece.getName(), savedPiece.getPrice(), count, pieceSerial);
+        List<PieceMember> savedPieceMember = pieceMemberRepository.findByMember_memberId(savedMember.getMemberId());
+        for (PieceMember pieceMember : savedPieceMember) {
+            Piece piece = pieceMember.getPiece();
+            if (piece.getUuid() != null && piece.getUuid().equals(pieceSerial)) {
+                newPiece = piece;
+                newPiece.plusCount(count);
+                break;
+            }
+        }
+        return newPiece;
     }
 
     @Transactional
@@ -100,5 +119,9 @@ public class InvestService {
         pieceMember.setMember(member);
         pieceMember.setPiece(piece);
         pieceMemberRepository.save(pieceMember);
+    }
+
+    private String generateUuid() {
+        return UUID.randomUUID().toString();
     }
 }
