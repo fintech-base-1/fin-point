@@ -16,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -78,41 +81,20 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto , HttpServletRequest httpServletRequest) throws ServletException, IOException {
-        log.info("request={}", httpServletRequest);
-
-        String itemName = httpServletRequest.getParameter("itemName");
+    public String listCreate(@ModelAttribute InvestDto investDto , @RequestParam String itemName, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        // 업로드하는 html form 의 name 에 맞추어 @RequestParam 을 적용하면 된다. 추가로 @ModelAttribute 에서도 MultipartFile 을 동일하게 사용할 수 있다.
+        log.info("request={}", request);
         log.info("itemName={}", itemName);
+        log.info("multipartFile={}", file);
 
-        Collection<Part> parts = httpServletRequest.getParts();
-        log.info("parts={}", parts);
-
-        for (Part part : parts) {
-            log.info("=== PART ===");
-            log.info("name={}", part.getName());
-            Collection<String> headerNames = part.getHeaderNames(); // part 는 헤더와 바디로 구분 되어있다.
-            for (String headerName : headerNames) {
-                log.info("header {}:{}", headerName, part.getHeader(headerName));
-            }
-            //편의 메서드로 제공된,
-            //content-disposition 를 이용.
-            log.info("submittedFilename={}", part.getSubmittedFileName());
-            log.info("size={}", part.getSize()); // part 의 body size
-
-            //데이터 읽기.
-            InputStream inputStream = part.getInputStream();
-            String body = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-            log.info("body={}", body);
-
-            //파일에 저장하기.
-            if (StringUtils.hasText(part.getSubmittedFileName())) {
-               String fullPath = fileDir + part.getSubmittedFileName();
-               log.info("파일 저장 fullPath={}",fullPath);
-               part.write(fullPath);
-            }
+        if(!file.isEmpty()) {
+            String fullPath = fileDir +file.getOriginalFilename();
+            log.info("파일 저장 fullPath={}", fullPath);
+            file.transferTo(new File(fullPath));
         }
 
-        String email = CookieUtil.getEmailToCookie(httpServletRequest);
+
+        String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
     }
