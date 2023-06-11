@@ -1,9 +1,12 @@
 package com.fp.finpoint.domain.piece.Entity;
 
+import com.fp.finpoint.domain.invest.entity.Invest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,20 +16,38 @@ public class Piece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private Long price;
     private Long count;
-    //todo: member와 1:n, Invest(판매글)과 1:1
-    //todo: 동시성 이슈가 생길 수 있음 낙관적 락을 걸고 일단 테스트 진행
     @Version
     private Long version;
+    @Column(columnDefinition = "text")
+    private String uuid;
 
+    @OneToOne(mappedBy = "piece")
+    private Invest invest;
 
-    public Piece(Long price, Long count) {
+    @OneToMany(mappedBy = "piece")
+    private List<PieceMember> pieceMembers = new ArrayList<>();
+
+    public Piece(String name, Long price, Long count) {
+        this.name = name;
         this.price = price;
         this.count = count;
     }
 
+    public Piece(String name, Long price, Long count, String uuid) {
+        this.name = name;
+        this.price = price;
+        this.count = count;
+        this.uuid = uuid;
+    }
+
     public void updateCount(Long count) {
         this.count -= count;
+    }
+
+    public void plusCount(Long count) {
+        this.count += count;
     }
 }
