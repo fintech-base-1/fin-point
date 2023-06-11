@@ -19,6 +19,8 @@ public class MemberDto {
 
     private Integer totalPrice;
 
+    private String image;
+
     public static class Code {
         @Getter
         @NotBlank

@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="ranking/css/ranking.css" />
+    <link rel="stylesheet" href="/ranking/css/ranking.css" />
 </head>
 <body>
+
 <ol id="memberList" style="--length: 5" role="list">
     <li th:each="member, i : ${memberPage.content}">
-        <h3><span th:text="${member.nickname}"></span></h3>
-        <span th:text="${member.email}"></span>
-        <span th:text="${member.totalPrice}"></span>
+        <img th:src="@{/images/}+${member.image}"/>
+        <div><th:block th:text="${member.nickname}"></th:block></div>
+        <div><th:block th:text="${member.email}"></th:block></div>
+        <div><th:block th:text="${member.totalPrice}"></th:block></div>
     </li>
 </ol>
 
-<script src="ranking/js/ranking.js"></script>
+<script src="/ranking/js/ranking.js"></script>
 
 </body>
 </html>
