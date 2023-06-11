@@ -1,30 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="login/css/ranking.css" />
+    <link rel="stylesheet" href="ranking/css/ranking.css" />
 </head>
 <body>
 
-<a th:if="${page.number > 0}" th:href="@{/users(page=${page.number - 1})}">이전</a>
-<a th:if="${page.number < page.totalPages - 1}" th:href="@{/users(page=${page.number + 1})}">다음</a>
-
-<ol style="--length: 5" role="list">
-    <li style="--i: 1">
-        <h3>Discovery and assessment</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus.</p>
+<ol id="memberList" style="--length: 5" role="list">
+    <li th:each="member, i : ${memberPage.content}">
+        <h3><span th:text="${member.nickname}"></span></h3>
+        <span th:text="${member.email}"></span>
     </li>
-    <li style="--i: 2">
-        <h3>Information gathering and analysis</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus.</p>
-    </li>
-    <li style="--i: 3">
-        <h3>Creating your claim</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing diam donec adipiscing tristique risus.</p>
-    </li>
-
 </ol>
+
+<script src="ranking/js/ranking.js"></script>
 
 </body>
 </html>

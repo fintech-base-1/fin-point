@@ -15,6 +15,8 @@ public class MemberDto {
     @NotBlank
     private String password;
 
+    private String nickname;
+
     public static class Code {
         @Getter
         @NotBlank
