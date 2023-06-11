@@ -1,5 +1,6 @@
-package com.fp.finpoint.domain.invest.entity;
+package com.fp.finpoint.domain.invest.dto;
 
+import com.fp.finpoint.domain.invest.entity.Invest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.fp.finpoint.domain.invest.service;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.invest.entity.InvestDto;
+import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;

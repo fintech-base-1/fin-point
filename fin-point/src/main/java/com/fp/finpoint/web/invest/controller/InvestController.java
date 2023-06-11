@@ -40,14 +40,14 @@ public class InvestController {
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
-    public String list (Model model,
-                        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                        String searchKeyword) {
+    public String list(Model model,
+                       @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                       String searchKeyword) {
         Page<Invest> list = null;
 
-        if(searchKeyword == null) {
+        if (searchKeyword == null) {
             list = investService.investList(pageable);
-        }else {
+        } else {
             list = investService.investSearchList(searchKeyword, pageable);
         }
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -81,14 +81,14 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto , @RequestParam String itemName, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+    public String listCreate(@ModelAttribute InvestDto investDto, @RequestParam String itemName, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
         // 업로드하는 html form 의 name 에 맞추어 @RequestParam 을 적용하면 된다. 추가로 @ModelAttribute 에서도 MultipartFile 을 동일하게 사용할 수 있다.
         log.info("request={}", request);
         log.info("itemName={}", itemName);
         log.info("multipartFile={}", file);
 
-        if(!file.isEmpty()) {
-            String fullPath = fileDir +file.getOriginalFilename();
+        if (!file.isEmpty()) {
+            String fullPath = fileDir + file.getOriginalFilename();
             log.info("파일 저장 fullPath={}", fullPath);
             file.transferTo(new File(fullPath));
         }
@@ -100,8 +100,8 @@ public class InvestController {
     }
 
     // 글 삭제.
-    @GetMapping ("/delete/{id}")
-    public String boardDelete(@PathVariable("id") Long id){
+    @GetMapping("/delete/{id}")
+    public String boardDelete(@PathVariable("id") Long id) {
         investService.deleteInvest(id);
 
         return "redirect:/invest/list";
@@ -125,7 +125,7 @@ public class InvestController {
         model.addAttribute("message", "수정 완료");
         model.addAttribute("SearchUrl", "/invest/list");
 
-        return  "Message";
+        return "Message";
     }
 
 
@@ -136,4 +136,6 @@ public class InvestController {
         investService.purchase(id, request, count);
         return "success";
     }
+
+}
 
