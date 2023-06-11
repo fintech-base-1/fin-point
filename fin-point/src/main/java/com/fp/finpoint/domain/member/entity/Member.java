@@ -55,6 +55,10 @@ public class Member extends Auditable {
     private List<Invest> invests = new ArrayList<>();
 
     private String fintech_use_num;
+
+    private Long finPoint;
+
+    private Long target_spend;
     public void assignCode(String code) {
         this.code = code;
     }
