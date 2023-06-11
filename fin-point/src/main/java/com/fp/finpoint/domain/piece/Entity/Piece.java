@@ -21,6 +21,8 @@ public class Piece {
     private Long count;
     @Version
     private Long version;
+    @Column(columnDefinition = "text")
+    private String uuid;
 
     @OneToOne(mappedBy = "piece")
     private Invest invest;
@@ -34,7 +36,18 @@ public class Piece {
         this.count = count;
     }
 
+    public Piece(String name, Long price, Long count, String uuid) {
+        this.name = name;
+        this.price = price;
+        this.count = count;
+        this.uuid = uuid;
+    }
+
     public void updateCount(Long count) {
         this.count -= count;
+    }
+
+    public void plusCount(Long count) {
+        this.count += count;
     }
 }
