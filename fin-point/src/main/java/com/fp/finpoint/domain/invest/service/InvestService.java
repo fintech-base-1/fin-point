@@ -30,7 +30,7 @@ public class InvestService {
     }
 
     // 특정 게시글.
-    public Invest investDetail(Long id) {
+    public Invest readInvestDetail(Long id) {
         return investRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
     }
 

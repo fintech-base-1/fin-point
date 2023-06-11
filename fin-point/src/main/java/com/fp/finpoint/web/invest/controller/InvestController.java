@@ -2,7 +2,6 @@ package com.fp.finpoint.web.invest.controller;
 
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
@@ -79,7 +78,7 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute, InvestDto investDto , HttpServletRequest httpServletRequest) throws ServletException, IOException {
+    public String listCreate(@ModelAttribute InvestDto investDto , HttpServletRequest httpServletRequest) throws ServletException, IOException {
         log.info("request={}", httpServletRequest);
 
         String itemName = httpServletRequest.getParameter("itemName");
