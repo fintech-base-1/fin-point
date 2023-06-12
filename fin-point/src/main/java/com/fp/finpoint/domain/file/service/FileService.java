@@ -47,7 +47,6 @@ public class FileService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity existingFile = member.getFileEntity();
         if (existingFile != null) {
-            System.out.println("널이 아니다");
             existingFile.setOriginName(originName);
             existingFile.setSavedName(savedName);
             existingFile.setSavedPath(savedPath);
@@ -55,7 +54,6 @@ public class FileService {
             FileEntity savedFile = fileRepository.save(existingFile);
             return savedFile.getId();
         }
-        System.out.println("널이다");
         FileEntity file = FileEntity.builder()
                 .originName(originName)
                 .savedName(savedName)

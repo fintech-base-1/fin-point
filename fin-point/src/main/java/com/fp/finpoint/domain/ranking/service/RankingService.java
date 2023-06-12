@@ -3,6 +3,9 @@ package com.fp.finpoint.domain.ranking.service;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
+import com.fp.finpoint.domain.piece.Entity.Piece;
+import com.fp.finpoint.domain.ranking.dto.RankResponseDto;
+import com.fp.finpoint.domain.ranking.repository.PieceCustomRepositoryImpl;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,26 +25,74 @@ import java.util.List;
 public class RankingService {
 
     private final MemberRepository memberRepository;
+    private final PieceCustomRepositoryImpl pieceCustomRepositoryImpl;
 
-    public Page<Member> getMemberRankingByPieceCount(int pageNumber){
-        Sort sortByPieceCount = Sort.by("totalCount").descending();
-        PageRequest pageable = PageRequest.of(pageNumber,5,sortByPieceCount);
-        return memberRepository.findAll(pageable);
+    public List<RankResponseDto> getRankList(String standard, int page, int size) {
+        List<Member> members = memberRepository.findAll();
+        List<RankResponseDto> rankResponseDtos = allMemberToRankResponseDto(members);
+        sortRankByStandard(standard, rankResponseDtos);
+        return processPaging(page, size, rankResponseDtos);
     }
 
-    public Page<Member> getMemberRankingByAllPiecesPrice(int pageNumber){
-        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
-        PageRequest pageable = PageRequest.of(pageNumber,5,sortByAllPiecesPrice);
-        return memberRepository.findAll(pageable);
+    private List<RankResponseDto> allMemberToRankResponseDto(List<Member> members) {
+        List<RankResponseDto> rankResponseDtos = new ArrayList<>();
+
+        for (Member member : members) {
+            List<Piece> pieceListByMember = pieceCustomRepositoryImpl.findPieceListByMember(member);
+            int typeCount = pieceListByMember.size();
+            Long pieceRetainCount = 0L;
+            Long assetAmount = 0L;
+
+            for (Piece piece : pieceListByMember) {
+                pieceRetainCount += piece.getCount();
+                assetAmount += piece.getPrice() * piece.getCount();
+            }
+
+            RankResponseDto rankResponseDto = RankResponseDto.builder()
+                    .email(member.getEmail())
+                    .typeCount(typeCount)
+                    .pieceRetainCount(pieceRetainCount)
+                    .assetAmount(assetAmount)
+                    .build();
+
+            rankResponseDtos.add(rankResponseDto);
+        }
+        return rankResponseDtos;
+    }
+
+    private static void sortRankByStandard(String standard, List<RankResponseDto> rankResponseDtos) {
+        switch (standard) {
+            case "type":
+                rankResponseDtos.sort((o1, o2) ->
+                        o2.getTypeCount() - o1.getTypeCount());
+            case "piece":
+                rankResponseDtos.sort(((o1, o2) ->
+                        Math.toIntExact(o2.getPieceRetainCount() - o1.getPieceRetainCount())));
+            case "asset":
+                rankResponseDtos.sort(((o1, o2) ->
+                        Math.toIntExact(o2.getAssetAmount() - o1.getAssetAmount())));
+        }
+    }
+
+    private static List<RankResponseDto> processPaging(int page, int size, List<RankResponseDto> rankResponseDtos) {
+        int fromIndex = (page - 1) * size;
+        if (rankResponseDtos.size() < fromIndex) {
+            return Collections.emptyList();
+        }
+
+        int toIndex = Math.min(fromIndex + size, rankResponseDtos.size());
+
+        return rankResponseDtos.subList(fromIndex, toIndex);
     }
 
     public Page<MemberDto> getMemberRankingByAllPiecesPriceTest(int page){
 //        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
 //        PageRequest pageable = PageRequest.of(page,5,sortByAllPiecesPrice);
         List<MemberDto> members = new ArrayList<>();
+        Random random = new Random();
         for (int i = 0; i < 50; i++) {
             String email = "test" + (i + 1) + "@test.com";
-            String nickname = "테스트" + (i + 1);
+            String nickname = "정렬확인랜덤"+random.nextInt(1000);
             Integer totalPrice =  (1000000-10000*i);
             MemberDto memberDto = new MemberDto();
             memberDto.setEmail(email);
@@ -60,5 +113,31 @@ public class RankingService {
     }
 
 
+    public List<RankResponseDto> getRankListTest(String standard, int page, int size) {
+        //        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
+        //        PageRequest pageable = PageRequest.of(page,5,sortByAllPiecesPrice);
+        List<RankResponseDto> members = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < 50; i++) {
+            String email = "test" + (i + 1) + "@test.com";
+            String nickname = "nick"+random.nextInt(1000);
+            int typeCount = 50 - i;
+            Long pieceRetainCount = (long) (500-10*i);
+            Long assetAmount = (long) (1000000-10000*i);
+
+            RankResponseDto rankResponseDto = RankResponseDto.builder()
+                    .email(email)
+                    .nickname(nickname)
+                    .typeCount(typeCount) // ???
+                    .pieceRetainCount(pieceRetainCount)
+                    .assetAmount(assetAmount)
+                    .image("default.jpg")
+                    .build();
+            members.add(rankResponseDto);
+        }
+
+        sortRankByStandard(standard, members);
+        return processPaging(page, size, members);
+    }
 
 }
