@@ -26,10 +26,18 @@ public class LikeController {
 //
 //    }
 
+    //테스트
+    @GetMapping("/test")
+    public String view() {
+        
+        return "test";
+    }
+    
+    
     //상품 좋아요
     @PostMapping("/invest/list/detail/like/{invest_id}")
     @ResponseBody
-    public boolean like(@PathVariable Long invest_id, HttpServletRequest request) {
+    public boolean like(@PathVariable(value="investId") Long invest_id, HttpServletRequest request) {
 
         String email = CookieUtil.getEmailToCookie(request);
 
