@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PieceMemberRepository extends JpaRepository<PieceMember, Long> {
     List<PieceMember> findByMember_memberId(Long memberId);
+
+    boolean existsByPieceIdAndMember_MemberId(Long pieceId, Long memberId);
 }

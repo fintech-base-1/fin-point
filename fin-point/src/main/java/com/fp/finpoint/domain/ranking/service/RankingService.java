@@ -44,7 +44,7 @@ public class RankingService {
             Long assetAmount = 0L;
             for (Piece piece : pieceListByMember) {
                 pieceRetainCount += piece.getCount();
-                assetAmount += piece.getPrice();
+                assetAmount += piece.getPrice() * piece.getCount();
             }
 
             RankResponseDto rankResponseDto = RankResponseDto.builder()
@@ -72,7 +72,6 @@ public class RankingService {
                         Math.toIntExact(o2.getAssetAmount() - o1.getAssetAmount())));
         }
     }
-
 
     private static List<RankResponseDto> processPaging(int page, int size, List<RankResponseDto> rankResponseDtos) {
         int fromIndex = (page - 1) * size;

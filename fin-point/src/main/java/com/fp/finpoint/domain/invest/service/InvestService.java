@@ -124,7 +124,10 @@ public class InvestService {
         PieceMember pieceMember = new PieceMember(member, piece);
         pieceMember.setMember(member);
         pieceMember.setPiece(piece);
-        pieceMemberRepository.save(pieceMember);
+        boolean judge = pieceMemberRepository.existsByPieceIdAndMember_MemberId(piece.getId(), member.getMemberId());
+        if (!judge) {
+            pieceMemberRepository.save(pieceMember);
+        }
     }
 
     private String generateUuid() {
