@@ -1,11 +1,13 @@
 package com.fp.finpoint.web.invest.controller;
 
+import com.fp.finpoint.domain.file.service.FileService;
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +38,8 @@ import java.util.Optional;
 @RequiredArgsConstructor // DI 주입. (InvestService)
 public class InvestController {
 
-    private final InvestService investService;
+    private final InvestService investService; // 롬복 생성자 빈 주입방식 @Autowired
+    private final FileService fileService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -81,21 +84,24 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@ModelAttribute InvestDto investDto, @RequestParam String itemName, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+    public String listCreate(@ModelAttribute InvestDto investDto,
+                             @RequestParam String itemName,
+                             @RequestParam MultipartFile file,
+                             HttpServletRequest request) throws IOException {
         // 업로드하는 html form 의 name 에 맞추어 @RequestParam 을 적용하면 된다. 추가로 @ModelAttribute 에서도 MultipartFile 을 동일하게 사용할 수 있다.
         log.info("request={}", request);
         log.info("itemName={}", itemName);
         log.info("multipartFile={}", file);
 
-        if (!file.isEmpty()) {
-            String fullPath = fileDir + file.getOriginalFilename();
-            log.info("파일 저장 fullPath={}", fullPath);
-            file.transferTo(new File(fullPath));
-        }
+//        if (!file.isEmpty()) {
+//
+//        }
 
-
+        fileService.saveFile(file,request);
+        log.info("파일 저장 fullPath={}", file);
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
+
         return "redirect:/invest/list";
     }
 

@@ -1,4 +1,4 @@
-package com.fp.finpoint.web.invest.controller;
+package com.fp.finpoint.domain.invest.dto;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

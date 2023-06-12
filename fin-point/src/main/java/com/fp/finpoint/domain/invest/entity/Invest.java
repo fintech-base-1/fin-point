@@ -28,7 +28,7 @@ public class Invest extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String content;//내용
 
-    private String imgUrl;
+    private String file_id;//이미지.
 
     private LocalDateTime deadline;
 

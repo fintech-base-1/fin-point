@@ -1,6 +1,7 @@
 package com.fp.finpoint.web.invest.controller;
 
 import com.fp.finpoint.domain.invest.dto.Item;
+import com.fp.finpoint.domain.invest.dto.ItemForm;
 import com.fp.finpoint.domain.invest.dto.UploadFile;
 import com.fp.finpoint.domain.invest.repository.ItemRepository;
 import com.fp.finpoint.domain.invest.service.FileStore;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 

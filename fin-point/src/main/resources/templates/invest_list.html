@@ -13,7 +13,7 @@
                 <div th:each="invest, loop : ${list}" class="list-each">
                     <a th:href="@{|/invest/list/detail/${invest.id}|}">
                         <div>
-                            <div class="invest-logo" th:text="${invest.imgUrl}"></div>
+<!--                            <div class="invest-logo" th:text="${invest.imgUrl}"></div>-->
                             <div class="invest-subject" th:text="${invest.subject}"></div>
                             <div class="invest-content" th:text="${invest.content}"></div>
                         </div>
@@ -22,54 +22,6 @@
             </div>
         </th:block>
 
-
-        <div class="list-container">
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-        </div>
 </div>
 </body>
 </html>

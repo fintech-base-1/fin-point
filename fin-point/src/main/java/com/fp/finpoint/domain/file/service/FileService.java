@@ -2,6 +2,8 @@ package com.fp.finpoint.domain.file.service;
 
 import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.file.repository.FileRepository;
+import com.fp.finpoint.domain.member.entity.Member;
+import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.global.util.CookieUtil;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -25,6 +28,7 @@ public class FileService {
     @Value("${file.dir}") // file: dir: c:/test/ 같이 yml 추가 및 경로에 폴더 필요
     private String fileDirectory;
     private final FileRepository fileRepository;
+    private final MemberRepository memberRepository;
 
     public Long saveFile(MultipartFile files, HttpServletRequest request) throws IOException {
         if (files.isEmpty()) {
@@ -36,6 +40,8 @@ public class FileService {
         String savedName = uuid + extension;
         String savedPath = fileDirectory + savedName;
         String email = CookieUtil.getEmailToCookie(request);
+
+
         FileEntity existingFile = fileRepository.findByEmail(email);
         if (existingFile != null) {
             existingFile.setOriginName(originName);
@@ -49,18 +55,17 @@ public class FileService {
                 .originName(originName)
                 .savedName(savedName)
                 .savedPath(savedPath)
-                .email(email)
                 .build();
         files.transferTo(new File(savedPath));
         FileEntity savedFile = fileRepository.save(file);
         return savedFile.getId();
     }
 
-    public Resource getImageUrl(HttpServletRequest request) throws MalformedURLException {
-        String email = CookieUtil.getEmailToCookie(request);
-        FileEntity file = fileRepository.findByEmail(email);
-        return new UrlResource("file:"+file.getSavedPath());
-
-    }
+//    public Resource getImageUrl(HttpServletRequest request) throws MalformedURLException {
+//        String email = CookieUtil.getEmailToCookie(request);
+//        Optional<Member> member = memberRepository.findByEmail(email);
+//        return new UrlResource("file:"+file.getSavedPath());
+//
+//    }
 
 }
