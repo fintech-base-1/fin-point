@@ -117,7 +117,7 @@ public class InvestController {
     // 글 수정.
     @GetMapping("/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
-        Invest modifyInvest = investService.readInvestDetail(id);
+        Invest modifyInvest = investService.investDetail(id);
         model.addAttribute("modify", modifyInvest);
 
         return "invest_modify";

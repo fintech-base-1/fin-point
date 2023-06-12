@@ -7,6 +7,7 @@ import com.fp.finpoint.global.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 public class Invest extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,9 +50,12 @@ public class Invest extends Auditable {
     private Piece piece;
 
     public Invest(String subject, String content) {
-
+        this.subject = subject;
+        this.content = content;
     }
-    private Integer likecnt;
+
+    @Column(columnDefinition = "integer default 0")
+    private Integer likeCnt;
 
     public Invest(String subject, String content, Long id, Member member) {
         this.subject = subject;
