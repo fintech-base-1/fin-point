@@ -1,6 +1,7 @@
 package com.fp.finpoint.web.invest.controller;
 
 import com.fp.finpoint.domain.file.service.FileService;
+import com.fp.finpoint.domain.file.service.InvestFileService;
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.service.InvestService;
@@ -39,7 +40,8 @@ import java.util.Optional;
 public class InvestController {
 
     private final InvestService investService; // 롬복 생성자 빈 주입방식 @Autowired
-    private final FileService fileService;
+//    private final FileService fileService;
+    private final InvestFileService investFileService;
 
     // 전체 리스트 페이지.
     @GetMapping("/list")
@@ -96,10 +98,11 @@ public class InvestController {
 //
 //        }
 
-        fileService.saveFile(file,request);
+        //TODO: 이미지 저장하는 로직에 대한 리펙토링 필요 (성능적인 이유)
         log.info("파일 저장 fullPath={}", file);
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
+        investFileService.saveFile(file,request);
 
         return "redirect:/invest/list";
     }
