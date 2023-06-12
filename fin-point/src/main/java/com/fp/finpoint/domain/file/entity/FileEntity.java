@@ -26,6 +26,7 @@ public class FileEntity {
         this.originName = originName;
         this.savedName = savedName;
         this.savedPath = savedPath;
+        this.email = email;
     }
 
 }
