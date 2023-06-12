@@ -85,13 +85,12 @@ public class InvestController {
 
     @PostMapping("/create")
     public String listCreate(@ModelAttribute InvestDto investDto,
-                             @RequestParam String itemName,
                              @RequestParam MultipartFile file,
                              HttpServletRequest request) throws IOException {
         // 업로드하는 html form 의 name 에 맞추어 @RequestParam 을 적용하면 된다. 추가로 @ModelAttribute 에서도 MultipartFile 을 동일하게 사용할 수 있다.
-        log.info("request={}", request);
-        log.info("itemName={}", itemName);
-        log.info("multipartFile={}", file);
+//        log.info("request={}", request);
+//        log.info("itemName={}", itemName);
+//        log.info("multipartFile={}", file);
 
 //        if (!file.isEmpty()) {
 //
@@ -117,7 +116,7 @@ public class InvestController {
     // 글 수정.
     @GetMapping("/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
-        Invest modifyInvest = investService.investDetail(id);
+        Invest modifyInvest = investService.readInvestDetail(id);
         model.addAttribute("modify", modifyInvest);
 
         return "invest_modify";
