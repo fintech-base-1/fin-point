@@ -1,13 +1,14 @@
 package com.fp.finpoint.domain.invest.service;
 
+import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.invest.entity.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.piece.Entity.Piece;
 import com.fp.finpoint.domain.piece.Entity.PieceMember;
 import com.fp.finpoint.domain.piece.repository.PieceMemberRepository;
+import com.fp.finpoint.domain.piece.repository.PieceRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.CookieUtil;
@@ -30,6 +31,7 @@ public class InvestService {
     private final InvestRepository investRepository;
     private final MemberRepository memberRepository;
     private final PieceMemberRepository pieceMemberRepository;
+    private final PieceRepository pieceRepository;
 
     //게시글 리스트.
     public List<Invest> getInvestList() {
@@ -90,9 +92,10 @@ public class InvestService {
         if (savedPiece.getCount() < count) {
             throw new BusinessLogicException(ExceptionCode.PIECE_NOT_ENOUGH);
         }
-        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
-            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
-        }
+//        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
+//            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
+//        }
+
         savedPiece.updateCount(count);
         Piece newPiece = getNewPiece(count, savedMember, savedPiece);
         mapPieceAndMember(newPiece, savedMember);
@@ -118,7 +121,10 @@ public class InvestService {
         PieceMember pieceMember = new PieceMember(member, piece);
         pieceMember.setMember(member);
         pieceMember.setPiece(piece);
-        pieceMemberRepository.save(pieceMember);
+        boolean isPieceMember = pieceMemberRepository.existsByPieceIdAndMember_MemberId(piece.getId(), member.getMemberId());
+        if (!isPieceMember) {
+            pieceMemberRepository.save(pieceMember);
+        }
     }
 
     private String generateUuid() {
