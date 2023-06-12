@@ -5,8 +5,6 @@ import com.fp.finpoint.domain.piece.Entity.Piece;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import static com.fp.finpoint.domain.piece.Entity.QPiece.piece;
@@ -26,7 +24,7 @@ public class PieceCustomRepositoryImpl implements PieceCustomRepository {
         List<Piece> pieces = jpaQueryFactory
                 .selectFrom(piece)
                 .join(piece.pieceMembers, pieceMember)
-                .where(pieceMember.member.eq(member))  // member 기준으로 필터링
+                .where(pieceMember.member.eq(member))
                 .fetch();
 
         return pieces;

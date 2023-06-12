@@ -25,7 +25,7 @@ import java.util.Optional;
 public class RankingService {
 
     private final MemberRepository memberRepository;
-    private final PieceCustomRepositoryImpl pieceCustomRepository;
+    private final PieceCustomRepositoryImpl pieceCustomRepositoryImpl;
 
     public List<RankResponseDto> getRankList(String standard, int page, int size) {
         List<Member> members = memberRepository.findAll();
@@ -38,10 +38,11 @@ public class RankingService {
         List<RankResponseDto> rankResponseDtos = new ArrayList<>();
 
         for (Member member : members) {
-            List<Piece> pieceListByMember = pieceCustomRepository.findPieceListByMember(member);
+            List<Piece> pieceListByMember = pieceCustomRepositoryImpl.findPieceListByMember(member);
             int typeCount = pieceListByMember.size();
             Long pieceRetainCount = 0L;
             Long assetAmount = 0L;
+
             for (Piece piece : pieceListByMember) {
                 pieceRetainCount += piece.getCount();
                 assetAmount += piece.getPrice() * piece.getCount();

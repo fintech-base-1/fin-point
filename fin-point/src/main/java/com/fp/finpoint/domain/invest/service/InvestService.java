@@ -84,22 +84,19 @@ public class InvestService {
     @Transactional
     public void purchase(Long id, HttpServletRequest request, Long count) {
         String email = CookieUtil.getEmailToCookie(request);
-        log.info("email={}", email);
         Member savedMember = memberRepository.findByEmail(email).orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Invest invest = investRepository.findById(id).orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
         Piece savedPiece = invest.getPiece();
-        log.info("savedPiece Price ======={}", savedPiece.getPrice());
         if (savedPiece.getCount() < count) {
             throw new BusinessLogicException(ExceptionCode.PIECE_NOT_ENOUGH);
         }
 //        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
 //            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
 //        }
-        savedPiece.updateCount(count);
-        log.info("savedPiece===={}", savedPiece.getCount());
 
+        savedPiece.updateCount(count);
         Piece newPiece = getNewPiece(count, savedMember, savedPiece);
         mapPieceAndMember(newPiece, savedMember);
     }
@@ -124,8 +121,8 @@ public class InvestService {
         PieceMember pieceMember = new PieceMember(member, piece);
         pieceMember.setMember(member);
         pieceMember.setPiece(piece);
-        boolean judge = pieceMemberRepository.existsByPieceIdAndMember_MemberId(piece.getId(), member.getMemberId());
-        if (!judge) {
+        boolean isPieceMember = pieceMemberRepository.existsByPieceIdAndMember_MemberId(piece.getId(), member.getMemberId());
+        if (!isPieceMember) {
             pieceMemberRepository.save(pieceMember);
         }
     }
