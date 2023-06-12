@@ -1,10 +1,6 @@
 <html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
 <!-- jQuery 및 자바스크립트 코드 -->
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-</head>
+
 <body>
 <div layout:fragment="content" class="container my-3" style="margin: 200px;">
     <form th:value="@{/invest/list/detail/{id}(id=${investDetail.id})}">
@@ -12,10 +8,9 @@
         <div th:text="${investDetail.content}"></div>
         <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
         <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
-
         <!--  <a href="javascript:void(0);" th:data-uri="@{|/invest/list/detail/${investDetail.id}|}" class="recommend btn btn-sm btn-outline-secondary">좋아요</a>-->
         <!--  <span class="badge rounded-pill bg-success" th:text="${#lists.size('likes')}"> </span>-->
-    <form>
+
         <div  th:if="${#request.getCookies()!= null}" >
 <!--            or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}">-->
             <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
@@ -25,17 +20,17 @@
                 <input type="hidden" th:id="investId" th:text="${investDetail.id}"/>
                 <img  th:id="likeImg" src="/images/likes-before.png" alt="" width="30px" height="30px">
                 <span th:text="${investDetail.likeCnt}"></span>
-                <button type="submit">like</button>
+
         </div>
 
         <div th:if="${#request.getCookies()== null}">
             <!-- 로그인하지 않은 유저라면 -->
-            <button>
-                <img th:id="loginCheck" src="/images/likes-before.png" alt="" width="30px" height="30px">
+
+                <img th:id="loginCheck" src="/images/likes-before.png" alt="" width="300" height="300">
                 <span th:text="${investDetail.likeCnt}"></span>
-            </button>
+
         </div>
-    </form>
+
         <!--        <div sec:authorize-expr="isAuthenticated()" or th:unless="${#strings.equals(investDetail.getMember().getMemberId(),login_email)}" class="d-block">-->
         <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
         <!-- 좋아요 -->
@@ -58,6 +53,14 @@
 </div>
 
 <!--<script layout:fragment="script" type='text/javascript'>-->
+<script th:inline="javascript">
+const btn = document.getElementById("btn");
+
+function test() {
+    alert("hi");
+}
+btn.addEventListener("click", test)
+</script>
 <script>
 
     <!--<script>-->
@@ -149,8 +152,6 @@
     $('#loginCheck').click(function () {
         alert("로그인 후 이용할 수 있습니다.");
     });
-
-
 
 </script>
 </body>
