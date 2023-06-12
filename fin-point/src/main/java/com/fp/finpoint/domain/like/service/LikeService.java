@@ -11,6 +11,8 @@ import com.fp.finpoint.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class LikeService {
@@ -48,6 +50,7 @@ public class LikeService {
     }
 
     //좋아요 저장
+    @Transactional
     public boolean saveLike(Long invest_id, String email){
 
         //로그인한 유저가 해당 게시물을 좋아요 했는지 안 했는지 확인

@@ -19,13 +19,13 @@ public interface InvestRepository extends JpaRepository<Invest, Long> {
 
     //좋아요 추가
     @Modifying
-    @Query(value = "update Invest invest set invest.likecnt = invest.likecnt + 1 where invest.id = :invest_id")
-    int okLike(@Param("invest_id") Long invest_id);
+    @Query(value = "update Invest invest set invest.likeCnt = invest.likeCnt + 1 where invest.id = :invest_id")
+    void okLike(@Param("invest_id") Long invest_id);
 
     //좋아요 삭제
     @Modifying
-    @Query(value = "update Invest invest set invest.likecnt = invest.likecnt - 1 where invest.id = :invest_id")
-    int noLike(@Param("invest_id") Long invest_id);
+    @Query(value = "update Invest invest set invest.likeCnt = invest.likeCnt - 1 where invest.id = :invest_id")
+    void noLike(@Param("invest_id") Long invest_id);
 
 
 }

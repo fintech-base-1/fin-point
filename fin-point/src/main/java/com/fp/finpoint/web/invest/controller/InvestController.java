@@ -66,7 +66,7 @@ public class InvestController {
     }
 
     @PostMapping("/create")
-    public String listCreate(@RequestBody InvestDto investDto, HttpServletRequest request) {
+    public String listCreate(@ModelAttribute InvestDto investDto, HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         investService.create(investDto, email);
         return "redirect:/invest/list";
