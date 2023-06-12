@@ -4,31 +4,59 @@
     <form th:action="@{/invest/list/detail/${investDetail.id}}">
         <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
         <div th:text="${investDetail.content}"></div>
-        <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary"> 삭제</a>
+        <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
         <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
 
         <!--  <a href="javascript:void(0);" th:data-uri="@{|/invest/list/detail/${investDetail.id}|}" class="recommend btn btn-sm btn-outline-secondary">좋아요</a>-->
         <!--  <span class="badge rounded-pill bg-success" th:text="${#lists.size('likes')}"> </span>-->
 
-        <a>
+<!--        <form th:action="@{/invest/list/detail/like/${investDetail.id}}" method="post">-->
+        <div th:if="${#request.getCookies()!= null}" or th:unless="${#strings.equals(investDetail.getMember().getMemberId(),login_email)}" class="d-block">
+            <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
             <!-- 좋아요 -->
-            <input type="hidden" id="like_check" th:value="${like}"/>
+            <input type="hidden" th:id="like_check" th:value="${like}"/>
+            <input type="hidden" th:id="like_check" th:text="${investDetail.id}"/>
+            <button>
             <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px" height="30px">
-
+            </button>
             <span th:text="${investDetail.likecnt}"></span>
-        </a>
+        </div>
+
+        <div th:if="${#request.getCookies()== null}">
+            <!-- 로그인하지 않은 유저라면 -->
+            <input type="hidden" th:id="like_check" th:value="${like}"/>
+            <input type="hidden" th:id="like_check" th:text="${investDetail.id}"/>
+            <button>
+            <img th:id="loginCheck" src="/images/likes-before.png" alt="" width="30px" height="30px">
+            </button>
+            <span th:text="${investDetail.likecnt}"></span>
+        </div>
+<!--            </form>-->
+
+
+
+<!--        <div sec:authorize-expr="isAuthenticated()" or th:unless="${#strings.equals(investDetail.getMember().getMemberId(),login_email)}" class="d-block">-->
+            <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
+            <!-- 좋아요 -->
+<!--            <input type="hidden" id="like_check" th:value="${like}">-->
+<!--            <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px"-->
+<!--                 height="30px">-->
+
+<!--            <span th:text="${investDetail.likecnt}"></span>-->
+<!--        </div>-->
+<!--        <div sec:authorize-expr="!isAuthenticated()">-->
+            <!-- 로그인하지 않은 유저라면 -->
+<!--            <img id="loginCheck" src="/images/likes-before.png" alt="" width="30px"-->
+<!--                 height="30px">-->
+<!--            <span th:text="${investDetail.likecnt}"></span>-->
+<!--        </div>-->
 
     </form>
 
-    <!--  <a href="javascript:void(0);" class="btn btn-primary"-->
-    <!--     th:data-uri="@{|/invest/liked/${investDetail.id}|}">추천-->
-    <!--&lt;!&ndash;    <span class="badge rounded-pill bg-success" th:text="${#lists.size(invest.liked)}"></span>&ndash;&gt;-->
-    <!--&lt;!&ndash;  </a>&ndash;&gt;-->
-
 </div>
 
-<!--<script layout:fragment="script" type='text/javascript'>-->
-<script>
+<script layout:fragment="script" type='text/javascript'>
+<!--<script>-->
 
     // const recommend_elements = document.getElementsByClassName("recommend");
     // Array.from(recommend_elements).forEach(function(element) {
@@ -44,7 +72,7 @@
 
     // /** 좋아요 유무에 따라 하트 그림 다르게 보여줌 **/
     //브라우저가 웹 문서를 읽기 시작하고 DOM이 생성되면 실행되는 메소드
-    $(function () {
+    $(function likes() {
 
         // 현재 로그인한 유저가 해당 게시물을 좋아요 했다면 likeVal = true,
         // 좋아요하지 않았다면 false
@@ -65,7 +93,7 @@
 
     //좋아요 클릭시 실행
     $('#likeImg').click(function () {
-        const investId = $('#investId').val();
+        const investId = $('#investDetail.id').val();
         const likeVal = $('#like_check').val();
 
         console.log(likeVal);
@@ -74,6 +102,7 @@
             if (con_check) {
                 console.log("좋아요 취소 진입");
                 $.ajax({
+                    dataType: "text",
                     type: 'POST',
                     url: '/invest/list/detail/like/' + investId,
                     contentType: 'application/json; charset=utf-8'
@@ -91,6 +120,7 @@
             if (con_check) {
                 console.log("추천 진입");
                 $.ajax({
+                    dataType: "text",
                     type: 'POST',
                     url: '/invest/list/detail/like/' + investId,
                     contentType: 'application/json; charset=utf-8'
