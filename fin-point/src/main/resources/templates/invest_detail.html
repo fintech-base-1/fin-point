@@ -15,7 +15,7 @@
             <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
             <!-- 좋아요 -->
             <input type="hidden" th:id="like_check" th:value="${like}"/>
-            <input type="hidden" th:id="like_check" th:text="${investDetail.id}"/>
+            <input type="hidden" th:id="invest_id" th:text="${investDetail.id}"/>
             <button>
             <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px" height="30px">
             </button>
@@ -25,47 +25,17 @@
         <div th:if="${#request.getCookies()== null}">
             <!-- 로그인하지 않은 유저라면 -->
             <input type="hidden" th:id="like_check" th:value="${like}"/>
-            <input type="hidden" th:id="like_check" th:text="${investDetail.id}"/>
+            <input type="hidden" th:id="invest_id" th:text="${investDetail.id}"/>
             <button>
             <img th:id="loginCheck" src="/images/likes-before.png" alt="" width="30px" height="30px">
             </button>
             <span th:text="${investDetail.likecnt}"></span>
         </div>
-<!--            </form>-->
 
-
-
-<!--        <div sec:authorize-expr="isAuthenticated()" or th:unless="${#strings.equals(investDetail.getMember().getMemberId(),login_email)}" class="d-block">-->
-            <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
-            <!-- 좋아요 -->
-<!--            <input type="hidden" id="like_check" th:value="${like}">-->
-<!--            <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px"-->
-<!--                 height="30px">-->
-
-<!--            <span th:text="${investDetail.likecnt}"></span>-->
-<!--        </div>-->
-<!--        <div sec:authorize-expr="!isAuthenticated()">-->
-            <!-- 로그인하지 않은 유저라면 -->
-<!--            <img id="loginCheck" src="/images/likes-before.png" alt="" width="30px"-->
-<!--                 height="30px">-->
-<!--            <span th:text="${investDetail.likecnt}"></span>-->
-<!--        </div>-->
-
-    </form>
 
 </div>
-
-<script layout:fragment="script" type='text/javascript'>
-<!--<script>-->
-
-    // const recommend_elements = document.getElementsByClassName("recommend");
-    // Array.from(recommend_elements).forEach(function(element) {
-    //   element.addEventListener('click', function() {
-    //     if(confirm("정말로 좋아요 하시겠습니까?")) {
-    //       location.href = this.dataset.uri;
-    //     };
-    //   });
-    // });
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script>
 
     const clickLikeUrl = "/images/likes-after.png";
     const emptyLikeUrl = "/images/likes-before.png";
@@ -140,8 +110,6 @@
     $('#loginCheck').click(function () {
         alert("로그인 후 이용할 수 있습니다.");
     });
-
-
 </script>
 </body>
 </html>

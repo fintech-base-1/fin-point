@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +32,8 @@ public class FileService {
     private final FileRepository fileRepository;
     private final MemberRepository memberRepository;
 
-    public void saveFile(MultipartFile files, HttpServletRequest request) throws IOException {
+    @Transactional
+    public Long saveFile(MultipartFile files, HttpServletRequest request) throws IOException {
         if (files.isEmpty()) {
             throw new RuntimeException("error");
         }
@@ -42,32 +44,36 @@ public class FileService {
         String savedPath = fileDirectory + savedName;
         String email = CookieUtil.getEmailToCookie(request);
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity existingFile = member.getFileEntity();
         if (existingFile != null) {
+            System.out.println("널이 아니다");
             existingFile.setOriginName(originName);
             existingFile.setSavedName(savedName);
             existingFile.setSavedPath(savedPath);
             files.transferTo(new File(savedPath));
-            fileRepository.save(existingFile);
+            FileEntity savedFile = fileRepository.save(existingFile);
+            return savedFile.getId();
         }
+        System.out.println("널이다");
         FileEntity file = FileEntity.builder()
                 .originName(originName)
                 .savedName(savedName)
                 .savedPath(savedPath)
                 .build();
         files.transferTo(new File(savedPath));
-        fileRepository.save(file);
+        FileEntity savedFile = fileRepository.save(file);
         member.setFileEntity(file);
+        return savedFile.getId();
     }
 
     public Resource getImageUrl(HttpServletRequest request) throws MalformedURLException {
         String email = CookieUtil.getEmailToCookie(request);
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity file = fileRepository.findById(member.getFileEntity().getId())
-                .orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return new UrlResource("file:"+file.getSavedPath());
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return new UrlResource("file:" + file.getSavedPath());
     }
 
 }
