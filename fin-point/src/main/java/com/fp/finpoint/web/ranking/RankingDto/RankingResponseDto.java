@@ -1,4 +1,4 @@
-package com.fp.finpoint.domain.ranking.RankingDto;
+package com.fp.finpoint.web.ranking.RankingDto;
 
 import com.fp.finpoint.domain.member.entity.Member;
 import lombok.Data;

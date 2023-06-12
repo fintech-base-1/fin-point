@@ -76,6 +76,25 @@ h3::before {
     color: white;
 }
 
+li img {
+    height: 100px;
+    width: auto;
+    margin-right: 1rem;
+}
+
+#memberList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+ol li div {
+    font-size: 20px;
+    flex-grow: 1;
+    margin: 0 0.5rem;
+}
+
 @media (min-width: 40em) {
     li {
         margin: 3rem auto;
