@@ -60,11 +60,6 @@ public class Invest extends Auditable {
     @Column(columnDefinition = "integer default 0")
     private Integer likeCnt;
 
-    public Invest(String subject, String content, Long id, Member member) {
-        this.subject = subject;
-        this.content = content;
-    }
-
     public void setMember(Member member) {
         this.member = member;
         member.getInvests().add(this);
