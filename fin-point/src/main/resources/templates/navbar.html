@@ -3,7 +3,7 @@
     <div class="nav-container">
         <div >
             <a th:href="@{/finpoint/invest/list}">
-                <img th:src="@{/static/images/finpoint-logo.png}" class="logo"  alt="image" />
+                <img th:src="@{/images/finpoint-logo.png}" class="logo"  alt="image"  src=""/>
             </a>
         </div>
         <div class="services">
@@ -12,7 +12,7 @@
             <a >랭킹</a>
         </div>
         <div class="mypage-logout">
-            <button class="mypage">마이페이지</button>
+            <button th:onclick="|location.href='/finpoint/mypage'|" class="mypage">마이페이지</button>
             <button th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
         </div>
     </div>

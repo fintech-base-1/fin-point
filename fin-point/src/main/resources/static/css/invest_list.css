@@ -11,11 +11,16 @@ body {
     margin: 0 auto;
 }
 
+.add-btn-wrap {
+    width: 1000px;
+}
+
+
 .add-invest {
     margin-top : 130px;
     display: flex;
     flex-direction: row-reverse;
-    margin-right: 250px;
+    /*margin-right: 250px;*/
     margin-bottom: 0;
 
 
