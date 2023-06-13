@@ -6,6 +6,11 @@ import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.invest.service.InvestService;
+import com.fp.finpoint.domain.like.service.LikeService;
+import com.fp.finpoint.domain.member.repository.MemberRepository;
+import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.global.exception.BusinessLogicException;
+import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +48,9 @@ public class InvestController {
     private final InvestService investService; // 롬복 생성자 빈 주입방식 @Autowired
 //    private final FileService fileService;
     private final InvestFileService investFileService;
+    private final MemberService memberService;
+    private final LikeService likeService;
+    private final MemberRepository memberRepository;
 
     // 전체 리스트 페이지.
     @GetMapping("/invest/list")
@@ -70,9 +78,17 @@ public class InvestController {
 
     // 디테일 페이지.
     @GetMapping(value = "/invest/list/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id) {
-        Invest readInvestDetail = this.investService.readInvestDetail(id);
+    public String detail(Model model, @PathVariable("id") Long id,HttpServletRequest request) {
+        Invest readInvestDetail = investService.readInvestDetail(id);
         model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
+
+        boolean like = false;
+        String email = CookieUtil.getEmailToCookie(request);
+        memberRepository.findByEmail(email).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
+        );
+        like = likeService.findLike(id, email);
+        model.addAttribute("like",like);
 
         return "invest_detail";
     }

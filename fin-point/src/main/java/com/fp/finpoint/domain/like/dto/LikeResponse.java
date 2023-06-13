@@ -1,8 +1,9 @@
 package com.fp.finpoint.domain.like.dto;
 
-import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.member.entity.Member;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -10,9 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 public class LikeResponse {
 
-    private Long id;
-    private Member member;
-    private Invest invest;
-
+    private String status;
 
 }

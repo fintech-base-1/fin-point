@@ -21,25 +21,6 @@ public class LikeService {
     private final MemberRepository memberRepository;
     private final InvestRepository investRepository;
 
-//    public String likeInvest(Long id, String email) {
-//        Member member = memberRepository
-//                .findByEmail(email)
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//        Invest invest = investRepository
-//                .findById(id)
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
-//
-//
-////        LikeResponse goodResponse= new LikeReponse();
-//        if (member.getLikes().stream().anyMatch(like -> like.getInvest().equals(invest))) {
-//            likeRepository.deleteByMemberAndInvest(member, invest);
-////            goodResponse.setmessage("좋아요 취소");
-//        } else {
-//            likeRepository.save(Like.builder().invest(invest).member(member).build());
-////            goodResponse.setmessage("좋아요 성공");
-//        }
-//        return "success";
-//    }
 
     //특정 게시물 유저 좋아요 확인
     public boolean findLike(Long invest_id, String email) {
