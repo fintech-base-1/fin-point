@@ -32,7 +32,7 @@ function createMemberElement(member) {
     const li = document.createElement('li');
 
     const img = document.createElement('img');
-    img.src = "/images/" + member.image;
+    img.src = member.image;
     li.appendChild(img);
 
     const nicknameDiv = document.createElement('div');

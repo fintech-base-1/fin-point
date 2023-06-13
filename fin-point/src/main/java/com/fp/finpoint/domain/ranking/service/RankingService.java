@@ -8,12 +8,14 @@ import com.fp.finpoint.domain.ranking.dto.RankResponseDto;
 import com.fp.finpoint.domain.ranking.repository.PieceCustomRepositoryImpl;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,14 +29,14 @@ public class RankingService {
     private final MemberRepository memberRepository;
     private final PieceCustomRepositoryImpl pieceCustomRepositoryImpl;
 
-    public List<RankResponseDto> getRankList(String standard, int page, int size) {
+    public List<RankResponseDto> getRankList(String standard, int page, int size) throws MalformedURLException {
         List<Member> members = memberRepository.findAll();
         List<RankResponseDto> rankResponseDtos = allMemberToRankResponseDto(members);
         sortRankByStandard(standard, rankResponseDtos);
         return processPaging(page, size, rankResponseDtos);
     }
 
-    private List<RankResponseDto> allMemberToRankResponseDto(List<Member> members) {
+    private List<RankResponseDto> allMemberToRankResponseDto(List<Member> members) throws MalformedURLException {
         List<RankResponseDto> rankResponseDtos = new ArrayList<>();
 
         for (Member member : members) {
@@ -48,12 +50,16 @@ public class RankingService {
                 assetAmount += piece.getPrice() * piece.getCount();
             }
 
-            RankResponseDto rankResponseDto = RankResponseDto.builder()
-                    .email(member.getEmail())
-                    .typeCount(typeCount)
-                    .pieceRetainCount(pieceRetainCount)
-                    .assetAmount(assetAmount)
-                    .build();
+            UrlResource src = new UrlResource("file:" +member.getFileEntity().getSavedPath() );
+
+            RankResponseDto rankResponseDto = new RankResponseDto();
+            rankResponseDto.setEmail(member.getEmail());
+            rankResponseDto.setTypeCount(typeCount);
+            rankResponseDto.setPieceRetainCount(pieceRetainCount);
+            rankResponseDto.setAssetAmount(assetAmount);
+            if (rankResponseDto.getImage() != null) {
+                rankResponseDto.setImage(src);
+            }
 
             rankResponseDtos.add(rankResponseDto);
         }
@@ -85,15 +91,15 @@ public class RankingService {
         return rankResponseDtos.subList(fromIndex, toIndex);
     }
 
-    public Page<MemberDto> getMemberRankingByAllPiecesPriceTest(int page){
+    public Page<MemberDto> getMemberRankingByAllPiecesPriceTest(int page) {
 //        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
 //        PageRequest pageable = PageRequest.of(page,5,sortByAllPiecesPrice);
         List<MemberDto> members = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < 50; i++) {
             String email = "test" + (i + 1) + "@test.com";
-            String nickname = "정렬확인랜덤"+random.nextInt(1000);
-            Integer totalPrice =  (1000000-10000*i);
+            String nickname = "정렬확인랜덤" + random.nextInt(1000);
+            Integer totalPrice = (1000000 - 10000 * i);
             MemberDto memberDto = new MemberDto();
             memberDto.setEmail(email);
             memberDto.setNickname(nickname);
@@ -113,31 +119,31 @@ public class RankingService {
     }
 
 
-    public List<RankResponseDto> getRankListTest(String standard, int page, int size) {
-        //        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
-        //        PageRequest pageable = PageRequest.of(page,5,sortByAllPiecesPrice);
-        List<RankResponseDto> members = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            String email = "test" + (i + 1) + "@test.com";
-            String nickname = "nick"+random.nextInt(1000);
-            int typeCount = 50 - i;
-            Long pieceRetainCount = (long) (500-10*i);
-            Long assetAmount = (long) (1000000-10000*i);
-
-            RankResponseDto rankResponseDto = RankResponseDto.builder()
-                    .email(email)
-                    .nickname(nickname)
-                    .typeCount(typeCount) // ???
-                    .pieceRetainCount(pieceRetainCount)
-                    .assetAmount(assetAmount)
-                    .image("default.jpg")
-                    .build();
-            members.add(rankResponseDto);
-        }
-
-        sortRankByStandard(standard, members);
-        return processPaging(page, size, members);
-    }
+//    public List<RankResponseDto> getRankListTest(String standard, int page, int size) {
+//        //        Sort sortByAllPiecesPrice = Sort.by("totalPrice").descending();
+//        //        PageRequest pageable = PageRequest.of(page,5,sortByAllPiecesPrice);
+//        List<RankResponseDto> members = new ArrayList<>();
+//        Random random = new Random();
+//        for (int i = 0; i < 50; i++) {
+//            String email = "test" + (i + 1) + "@test.com";
+//            String nickname = "nick" + random.nextInt(1000);
+//            int typeCount = 50 - i;
+//            Long pieceRetainCount = (long) (500 - 10 * i);
+//            Long assetAmount = (long) (1000000 - 10000 * i);
+//
+//            RankResponseDto rankResponseDto = RankResponseDto.builder()
+//                    .email(email)
+//                    .nickname(nickname)
+//                    .typeCount(typeCount) // ???
+//                    .pieceRetainCount(pieceRetainCount)
+//                    .assetAmount(assetAmount)
+//                    .image("default.jpg")
+//                    .build();
+//            members.add(rankResponseDto);
+//        }
+//
+//        sortRankByStandard(standard, members);
+//        return processPaging(page, size, members);
+//    }
 
 }

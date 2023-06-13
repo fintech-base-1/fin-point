@@ -1,5 +1,7 @@
 package com.fp.finpoint.domain.member.service;
 
+import com.fp.finpoint.domain.file.entity.FileEntity;
+import com.fp.finpoint.domain.file.repository.FileRepository;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.entity.Role;
@@ -26,6 +28,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EmailSenderService emailSenderService;
     private final RedisUtil redisUtil;
+    private final FileRepository fileRepository;
 
     public void registerMember(MemberDto memberDto) {
         // 검증
@@ -40,12 +43,20 @@ public class MemberService {
         roles.add(Role.ROLE_USER);
 
         // 등록
+        FileEntity file = new FileEntity();
+        file.setOriginName("");
+        file.setOriginName("");
+        file.setSavedPath("/images/default.jpg");
+        FileEntity save = fileRepository.save(file);
+
+
         Member member = Member.builder()
                 .email(memberDto.getEmail())
                 .password(password)
                 .salt(salt)
                 .roles(roles)
                 .oauthClient(OauthClient.NOTHING)
+                .fileEntity(save)
                 .build();
 
         memberRepository.save(member);

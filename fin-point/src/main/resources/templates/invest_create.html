@@ -71,14 +71,29 @@
 <!--      </div>-->
 
       <div class="input-each">
-        <lable for="content" class="input-lable-font">상품설명</lable>
+        <lable for="pieceName" class="input-lable-font">조각이름</lable>
         <textarea
                 class="textarea-class"
-                th:field="*{content}"
+                th:field="*{pieceName}"
                 rows="10"
         ></textarea>
       </div>
-
+      <div class="input-each">
+        <lable for="piecePrice" class="input-lable-font">piecePrice</lable>
+        <textarea
+                class="textarea-class"
+                th:field="*{piecePrice}"
+                rows="10"
+        ></textarea>
+      </div>
+      <div class="input-each">
+        <lable for="pieceCount" class="input-lable-font">pieceCount</lable>
+        <textarea
+                class="textarea-class"
+                th:field="*{pieceCount}"
+                rows="10"
+        ></textarea>
+      </div>
       <div class="input-each">
         <button type="submit" class="create-button">등록하기</button>
       </div>

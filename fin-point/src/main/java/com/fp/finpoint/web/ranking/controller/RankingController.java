@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Slf4j
@@ -39,14 +40,15 @@ public class RankingController {
     @PostMapping("/rank")
     public List<RankResponseDto> getRankList(@RequestParam(defaultValue = "type") String standard,
                                              @RequestParam(defaultValue = "1", required = false) int page,
-                                             @RequestParam(defaultValue = "5", required = false) int size) {
+                                             @RequestParam(defaultValue = "5", required = false) int size) throws MalformedURLException {
         return rankingService.getRankList(standard, page, size);
     }
 
     @ResponseBody
     @PostMapping("/ranking/data")
-    public List<RankResponseDto> getRankListTest(@RequestBody RankRequestDto rankRequestDto) {
-        return rankingService.getRankListTest(rankRequestDto.getStandard(), rankRequestDto.getPage(), 5);
+    public List<RankResponseDto> getRankList(@RequestParam(defaultValue = "type") String standard,
+                                                 @RequestParam(defaultValue = "1", required = false) int page) throws MalformedURLException {
+        return rankingService.getRankList(standard, page, 5);
     }
 
 }

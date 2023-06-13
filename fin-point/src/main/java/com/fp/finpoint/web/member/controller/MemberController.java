@@ -1,5 +1,6 @@
 package com.fp.finpoint.web.member.controller;
 
+import com.fp.finpoint.domain.file.service.FileService;
 import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
@@ -17,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 @Slf4j
@@ -26,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final FileService fileService;
     private final CookieUtil cookieUtil;
 
     @GetMapping("/finpoint/join")
@@ -35,8 +38,9 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/finpoint/join")
-    public ResponseEntity<HttpStatus> join(@Valid @RequestBody MemberDto memberDto) {
+    public ResponseEntity<HttpStatus> join(@Valid @RequestBody MemberDto memberDto) throws IOException {
         memberService.registerMember(memberDto);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
