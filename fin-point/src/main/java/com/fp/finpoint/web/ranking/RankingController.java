@@ -2,9 +2,9 @@ package com.fp.finpoint.web.ranking;
 
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
-import com.fp.finpoint.domain.ranking.RankingDto.RankingResponseDto;
 import com.fp.finpoint.domain.ranking.dto.RankResponseDto;
 import com.fp.finpoint.domain.ranking.service.RankingService;
+import com.fp.finpoint.web.ranking.RankingDto.RankingResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.ParameterScriptAssert;
