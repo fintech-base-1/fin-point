@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvestRepository extends JpaRepository<Invest, Long> {
 
+    Invest findByMember_MemberId(Long id);
 
     //페이징, 검색
     Page<Invest> findBySubjectContaining(String searchKeyword, Pageable pageable);
@@ -27,5 +28,7 @@ public interface InvestRepository extends JpaRepository<Invest, Long> {
     @Query(value = "update Invest invest set invest.likeCnt = invest.likeCnt - 1 where invest.id = :invest_id")
     void noLike(@Param("invest_id") Long invest_id);
 
-
+    @Modifying
+    @Query("UPDATE Invest i SET i.fileEntity.id = :fileEntityId WHERE i.id = :investId")
+    void updateFileId(@Param("investId") Long investId, @Param("fileEntityId") Long fileEntityId);
 }

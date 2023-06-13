@@ -1,7 +1,7 @@
 .create-container {
     background-color: #ffffff;
     width: 600px;
-    height: 800px;
+    height: 1200px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -10,30 +10,63 @@
 }
 
 .input-each {
-    margin: 100px;
+    margin: 50px;
     display: flex;
     flex-direction: column;
 }
 
-.input-lable-font {
-    font-size: 20px;
+.input-label-font {
+    font-size: 16px;
     font-weight: 100;
 }
 
+input::placeholder textarea::placeholder{
+    font-size: 20px;
+    font-weight: 100;
+    opacity: 0.7;
+}
+
+.input-file-class {
+    display: inline-block;
+    height: 35px;
+    font-size:18px;
+    padding: 0 10px;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+}
+
 .input-class {
-    border: 0 solid black;
-    width: 300px;
-    height: 30px;
-    background-color: rgb(244, 242, 242);
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+    /*border: 0 solid black;*/
+    /*width: 300px;*/
+    /*height: 30px;*/
+    /*background-color: rgb(244, 242, 242);*/
+    /*border-radius: 10px;*/
+    /*box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;*/
+    width: 400px;
+    height: 50px;
+    border: 0;
+    border-bottom: 1px solid gray;
+    opacity: 0.8;
 }
 
 .textarea-class {
-    border: 0 solid black;
-    width: 300px;
-    height: 60px;
-    background-color: rgb(243, 243, 243);
+    margin-top: 10px;
+    width: 400px;
+    height: 50px;
+    opacity: 0.8;
+    border: 0;
+    border-bottom: 1px solid gray;
+    /*background-color: rgb(243, 243, 243);*/
+}
+
+.input-image {
+    border:none;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 100;
+    opacity: 0.7;
 }
 
 .create-button {
@@ -43,22 +76,21 @@
     border-radius: 10px;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.07) 0px 20px 30px;
+    cursor: pointer;
 }
 
 .btn-upload {
     width: 150px;
     height: 30px;
-    background: #e6e1e1;
-    border: 0px solid rgb(77, 77, 77);
-    border-radius: 10px;
+    /*background: #e6e1e1;*/
+    border-bottom: 1px solid rgb(77, 77, 77);
+    /*border-radius: 6px;*/
     font-weight: 500;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    font-weight: 100;
-
 }
 
 .btn-upload:hover {
@@ -66,15 +98,16 @@
      color: #fff;
  }
 
-#file {
-    display: none;
-}
+/*#file {*/
+/*    display: none;*/
+/*}*/
 
 input[type="file"]::file-selector-button {
+    /*display:none;*/
     width: 150px;
     height: 30px;
     background: #fff;
-    border: 1px solid rgb(77, 77, 77);
+    /*border: 1px solid rgb(77, 77, 77);*/
     border-radius: 10px;
     cursor: pointer;
 
@@ -84,3 +117,19 @@ input[type="file"]:hover {
      background: rgb(77, 77, 77);
      color: #fff;
  }
+
+.upload-name {
+    display: inline-block;
+    padding: .5em .75em;  /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}

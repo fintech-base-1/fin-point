@@ -40,21 +40,20 @@ public class InvestService {
     }
 
     // 특정 게시글.
-    public Invest investDetail(Long id) {
+    public Invest readInvestDetail(Long id) {
         return investRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
     }
 
     //게시글 생성.
     @Transactional
-    public void create(InvestDto investDto, String email) {
+    public void create(InvestDto investDto, String email, Long fileId) {
         Member findMember = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//        investDto.setMember(findMember);
-//        investRepository.save(investDto.toEntity());
         Invest invest = investDto.toEntity();
         invest.setMember(findMember);
         Piece piece = new Piece(investDto.getPieceName(), investDto.getPiecePrice(), investDto.getPieceCount(), generateUuid());
         invest.setPiece(piece);
         investRepository.save(invest);
+        investRepository.updateFileId(invest.getId(), fileId);
     }
 
     //게시글 삭제.
@@ -62,10 +61,13 @@ public class InvestService {
         investRepository.deleteById(id);
     }
 
-    //게시글 수정
-    public void updateInvest(InvestDto investDto){
 
-        investRepository.save(investDto.toEntity());
+    //게시글 수정
+    @Transactional
+    public void updateInvest(InvestDto investDto, Long id){
+       Invest invest = investRepository.findById(id).orElseThrow(()-> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+        invest.setSubject(investDto.getSubject());
+        invest.setContent(investDto.getContent());
     }
 
 
@@ -92,10 +94,9 @@ public class InvestService {
         if (savedPiece.getCount() < count) {
             throw new BusinessLogicException(ExceptionCode.PIECE_NOT_ENOUGH);
         }
-//        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
-//            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
-//        }
-
+        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
+            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
+        }
         savedPiece.updateCount(count);
         Piece newPiece = getNewPiece(count, savedMember, savedPiece);
         mapPieceAndMember(newPiece, savedMember);

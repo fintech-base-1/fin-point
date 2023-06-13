@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.invest.entity;
 
+import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.piece.Entity.Piece;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 public class Invest extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,7 +32,9 @@ public class Invest extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String content;//내용
 
-    private String imgUrl;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fileEntity_id")
+    private FileEntity fileEntity;
 
     private LocalDateTime deadline;
 
@@ -64,5 +68,17 @@ public class Invest extends Auditable {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+    }
+
+//    public void setFileEntity(FileEntity fileEntity) {
+//        this.fileEntity = fileEntity;
+//    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

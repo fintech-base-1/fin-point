@@ -43,9 +43,12 @@ public class FileService {
         String savedName = uuid + extension;
         String savedPath = fileDirectory + savedName;
         String email = CookieUtil.getEmailToCookie(request);
+
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
         FileEntity existingFile = member.getFileEntity();
+
         if (existingFile != null) {
             existingFile.setOriginName(originName);
             existingFile.setSavedName(savedName);

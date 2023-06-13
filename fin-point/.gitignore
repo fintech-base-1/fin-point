@@ -14,7 +14,7 @@ target/
 .sts4-cachegit
 
 ### IntelliJ IDEA ###
-*.idea
+.idea
 *.iws
 *.iml
 *.ipr

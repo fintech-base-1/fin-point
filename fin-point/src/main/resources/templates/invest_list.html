@@ -1,107 +1,29 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko">
 <body>
 <div layout:fragment="content">
-    <div class="list-outline">
-<!--    <table class="table">-->
-<!--        <thead class="table-dark">-->
-<!--            <tr>-->
-<!--                <th>글번호</th>-->
-<!--                <th>제목</th>-->
-<!--                <th>내용</th>-->
-<!--            </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--            <tr th:each="invest, loop : ${list}">-->
-<!--                <td th:text="${loop.count}"></td>-->
-<!--                <td>-->
-<!--                    <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>-->
-<!--                </td>-->
-<!--                <td th:text="${invest.content}"></td>-->
-<!--            </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-    </div>
-
-
-
+    <div class="add-btn-wrap">
         <div class="add-invest">
-            <button th:onclick="|location.href='@{/invest/form}'|">            <a th:href="@{/invest/form}" >투자 등록</a>
+            <button th:onclick="|location.href='@{/finpoint/invest/create}'|">
+                투자 등록
+<!--                <a th:href="@{/invest/create}" >투자 등록</a>-->
             </button>
         </div>
-
-    <th:block class="list-wrap">
-        <div class="list-container" >
-            <div th:each="invest, loop : ${list}" class="list-each">
-                <a th:href="@{|/invest/list/detail/${invest.id}|}">
-                    <div class="invest-logo" th:text="${invest.imgUrl}"></div>
-                    <div class="invest-subject">
-                        <a th:href="@{|/invest/list/detail/${invest.id}|}" th:text="${invest.subject}"></a>
-                    </div>
-                    <div class="invest-content" th:text="${invest.content}"></div>
-                </a>
-            </div>
-        </div>
-    </th:block>
-
-
-        <div class="list-container">
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-            <div class="list-each">
-                <div class="invest-logo">logo</div>
-                <div class="invest-subject">subject</div>
-                <div class="invest-content">content</div>
-            </div>
-        </div>
-
-
     </div>
+        <th:block class="list-wrap">
+            <div class="list-container" >
+                <div th:each="invest, loop : ${list}" class="list-each">
+                    <a th:href="@{|/finpoint/invest/list/detail/${invest.id}|}">
+                        <div>
+                            <img class="invest-logo" th:src="@{image}"  alt="" src="">
+<!--                            th:text="${invest.fileEntity.savedPath}"-->
+                            <div class="invest-subject" th:text="${invest.subject}"></div>
+                            <div class="invest-content" th:text="${invest.content}"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
 
-
-
-
-
-
-
-    </div>
 </div>
 </body>
 </html>
