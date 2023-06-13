@@ -5,8 +5,11 @@ import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import com.fp.finpoint.domain.like.service.LikeService;
+import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.member.service.MemberService;
+import com.fp.finpoint.domain.piece.Entity.Piece;
+import com.fp.finpoint.domain.piece.repository.PieceRepository;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.CookieUtil;
@@ -37,6 +40,7 @@ public class InvestController {
     private final MemberService memberService;
     private final LikeService likeService;
     private final MemberRepository memberRepository;
+    private final PieceRepository pieceRepository;
 
     // 전체 리스트 페이지.
     @GetMapping("/invest/list")
@@ -70,11 +74,13 @@ public class InvestController {
 
         boolean like = false;
         String email = CookieUtil.getEmailToCookie(request);
-        memberRepository.findByEmail(email).orElseThrow(
+        Member savedMember = memberRepository.findByEmail(email).orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
         );
         like = likeService.findLike(id, email);
         model.addAttribute("like",like);
+        Piece savedPiece = pieceRepository.findById(savedMember.getMemberId()).orElseThrow(() -> new RuntimeException("error"));
+        model.addAttribute("piece", savedPiece);
 
         return "invest_detail";
     }
@@ -139,7 +145,7 @@ public class InvestController {
     }
 
 
-    @PostMapping("/test/{id}")
+    @PostMapping("/invest/{id}/buy")
     @ResponseBody
     public String test(@PathVariable("id") Long id, HttpServletRequest request, @RequestParam(name = "count") Long count) {  //id 는 게시판 글번호.
         //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
