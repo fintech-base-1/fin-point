@@ -26,7 +26,7 @@ public class CookieUtil {
                 .path("/")
                 .httpOnly(true)
                 .build();
-        
+
         response.setHeader(SET_COOKIE, cookie.toString());
     }
 
@@ -35,7 +35,7 @@ public class CookieUtil {
                 .path("/")
                 .httpOnly(true)
                 .build();
-        
+
         response.addHeader(SET_COOKIE, cookie.toString());
     }
 

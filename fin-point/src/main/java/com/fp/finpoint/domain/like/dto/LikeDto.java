@@ -1,7 +1,6 @@
 package com.fp.finpoint.domain.like.dto;
 
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +15,8 @@ public class LikeDto {
     public Member member;
     private Invest invest;
 
-    public Like toEntity(){
-
-        return new Like(this.id, this.member, this.invest);
-    }
+//    public Like toEntity(){
+//
+//        return new Like(this.id, this.member, this.invest);
+//    }
 }
