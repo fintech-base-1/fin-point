@@ -1,24 +1,35 @@
 <html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
 <body>
-<div layout:fragment="content" class="container my-3" style="margin: 200px;">
-    <form th:action="@{/finpoint/invest/list/detail/${investDetail.id}}">
-        <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
-        <div th:text="${investDetail.content}"></div>
-        <a th:href="@{|/finpoint/invest/delete/${investDetail.id}|}" id="delete" class="btn btn-primary">삭제</a>
-        <a th:href="@{|/finpoint/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
+<div layout:fragment="content" class="invest-detail" style="">
+
+    <div class="invest-detail_container">
+    <form th:action="@{/finpoint/invest/list/detail/${investDetail.id}}" class="form-box">
+        <div class="text-box">
+            <h2 class="text-subject" th:text="${investDetail.subject}"></h2>
+            <div class="text-content" th:text="${investDetail.content}"></div>
+        </div>
+        <div class="btn-box">
+            <button class="btn">
+            <a th:href="@{|/finpoint/invest/delete/${investDetail.id}|}" id="delete" >삭제</a>
+            </button>
+            <button class="btn">
+            <a th:href="@{|/finpoint/invest/modify/${investDetail.id}|}">수정</a>
+            </button>
+        </div>
 
 
-        <div th:if="${#request.getCookies()!= null}">
+
+        <div class="like-container" th:if="${#request.getCookies()!= null}">
             <!-- or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}"-->
             <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
             <!-- 좋아요 -->
             <input type="hidden" id="like_check" th:value="${like}" />
             <input type="hidden" id="investId" th:value="${investDetail.id}"/>
             <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px" height="30px">
-            <span th:text="${investDetail.likeCnt}"></span>
+            <span class="like-count" th:text="${investDetail.likeCnt}"></span>
         </div>
 
-        <div th:if="${#request.getCookies()== null}">
+        <div class="like-container" th:if="${#request.getCookies()== null}">
             <!-- 로그인하지 않은 유저라면 -->
             <img id="loginCheck" src="/images/likes-before.png" alt="" width="30px" height="30px">
             <span th:text="${investDetail.likeCnt}"></span>
@@ -26,6 +37,11 @@
 
 
     </form>
+
+
+    </div>
+
+
 
 </div>
 

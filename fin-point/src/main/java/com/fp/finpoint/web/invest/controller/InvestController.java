@@ -139,9 +139,9 @@ public class InvestController {
     }
 
 
-    @PostMapping("/test")
+    @PostMapping("/test/{id}")
     @ResponseBody
-    public String test(@RequestParam(name = "id") Long id, HttpServletRequest request, @RequestParam(name = "count") Long count) {
+    public String test(@PathVariable("id") Long id, HttpServletRequest request, @RequestParam(name = "count") Long count) {  //id 는 게시판 글번호.
         //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
         investService.purchase(id, request, count);
         return "success";
