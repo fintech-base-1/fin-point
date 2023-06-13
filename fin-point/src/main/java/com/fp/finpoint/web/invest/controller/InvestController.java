@@ -43,7 +43,6 @@ import java.util.Optional;
 @RequestMapping("/finpoint")
 @Controller
 @RequiredArgsConstructor // DI 주입. (InvestService)
-@Slf4j
 public class InvestController {
 
     private final InvestService investService; // 롬복 생성자 빈 주입방식 @Autowired
@@ -79,7 +78,7 @@ public class InvestController {
 
     // 디테일 페이지.
     @GetMapping(value = "/invest/list/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id) {
+    public String detail(Model model, @PathVariable("id") Long id,HttpServletRequest request) {
         Invest readInvestDetail = investService.readInvestDetail(id);
         model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
 
