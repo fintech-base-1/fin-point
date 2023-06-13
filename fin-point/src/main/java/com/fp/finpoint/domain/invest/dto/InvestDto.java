@@ -1,5 +1,6 @@
-package com.fp.finpoint.domain.invest.entity;
+package com.fp.finpoint.domain.invest.dto;
 
+import com.fp.finpoint.domain.invest.entity.Invest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,15 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvestDto {
-
-    public String subject;//제목
-    public String content;//내용
+    private String subject;//제목
+    private String content;//내용
 //    public Long id;//글 번호
 //    public Member member;
+
     // 조각정보
-    public String pieceName;
-    public Long piecePrice;
-    public Long pieceCount;
+    private String pieceName;
+    private Long piecePrice;
+    private Long pieceCount;
 
 //    Set<Member> liked;// 좋아요
 //    private Integer liked_cnt;// 좋아요 수

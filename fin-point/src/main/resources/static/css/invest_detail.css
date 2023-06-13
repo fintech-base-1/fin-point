@@ -1,0 +1,17 @@
+@import "reset.css";
+@import "style.css";
+
+body {
+    font-family: "Raleway", sans-serif;
+    height: 1000vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 0 auto;
+}
+
+.invest-detail {
+    margin-top: 200px;
+
+}

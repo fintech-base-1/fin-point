@@ -27,7 +27,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MypageController {
 
-    private final MemberService memberService;
     private final FileService fileService;
 
     @GetMapping("/mypage")
@@ -45,11 +44,11 @@ public class MypageController {
         return "mypage";
     }
 
-    @GetMapping("/image")
-    @ResponseBody
-    public Resource image(HttpServletRequest request) throws MalformedURLException {
-     return fileService.getImageUrl(request);
-    }
+//    @GetMapping("/image")
+//    @ResponseBody
+//    public Resource image(HttpServletRequest request) throws MalformedURLException {
+//     return fileService.getImageUrl(request);
+//    }
 
     @PostMapping("/update-profile")
     public ResponseEntity<?> uploadFile(@RequestParam("profileImage") MultipartFile file,
@@ -61,7 +60,7 @@ public class MypageController {
     }
 
     @GetMapping("/profile")
-    public String image(){
+    public String profile(){
         return "profile";
     }
 
