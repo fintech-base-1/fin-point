@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.invest.service;
 
+import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
@@ -44,15 +45,14 @@ public class InvestService {
 
     //게시글 생성.
     @Transactional
-    public void create(InvestDto investDto, String email) {
+    public void create(InvestDto investDto, String email, Long fileId) {
         Member findMember = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//        investDto.setMember(findMember);
-//        investRepository.save(investDto.toEntity());
         Invest invest = investDto.toEntity();
         invest.setMember(findMember);
         Piece piece = new Piece(investDto.getPieceName(), investDto.getPiecePrice(), investDto.getPieceCount(), generateUuid());
         invest.setPiece(piece);
         investRepository.save(invest);
+        investRepository.updateFileId(invest.getId(), fileId);
     }
 
     //게시글 삭제.

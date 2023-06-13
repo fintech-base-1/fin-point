@@ -33,33 +33,17 @@ import java.util.UUID;
         private String fileDirectory;
         private final FileRepository fileRepository;
         private final MemberRepository memberRepository;
-        private final InvestRepository investRepository;
 
         @Transactional
-        public Long saveFile(MultipartFile files, HttpServletRequest request) throws IOException {
+        public Long saveFile(MultipartFile files) throws IOException {
             if (files.isEmpty()) {
-                throw new RuntimeException("error");
+                return null;
             }
             String originName = files.getOriginalFilename();
             String uuid = UUID.randomUUID().toString();
             String extension = originName.substring(originName.lastIndexOf("."));
             String savedName = uuid + extension;
             String savedPath = fileDirectory + savedName;
-            String email = CookieUtil.getEmailToCookie(request);
-            Member member = memberRepository.findByEmail(email)
-                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-            Long memberId = member.getMemberId();
-            Invest invest = investRepository.findByMember_MemberId(memberId);
-            FileEntity existingFile = invest.getFileEntity();
-            if (existingFile != null) {
-                existingFile.setOriginName(originName);
-                existingFile.setSavedName(savedName);
-                existingFile.setSavedPath(savedPath);
-                files.transferTo(new File(savedPath));
-                FileEntity savedFile = fileRepository.save(existingFile);
-                return savedFile.getId();
-            }
-            System.out.println("널이다");
             FileEntity file = FileEntity.builder()
                     .originName(originName)
                     .savedName(savedName)
@@ -67,9 +51,6 @@ import java.util.UUID;
                     .build();
             files.transferTo(new File(savedPath));
             FileEntity savedFile = fileRepository.save(file);
-            invest.setFileEntity(file);
-
-            System.out.println("===========" + invest.getFileEntity().getId());
 
             return savedFile.getId();
         }

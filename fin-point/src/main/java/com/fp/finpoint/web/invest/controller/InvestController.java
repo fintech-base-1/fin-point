@@ -4,6 +4,7 @@ import com.fp.finpoint.domain.file.service.FileService;
 import com.fp.finpoint.domain.file.service.InvestFileService;
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
+import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
@@ -97,13 +98,12 @@ public class InvestController {
 //        if (!file.isEmpty()) {
 //
 //        }
-
+        Long fileEntity = investFileService.saveFile(file);
+        System.out.println("fileId : "+fileEntity);
         //TODO: 이미지 저장하는 로직에 대한 리펙토링 필요 (성능적인 이유)
         log.info("파일 저장 fullPath={}", file);
         String email = CookieUtil.getEmailToCookie(request);
-        investService.create(investDto, email);
-        investFileService.saveFile(file,request);
-
+        investService.create(investDto, email, fileEntity);
         return "redirect:/finpoint/invest/list";
     }
 
