@@ -21,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 public class Invest extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -72,4 +73,12 @@ public class Invest extends Auditable {
 //    public void setFileEntity(FileEntity fileEntity) {
 //        this.fileEntity = fileEntity;
 //    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

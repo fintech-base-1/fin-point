@@ -1,36 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- 위에 xmlns 하면 타임리프 문법을 쓸수 있다.-->
-<head>
-    <meta charset="UTF-8">
-    <title>게시물 작성폼</title>
-</head>
-
-<style>
-    .layout{
-        width : 500px;
-        margin: 0 auto;
-        margin-top :40px;
-    }
-
-    .layout  input, textarea {
-        width : 100%;
-        margin-top :10px;
-        box-sizing : border-box;
-    }
-
-    textarea{
-        height : 300px;
-    }
-</style>
+<html layout:decorate="~{layout}">
 
 <body>
-<H2>게시글 수정 페이지</H2>
-<div class="layout">
-    <form th:action="@{/invest/update/{id}(id = ${modify.id})}" method="post">
-        <input name="title" type="text" th:field="${modify.subject}" >
-        <textarea name="content" th:text ="${modify.content}"></textarea>
-        <button>수정</button>
-    </form>
+<div layout:fragment="content" >
+    <div class="create-container">
+        <form
+                enctype="multipart/form-data"
+                th:action="@{/finpoint/invest/update/{id}(id = ${modify.id})}"
+                th:object="${modify}"
+                method="post"
+        >
+            <div class="input-each">
+                <label class="input-label-font" for="title">투자상품명</label>
+                <input class="input-class" type="text" th:field="*{subject}" id="title" name="title" placeholder="투자상품명 입력"/>
+                <!--        th:field="*{subject}"-->
+            </div>
+
+            <div class="input-each">
+                <label for="content" class="input-label-font">상품설명</label>
+                <textarea
+                        placeholder="상품설명 입력"
+                        class="textarea-class"
+                        id="content"
+                        name="content"
+                        th:field="*{content}"
+                ></textarea>
+                <!--        th:field="*{content}"-->
+            </div>
+
+            <div class="input-each">
+                <label for="file" class="input-label-font">이미지 추가
+                </label>
+                <input
+                        type="file"
+                        name="file"
+                        id="file"
+                        class="input-image"
+                        accept="image/*"
+                        placeholder="이미지 올리기"
+                />
+            </div>
+
+            <div class="input-each">
+                <button type="submit" class="modify-button">수정하기</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>
