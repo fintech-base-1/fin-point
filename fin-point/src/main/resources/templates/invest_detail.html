@@ -2,18 +2,18 @@
 
 <body>
 <div layout:fragment="content" className="container my-3" style="margin: 200px;">
-    <form th:value="@{/invest/list/detail/{id}(id=${investDetail.id})}">
+    <form th:action="@{/invest/list/detail/{id}(id=${investDetail.id})}" >
         <h2 className="border-bottom py-2" th:text="${investDetail.subject}"></h2>
         <div th:text="${investDetail.content}"></div>
         <a th:href="@{|/invest/delete/${investDetail.id}|}" className="btn btn-primary">삭제</a>
         <a th:href="@{|/invest/modify/${investDetail.id}|}" className="btn btn-primary">수정</a>
 
 
-        <div th:if="${#request.getCookies()!= null}"
-                        or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}">
+        <div th:if="${#request.getCookies()!= null}">
+<!--                        <or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}">-->
             <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
             <!-- 좋아요 -->
-            <input type="hidden" id="like_check" th:value="${like.status}" />
+            <input type="hidden" id="like_check" th:value="${like}" />
             <input type="hidden" id="investId" th:value="${investDetail.id}"/>
             <img th:id="likeImg" src="/images/likes-before.png" alt="" width="30px" height="30px">
             <span th:text="${investDetail.likeCnt}"></span>
