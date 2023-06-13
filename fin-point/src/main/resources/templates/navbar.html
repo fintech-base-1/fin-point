@@ -1,19 +1,20 @@
-
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko">
 <nav th:fragment="navbarFragment" class="nav-bar" >
     <div class="nav-container">
-    <div >
-        <a th:href="@{/invest/list}">
-            <img src="../static/images/finpoint-logo.png" class="logo"  alt="image"/>
-        </a>
-    </div>
-    <div class="services">
-<!--        <a >홈</a>-->
-        <a th:href="@{/invest/list}" >조각투자</a>
-        <a >랭킹</a>
-    </div>
-    <div class="mypage-logout">
-        <button class="mypage">마이페이지</button>
-        <button th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
-    </div>
+        <div >
+            <a th:href="@{/finpoint/invest/list}">
+                <img th:src="@{/images/finpoint-logo.png}" class="logo"  alt="image"  src=""/>
+            </a>
+        </div>
+        <div class="services">
+    <!--        <a >홈</a>-->
+            <a th:href="@{/finpoint/invest/list}" >조각투자</a>
+            <a >랭킹</a>
+        </div>
+        <div class="mypage-logout">
+            <button th:onclick="|location.href='/finpoint/mypage'|" class="mypage">마이페이지</button>
+            <button th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
+        </div>
     </div>
 </nav>
+</html>

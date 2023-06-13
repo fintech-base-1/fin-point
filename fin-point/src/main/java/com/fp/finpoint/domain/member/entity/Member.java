@@ -1,5 +1,6 @@
 package com.fp.finpoint.domain.member.entity;
 
+import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.like.entity.Like;
 import com.fp.finpoint.domain.oauth.OauthClient;
@@ -59,6 +60,15 @@ public class Member extends Auditable {
     private Long finPoint;
 
     private Long target_spend;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fileEntity_id")
+    private FileEntity fileEntity;
+
+    public void setFileEntity(FileEntity fileEntity) {
+        this.fileEntity = fileEntity;
+    }
+
     public void assignCode(String code) {
         this.code = code;
     }

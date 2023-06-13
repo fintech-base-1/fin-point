@@ -15,6 +15,12 @@ public class MemberDto {
     @NotBlank
     private String password;
 
+    private String nickname;
+
+    private Integer totalPrice;
+
+    private String image;
+
     public static class Code {
         @Getter
         @NotBlank
