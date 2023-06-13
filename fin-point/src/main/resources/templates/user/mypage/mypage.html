@@ -31,18 +31,18 @@
                 <h1 th:text="${mypageDto.nickname}"></h1>
                 <p th:text="${mypageDto.email}"></p>
                 <br>
-                <p>finpoint : <span th:text="${mypageDto.finpoint}"></span></p>
+                <p>finpoint : <span th:text="${mypageDto.finpoint != null ? mypageDto.finpoint : 0}"></span></p>
                 <br>
                 <button onclick="openProfileWindow()"> 프로필 이미지 변경 </button>
             </header>
-            <img th:src="@{/image}" id="image"/>
+            <img th:src="@{/finpoint/mypage/image}" id="image"/>
         </article>
 
         <!-- Assets -->
         <article id="assets" class="panel">
             <header>
                 <h2>assets</h2>
-                <p>finpoint : <span th:text="${mypageDto.finpoint}"></span></p>
+                <p>finpoint : <span th:text="${mypageDto.finpoint != null ? mypageDto.finpoint : 0}"></span></p>
                 <p id="piece-cnt" onclick="toggleSection('cnt', this)">보유조각수 : <span th:text="${mypageDto.pieceCnt}"></span></p>
                 <p id="piece-kind" onclick="toggleSection('kind', this)">보유조각종류 : <span th:text="${mypageDto.pieceKind}"></span></p>
                 <p id="piece-price" onclick="toggleSection('price', this)">보유조각금액 : <span th:text="${mypageDto.piecePrice}"></span></p>
@@ -102,12 +102,12 @@
                             <text>현재 목표 지출금액 : </text>
                         </div>
                         <div class="col-6 col-12-medium">
-                            <span th:text="${mypageDto.goal}"></span>
+                            <span th:text="${mypageDto.goal != 0 ? mypageDto.goal : '금액을 설정해주세요'}"></span>
                         </div>
                         <div class="col-6 col-12-medium">
                             <text>일일 지출금액 : </text>
                         </div>
-                        <div class="col-6 col-12-medium">
+                        <div class="col-6 col-12-medium" id="targetValue">
                             <span th:text="${mypageDto.spend}"></span>
                         </div>
                         <div class="col-6 col-12-medium">
@@ -116,12 +116,12 @@
                         <div class="col-6 col-12-medium">
                             <span th:text="${mypageDto.goal-mypageDto.spend}"></span>
                         </div>
-                        <div class="col-12">
-                            <input type="submit" value="목표 재설정" />
-                        </div>
                     </div>
                 </div>
             </form>
+            <div class="col-12">
+                <button onclick="openResetGoalWindow()" value="목표 재설정" style="width: 200px; height: 50px; font-size: 20px;"></button>
+            </div>
         </article>
     </div>
 </div>

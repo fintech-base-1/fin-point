@@ -5,7 +5,6 @@ import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.service.MemberService;
 import com.fp.finpoint.global.util.CookieUtil;
 import com.fp.finpoint.global.util.JwtUtil;
-import com.fp.finpoint.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class MemberController {
 
     @GetMapping("/finpoint/join")
     public String join() {
-        return "join";
+        return "user/join/join";
     }
 
     @ResponseBody
@@ -46,7 +45,7 @@ public class MemberController {
 
     @GetMapping("/finpoint/login")
     public String login() {
-        return "login";
+        return "user/login/login";
     }
 
     @ResponseBody
@@ -57,7 +56,7 @@ public class MemberController {
     }
 
     @GetMapping("/finpoint/mail-confirm")
-    public String mailconfirm(){return "mail-confirm";}
+    public String mailconfirm(){return "user/login/mail-confirm";}
 
     @ResponseBody
     @PostMapping("/finpoint/mail-confirm")

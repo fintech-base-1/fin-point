@@ -1,19 +1,11 @@
 package com.fp.finpoint.web.ranking.controller;
-
-import com.fp.finpoint.domain.member.dto.MemberDto;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
-import com.fp.finpoint.domain.ranking.dto.RankRequestDto;
 import com.fp.finpoint.domain.ranking.dto.RankResponseDto;
 import com.fp.finpoint.domain.ranking.service.RankingService;
-import com.fp.finpoint.web.ranking.RankingDto.RankingResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -28,26 +20,14 @@ public class RankingController {
 
     @GetMapping("/ranking")
     public String ranking() {
-        return "ranking";
+        return "user/ranking/ranking";
     }
 
-//    @ResponseBody
-//    @GetMapping("/ranking/data")
-//    public Page<MemberDto> ranking(@RequestParam(defaultValue = "0") int page) {
-//        return rankingService.getMemberRankingByAllPiecesPriceTest(page);
-//    }
     @ResponseBody
-    @PostMapping("/rank")
+    @PostMapping("/ranking/data")
     public List<RankResponseDto> getRankList(@RequestParam(defaultValue = "type") String standard,
                                              @RequestParam(defaultValue = "1", required = false) int page,
                                              @RequestParam(defaultValue = "5", required = false) int size) throws MalformedURLException {
-        return rankingService.getRankList(standard, page, size);
-    }
-
-    @ResponseBody
-    @GetMapping("/ranking/data")
-    public List<RankResponseDto> getRankList(@RequestParam(defaultValue = "type") String standard,
-                                                 @RequestParam(defaultValue = "1", required = false) int page) throws MalformedURLException {
         return rankingService.getRankList(standard, page, 5);
     }
 

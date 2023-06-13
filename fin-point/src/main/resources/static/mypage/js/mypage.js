@@ -11,7 +11,7 @@
         })
 }
     function openProfileWindow() {
-    window.open("/profile", '프로필 이미지 변경', 'width=400,height=300');
+    window.open("/finpoint/mypage/profile", '프로필 이미지 변경', 'width=400,height=300');
 }
 
     function confirmProfileImage() {
@@ -20,7 +20,7 @@
             const formData = new FormData();
             formData.append('profileImage', fileInput.files[0]);
 
-            fetch('/update-profile', {
+            fetch('/finpoint/mypage/update-profile', {
                 method: 'POST',
                 body: formData
             })
@@ -61,3 +61,27 @@
     imageElement.onerror = function() {
         this.src = '/images/default.jpg';
     };
+
+    function openResetGoalWindow() {
+        window.open("/finpoint/mypage/reset-goal", '목표금액을 재설정 해주세요', 'width=400,height=300');
+    }
+
+    function resetGoal() {
+        const goal = document.getElementById('goal').value;
+
+        fetch('/finpoint/mypage/goal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ goal: goal })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message)
+                window.close()
+            })
+            .catch((error) => {
+                console.error('아오:', error);
+            });
+    }

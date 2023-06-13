@@ -27,7 +27,7 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-    @Value("${file.dir}") // file: dir: c:/test/ 같이 yml 추가 및 경로에 폴더 필요
+    @Value("${file.dir}")
     private String fileDirectory;
     private final FileRepository fileRepository;
     private final MemberRepository memberRepository;
@@ -74,10 +74,7 @@ public class FileService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity file = fileRepository.findById(member.getFileEntity().getId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//        return new UrlResource("file:" + file.getSavedPath());
-        UrlResource src = new UrlResource("file:" + file.getSavedPath());
-        System.out.println("UrlResource 프로필 사진 : "+src);
-        return src;
+        return new UrlResource("file:" + file.getSavedPath());
     }
 
 }

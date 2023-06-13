@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -171,7 +168,7 @@ public class MemberService {
     }
 
 
-    public MypageDto getMypageInfo(HttpServletRequest request){
+    public MypageDto getMypageInfo(HttpServletRequest request) {
         String email = CookieUtil.getEmailToCookie(request);
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -179,21 +176,29 @@ public class MemberService {
         Long totalPieces = 0L;
         int kindPiece = pieceList.size();
         Long totalPreice = 0L;
-        for(Piece piece : pieceList){
+        for (Piece piece : pieceList) {
             totalPieces += piece.getCount();
-            totalPreice += piece.getCount()*piece.getPrice();
+            totalPreice += piece.getCount() * piece.getPrice();
         }
         MypageDto mypageDto = new MypageDto();
-//        mypageDto.setFinpoint(member.getFinPoint());
-        mypageDto.setFinpoint(3000L);
+        Integer goal = member.getGoal();
+        mypageDto.setFinpoint(member.getFinPoint());
         mypageDto.setPieceCnt(totalPieces);
         mypageDto.setPieceKind(kindPiece);
         mypageDto.setPiecePrice(totalPreice);
         mypageDto.setEmail(email);
-        mypageDto.setGoal(50000L);
-        mypageDto.setNickname("테스트");
+        mypageDto.setGoal(Objects.requireNonNullElse(goal, 0));
+        mypageDto.setNickname("Test");//TODO:SPEND, NICKNAME
         mypageDto.setSpend(47000L);
         return mypageDto;
+    }
+
+    public void saveGoal(Integer goal, HttpServletRequest request) {
+        String email = CookieUtil.getEmailToCookie(request);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        member.setGoal(goal);
+        memberRepository.save(member);
     }
 
 }

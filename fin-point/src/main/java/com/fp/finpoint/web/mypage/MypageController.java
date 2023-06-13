@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,35 +22,17 @@ import java.util.Map;
 @Validated
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/finpoint/mypage")
 public class MypageController {
 
     private final FileService fileService;
     private final MemberService memberService;
 
-//    @GetMapping("/mypagea")
-//    public String myPagea(Model model) throws MalformedURLException {
-//        MypageDto mypageDto = new MypageDto();
-//        mypageDto.setFinpoint(47000L);
-//        mypageDto.setPieceCnt(27L);
-//        mypageDto.setPieceKind(5L);
-//        mypageDto.setPiecePrice(570000L);
-//        mypageDto.setEmail("test@gmail.com");
-//        mypageDto.setGoal(50000L);
-//        mypageDto.setNickname("테스트");
-//        mypageDto.setSpend(47000L);
-//        model.addAttribute("mypageDto",mypageDto);
-//        return "mypage";
-//    }
-
-    @GetMapping("/mypage")
-    public String myPage(Model model,
-                         HttpServletRequest request){
-        memberService.getMypageInfo(request);
-        MypageDto mypageDto = new MypageDto();
-        model.addAttribute("mypageDto",mypageDto);
-        return "mypage";
+    @GetMapping("")
+    public String myPage(Model model, HttpServletRequest request){
+        model.addAttribute("mypageDto",memberService.getMypageInfo(request));
+        return "user/mypage/mypage";
     }
-
 
     @ResponseBody
     @GetMapping("/image")
@@ -72,7 +51,19 @@ public class MypageController {
 
     @GetMapping("/profile")
     public String profile(){
-        return "profile";
+        return "user/mypage/profile";
+    }
+
+    @GetMapping("/reset-goal")
+    public String reset(){
+        return "user/mypage/reset-goal";
+    }
+    @PostMapping("/goal")
+    public ResponseEntity<Map<String ,String>> goal(@RequestBody MypageDto mypageDto, HttpServletRequest request){
+        memberService.saveGoal(mypageDto.getGoal(),request);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "목표금액 재설정 완료");
+        return ResponseEntity.ok(response);
     }
 
 }
