@@ -1,7 +1,6 @@
 package com.fp.finpoint.domain.invest.service;
 
 import com.fp.finpoint.domain.invest.dto.InvestDto;
-import com.fp.finpoint.domain.file.entity.FileEntity;
 import com.fp.finpoint.domain.invest.entity.Invest;
 import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.member.entity.Member;
@@ -62,10 +61,13 @@ public class InvestService {
         investRepository.deleteById(id);
     }
 
-    //게시글 수정
-    public void updateInvest(InvestDto investDto){
 
-        investRepository.save(investDto.toEntity());
+    //게시글 수정
+    @Transactional
+    public void updateInvest(InvestDto investDto, Long id){
+       Invest invest = investRepository.findById(id).orElseThrow(()-> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+        invest.setSubject(investDto.getSubject());
+        invest.setContent(investDto.getContent());
     }
 
 

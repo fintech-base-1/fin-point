@@ -1,10 +1,8 @@
 package com.fp.finpoint.web.invest.controller;
 
-import com.fp.finpoint.domain.file.service.FileService;
 import com.fp.finpoint.domain.file.service.InvestFileService;
 import com.fp.finpoint.domain.invest.dto.InvestDto;
 import com.fp.finpoint.domain.invest.entity.Invest;
-import com.fp.finpoint.domain.invest.repository.InvestRepository;
 import com.fp.finpoint.domain.invest.service.InvestService;
 import com.fp.finpoint.domain.like.service.LikeService;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
@@ -14,7 +12,6 @@ import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,22 +19,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequestMapping("/finpoint")
@@ -128,7 +114,7 @@ public class InvestController {
     public String boardDelete(@PathVariable("id") Long id) {
         investService.deleteInvest(id);
 
-        return "redirect:/invest/list";
+        return "redirect:/finpoint/invest/list";
     }
 
 
@@ -144,10 +130,10 @@ public class InvestController {
     @PostMapping("/invest/update/{id}")
     public String investUpdate(@PathVariable("id") Long id, Model model, InvestDto investDto) {
 
-        this.investService.updateInvest(investDto);
+        investService.updateInvest(investDto,id);
 
-        model.addAttribute("message", "수정 완료");
-        model.addAttribute("SearchUrl", "/invest/list");
+        model.addAttribute("message", "수정 되었습니다.");
+        model.addAttribute("SearchUrl", "/finpoint/invest/list");
 
         return "Message";
     }
