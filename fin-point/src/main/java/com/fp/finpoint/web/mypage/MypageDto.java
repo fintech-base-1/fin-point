@@ -20,7 +20,7 @@ public class MypageDto {
 
     public Long spend;
 
-    public Long pieceKind;
+    public int pieceKind;
 
     public Long pieceCnt;
 

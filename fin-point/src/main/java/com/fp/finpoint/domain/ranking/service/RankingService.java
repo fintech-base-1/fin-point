@@ -51,7 +51,6 @@ public class RankingService {
             }
 
             UrlResource src = new UrlResource("file:" +member.getFileEntity().getSavedPath() );
-
             RankResponseDto rankResponseDto = new RankResponseDto();
             rankResponseDto.setEmail(member.getEmail());
             rankResponseDto.setTypeCount(typeCount);
@@ -59,6 +58,7 @@ public class RankingService {
             rankResponseDto.setAssetAmount(assetAmount);
             if (rankResponseDto.getImage() != null) {
                 rankResponseDto.setImage(src);
+                System.out.println("이미지 들어있어요:) ");
             }
 
             rankResponseDtos.add(rankResponseDto);

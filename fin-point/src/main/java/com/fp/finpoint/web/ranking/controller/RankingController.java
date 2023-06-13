@@ -45,7 +45,7 @@ public class RankingController {
     }
 
     @ResponseBody
-    @PostMapping("/ranking/data")
+    @GetMapping("/ranking/data")
     public List<RankResponseDto> getRankList(@RequestParam(defaultValue = "type") String standard,
                                                  @RequestParam(defaultValue = "1", required = false) int page) throws MalformedURLException {
         return rankingService.getRankList(standard, page, 5);

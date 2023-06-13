@@ -7,15 +7,20 @@ import com.fp.finpoint.domain.member.entity.Member;
 import com.fp.finpoint.domain.member.entity.Role;
 import com.fp.finpoint.domain.member.repository.MemberRepository;
 import com.fp.finpoint.domain.oauth.OauthClient;
+import com.fp.finpoint.domain.piece.Entity.Piece;
+import com.fp.finpoint.domain.ranking.repository.PieceCustomRepositoryImpl;
 import com.fp.finpoint.global.exception.BusinessLogicException;
 import com.fp.finpoint.global.exception.ExceptionCode;
 import com.fp.finpoint.global.util.*;
+import com.fp.finpoint.web.mypage.MypageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +34,7 @@ public class MemberService {
     private final EmailSenderService emailSenderService;
     private final RedisUtil redisUtil;
     private final FileRepository fileRepository;
+    private final PieceCustomRepositoryImpl pieceRepo;
 
     public void registerMember(MemberDto memberDto) {
         // 검증
@@ -162,6 +168,32 @@ public class MemberService {
         String email = member.getEmail();
         redisUtil.setRedisValue(code, email, 3, TimeUnit.MINUTES);
         log.info("# Code set in Redis!");
+    }
+
+
+    public MypageDto getMypageInfo(HttpServletRequest request){
+        String email = CookieUtil.getEmailToCookie(request);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        List<Piece> pieceList = pieceRepo.findPieceListByMember(member);
+        Long totalPieces = 0L;
+        int kindPiece = pieceList.size();
+        Long totalPreice = 0L;
+        for(Piece piece : pieceList){
+            totalPieces += piece.getCount();
+            totalPreice += piece.getCount()*piece.getPrice();
+        }
+        MypageDto mypageDto = new MypageDto();
+//        mypageDto.setFinpoint(member.getFinPoint());
+        mypageDto.setFinpoint(3000L);
+        mypageDto.setPieceCnt(totalPieces);
+        mypageDto.setPieceKind(kindPiece);
+        mypageDto.setPiecePrice(totalPreice);
+        mypageDto.setEmail(email);
+        mypageDto.setGoal(50000L);
+        mypageDto.setNickname("테스트");
+        mypageDto.setSpend(47000L);
+        return mypageDto;
     }
 
 }

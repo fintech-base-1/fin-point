@@ -71,7 +71,10 @@ public class FileService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity file = fileRepository.findById(member.getFileEntity().getId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return new UrlResource("file:" + file.getSavedPath());
+//        return new UrlResource("file:" + file.getSavedPath());
+        UrlResource src = new UrlResource("file:" + file.getSavedPath());
+        System.out.println("UrlResource 프로필 사진 : "+src);
+        return src;
     }
 
 }

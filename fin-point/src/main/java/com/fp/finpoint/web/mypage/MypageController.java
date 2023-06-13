@@ -28,24 +28,35 @@ import java.util.Map;
 public class MypageController {
 
     private final FileService fileService;
+    private final MemberService memberService;
+
+//    @GetMapping("/mypagea")
+//    public String myPagea(Model model) throws MalformedURLException {
+//        MypageDto mypageDto = new MypageDto();
+//        mypageDto.setFinpoint(47000L);
+//        mypageDto.setPieceCnt(27L);
+//        mypageDto.setPieceKind(5L);
+//        mypageDto.setPiecePrice(570000L);
+//        mypageDto.setEmail("test@gmail.com");
+//        mypageDto.setGoal(50000L);
+//        mypageDto.setNickname("테스트");
+//        mypageDto.setSpend(47000L);
+//        model.addAttribute("mypageDto",mypageDto);
+//        return "mypage";
+//    }
 
     @GetMapping("/mypage")
-    public String myPage(Model model) throws MalformedURLException {
+    public String myPage(Model model,
+                         HttpServletRequest request){
+        memberService.getMypageInfo(request);
         MypageDto mypageDto = new MypageDto();
-        mypageDto.setFinpoint(47000L);
-        mypageDto.setPieceCnt(27L);
-        mypageDto.setPieceKind(5L);
-        mypageDto.setPiecePrice(570000L);
-        mypageDto.setEmail("test@gmail.com");
-        mypageDto.setGoal(50000L);
-        mypageDto.setNickname("테스트");
-        mypageDto.setSpend(47000L);
         model.addAttribute("mypageDto",mypageDto);
         return "mypage";
     }
 
-    @GetMapping("/image")
+
     @ResponseBody
+    @GetMapping("/image")
     public Resource image(HttpServletRequest request) throws MalformedURLException {
      return fileService.getImageUrl(request);
     }
