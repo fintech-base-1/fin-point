@@ -37,14 +37,13 @@ import java.util.UUID;
         @Transactional
         public Long saveFile(MultipartFile files) throws IOException {
             if (files.isEmpty()) {
-                throw new RuntimeException("error");
+                return null;
             }
             String originName = files.getOriginalFilename();
             String uuid = UUID.randomUUID().toString();
             String extension = originName.substring(originName.lastIndexOf("."));
             String savedName = uuid + extension;
             String savedPath = fileDirectory + savedName;
-            System.out.println("널이다");
             FileEntity file = FileEntity.builder()
                     .originName(originName)
                     .savedName(savedName)
