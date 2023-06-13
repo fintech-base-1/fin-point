@@ -27,6 +27,7 @@
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message)
+                    window.opener.location.reload();
                     window.close()
                 })
                 .catch(error => {
@@ -63,11 +64,17 @@
     };
 
     function openResetGoalWindow() {
-        window.open("/finpoint/mypage/reset-goal", '목표금액을 재설정 해주세요', 'width=400,height=300');
+        window.open("/finpoint/mypage/reset-goal", '목표금액을 재설정 하세요', 'width=400,height=300');
     }
 
     function resetGoal() {
-        const goal = document.getElementById('goal').value;
+        const goalInput = document.getElementById('goal');
+        const goal = goalInput.value;
+
+        if (goal.trim() === '') {
+            alert('목표 금액을 입력하세요');
+            return;
+        }
 
         fetch('/finpoint/mypage/goal', {
             method: 'POST',
@@ -78,10 +85,22 @@
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message)
-                window.close()
+                alert(data.message);
+                window.opener.location.reload();
+                window.close();
             })
             .catch((error) => {
                 console.error('아오:', error);
             });
     }
+
+    document.getElementById('goal').addEventListener('input', function () {
+        const goal = this.value;
+        const confirmButton = document.getElementById('confirmButton');
+
+        if (goal.trim() === '') {
+            confirmButton.disabled = true;
+        } else {
+            confirmButton.disabled = false;
+        }
+    });
