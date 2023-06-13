@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/finpoint")
+@RequestMapping("/finpoint")
 public class RankingController {
 
     private final RankingService rankingService;
