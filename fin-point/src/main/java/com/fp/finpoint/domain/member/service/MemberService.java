@@ -78,10 +78,16 @@ public class MemberService {
         isExistEmail(email);
         Set<Role> roles = new HashSet<>();
         roles.add(Role.ROLE_USER);
+        FileEntity file = new FileEntity();
+        file.setOriginName("");
+        file.setOriginName("");
+        file.setSavedPath("/images/default.jpg");
+        FileEntity save = fileRepository.save(file);
         Member member = Member.builder().
                 email(email)
                 .roles(roles)
                 .oauthClient(oauthClient)
+                .fileEntity(save)
                 .build();
 
         memberRepository.save(member);
