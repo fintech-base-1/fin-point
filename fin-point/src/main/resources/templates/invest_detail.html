@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
 <body>
 <div layout:fragment="content" class="container my-3" style="margin: 200px;">
-    <form th:action="@{/invest/list/detail/${investDetail.id}}">
+    <form th:action="@{/finpoint/invest/list/detail/${investDetail.id}}">
         <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
         <div th:text="${investDetail.content}"></div>
         <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>

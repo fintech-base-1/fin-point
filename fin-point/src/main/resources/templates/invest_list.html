@@ -2,7 +2,7 @@
 <body>
 <div layout:fragment="content">
         <div class="add-invest">
-            <button th:onclick="|location.href='@{/invest/create}'|">
+            <button th:onclick="|location.href='@{/finpoint/invest/create}'|">
                 투자 등록
 <!--                <a th:href="@{/invest/create}" >투자 등록</a>-->
             </button>
@@ -11,7 +11,7 @@
         <th:block class="list-wrap">
             <div class="list-container" >
                 <div th:each="invest, loop : ${list}" class="list-each">
-                    <a th:href="@{|/invest/list/detail/${invest.id}|}">
+                    <a th:href="@{|/finpoint/invest/list/detail/${invest.id}|}">
                         <div>
 <!--                            <div class="invest-logo" th:text="${invest.file_id}"></div>-->
                             <div class="invest-subject" th:text="${invest.subject}"></div>

@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@RequestMapping("/invest")
+@RequestMapping("/finpoint")
 @Controller
 @RequiredArgsConstructor // DI 주입. (InvestService)
 public class InvestController {
@@ -44,7 +44,7 @@ public class InvestController {
     private final InvestFileService investFileService;
 
     // 전체 리스트 페이지.
-    @GetMapping("/list")
+    @GetMapping("/invest/list")
     public String list(Model model,
                        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                        String searchKeyword) {
@@ -68,7 +68,7 @@ public class InvestController {
     }
 
     // 디테일 페이지.
-    @GetMapping(value = "/list/detail/{id}")
+    @GetMapping(value = "/invest/list/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         Invest readInvestDetail = this.investService.readInvestDetail(id);
         model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
@@ -80,12 +80,12 @@ public class InvestController {
     @Value("${file.dir}") // @Value 는 application.yml 파일에 입력되어있는 값을 가져올수 있다.
     private String fileDir;
 
-    @GetMapping("/create")
+    @GetMapping("/invest/create")
     public String listCreate(InvestDto investDto) {
         return "invest_create";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/invest/create")
     public String listCreate(@ModelAttribute InvestDto investDto,
                              @RequestParam MultipartFile file,
                              HttpServletRequest request) throws IOException {
@@ -104,11 +104,11 @@ public class InvestController {
         investService.create(investDto, email);
         investFileService.saveFile(file,request);
 
-        return "redirect:/invest/list";
+        return "redirect:/finpoint/invest/list";
     }
 
     // 글 삭제.
-    @GetMapping("/delete/{id}")
+    @GetMapping("/invest/delete/{id}")
     public String boardDelete(@PathVariable("id") Long id) {
         investService.deleteInvest(id);
 
@@ -117,7 +117,7 @@ public class InvestController {
 
 
     // 글 수정.
-    @GetMapping("/modify/{id}")
+    @GetMapping("/invest/modify/{id}")
     public String modifyInvest(@PathVariable("id") Long id, Model model) {
         Invest modifyInvest = investService.readInvestDetail(id);
         model.addAttribute("modify", modifyInvest);
@@ -125,7 +125,7 @@ public class InvestController {
         return "invest_modify";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/invest/update/{id}")
     public String investUpdate(@PathVariable("id") Long id, Model model, InvestDto investDto) {
 
         this.investService.updateInvest(investDto);
