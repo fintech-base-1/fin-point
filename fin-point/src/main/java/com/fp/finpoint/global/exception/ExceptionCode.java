@@ -39,8 +39,10 @@ public enum ExceptionCode {
     REDIS_COMMAND_ERROR(500, "Redis 명령어 실행에 문제가 있습니다."),
 
     //invset
-    INVEST_NOT_FOUND(404, "존재하지 않는 상품입니다.");
+    INVEST_NOT_FOUND(404, "존재하지 않는 상품입니다."),
 
+    // rank
+    RANK_STANDARD_NOT_VALID(404, "랭크 정렬 기준에 문제가 있습니다");
     @Getter
     final int code;
 
