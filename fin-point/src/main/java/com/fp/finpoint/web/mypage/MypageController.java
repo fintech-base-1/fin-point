@@ -44,11 +44,11 @@ public class MypageController {
         return "mypage";
     }
 
-//    @GetMapping("/image")
-//    @ResponseBody
-//    public Resource image(HttpServletRequest request) throws MalformedURLException {
-//     return fileService.getImageUrl(request);
-//    }
+    @GetMapping("/image")
+    @ResponseBody
+    public Resource image(HttpServletRequest request) throws MalformedURLException {
+     return fileService.getImageUrl(request);
+    }
 
     @PostMapping("/update-profile")
     public ResponseEntity<?> uploadFile(@RequestParam("profileImage") MultipartFile file,
