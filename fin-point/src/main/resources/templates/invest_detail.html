@@ -4,11 +4,9 @@
     <form th:action="@{/finpoint/invest/list/detail/${investDetail.id}}">
         <h2 class="border-bottom py-2" th:text="${investDetail.subject}"></h2>
         <div th:text="${investDetail.content}"></div>
-        <a th:href="@{|/invest/delete/${investDetail.id}|}" class="btn btn-primary">삭제</a>
-        <a th:href="@{|/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
+        <a th:href="@{|/finpoint/invest/delete/${investDetail.id}|}" id="delete" class="btn btn-primary">삭제</a>
+        <a th:href="@{|/finpoint/invest/modify/${investDetail.id}|}" class="btn btn-primary">수정</a>
 
-        <!--  <a href="javascript:void(0);" th:data-uri="@{|/invest/list/detail/${investDetail.id}|}" class="recommend btn btn-sm btn-outline-secondary">좋아요</a>-->
-        <!--  <span class="badge rounded-pill bg-success" th:text="${#lists.size('likes')}"> </span>-->
 
         <div th:if="${#request.getCookies()!= null}">
             <!-- or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}"-->
