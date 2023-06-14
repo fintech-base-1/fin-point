@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.core.io.Resource;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class MypageDto {
 
@@ -14,13 +13,13 @@ public class MypageDto {
 
     public String email;
 
-    public Long goal;
+    public Integer goal;
 
     public Long finpoint;
 
     public Long spend;
 
-    public Long pieceKind;
+    public int pieceKind;
 
     public Long pieceCnt;
 

@@ -46,7 +46,7 @@ public class Invest extends Auditable {
     @JoinColumn(name = "memberId")
     private Member member; //회원
 
-    @OneToMany(mappedBy = "invest")
+    @OneToMany(mappedBy = "invest", cascade = CascadeType.REMOVE)
     private List<Like> likes = new ArrayList<>();//좋아요
 
     @OneToOne(cascade = CascadeType.ALL)

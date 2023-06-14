@@ -16,6 +16,7 @@ import com.fp.finpoint.global.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Slf4j
 @RequestMapping("/finpoint")
@@ -81,7 +83,9 @@ public class InvestController {
         model.addAttribute("like",like);
         Piece savedPiece = pieceRepository.findById(savedMember.getMemberId()).orElseThrow(() -> new RuntimeException("error"));
         model.addAttribute("piece", savedPiece);
-
+        System.out.println("1"+id);
+        System.out.println("2"+email);
+        System.out.println("3"+like);
         return "invest_detail";
     }
 
@@ -151,6 +155,13 @@ public class InvestController {
         //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
         investService.purchase(id, request, count);
         return "success";
+    }
+
+    @ResponseBody
+    @GetMapping("/invest/image/{id}")
+    public Resource investImage(@PathVariable("id") Long id) throws MalformedURLException {
+        System.out.println("id 가져오는지 확인 : "+id);
+        return investFileService.getInvestImageUrl(id);
     }
 
 }

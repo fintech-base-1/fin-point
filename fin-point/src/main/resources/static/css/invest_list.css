@@ -91,8 +91,8 @@ body {
 .invest-logo {
     width: 40px;
     height: 40px;
-    border: 1px solid black;
-    border-radius: 5px;
+    /*border: 1px solid black;*/
+    border-radius: 10px;
     margin-left: 10px;
     padding: 5px;
 }
@@ -102,7 +102,7 @@ body {
     height: 30px;
     /*border: 1px solid black;*/
     margin: auto;
-    padding: 5px;
+    padding: 15px;
     word-wrap: break-word;
     overflow: hidden;
     white-space: nowrap;

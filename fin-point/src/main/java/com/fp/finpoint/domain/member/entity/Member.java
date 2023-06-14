@@ -61,7 +61,13 @@ public class Member extends Auditable {
 
     private Long target_spend;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    private Integer goal;
+
+    public void setGoal(Integer goal) {
+        this.goal = goal;
+    }
+
+    @OneToOne
     @JoinColumn(name = "fileEntity_id")
     private FileEntity fileEntity;
 
