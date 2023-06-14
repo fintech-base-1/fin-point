@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ import java.util.UUID;
         private String fileDirectory;
         private final FileRepository fileRepository;
         private final MemberRepository memberRepository;
+        private final InvestRepository investRepository;
 
         @Transactional
         public Long saveFile(MultipartFile files) throws IOException {
@@ -55,13 +57,14 @@ import java.util.UUID;
             return savedFile.getId();
         }
 
-        public Resource getImageUrl(HttpServletRequest request) throws MalformedURLException {
-            String email = CookieUtil.getEmailToCookie(request);
-            Member member = memberRepository.findByEmail(email)
-                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-            FileEntity file = fileRepository.findById(member.getFileEntity().getId())
-                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-            return new UrlResource("file:" + file.getSavedPath());
+        public Resource getInvestImageUrl(Long id) throws MalformedURLException {
+            Invest invest = investRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
+//            System.out.println("invest.getFileEntity().getId() : 확인확인확인확인 인식"+ invest.getFileEntity().getId());
+            FileEntity file = fileRepository.findById(invest.getFileEntity().getId())
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VALUE_NOT_FOUND));
+            Resource a =  new UrlResource("file:" + file.getSavedPath());
+            System.out.println("확인확인확인확인 인식 : "+a);
+            return a;
         }
 
     }

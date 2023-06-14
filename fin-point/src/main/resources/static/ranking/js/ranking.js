@@ -9,35 +9,41 @@ buttons.forEach(botton => {
     });
 });
 
-async function loadMemberPage() {
-    try {
-        const response = await fetch(`/ranking/data`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                standard: standard,
-                page: currentPage
-            })
+function loadMemberPage() {
+    fetch(`/finpoint/ranking/data`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            standard: standard,
+            page: currentPage
         })
-        const members = await response.json();
-        displayMembers(members);
-    } catch (error) {
-        console.error('T_T : ', error);
-    }
+    })
+        .then(response => response.json())
+        .then(members => {
+            displayMembers(members);
+        })
+        .catch(error => {
+            console.error('T_T : ', error);
+        });
 }
 
 function createMemberElement(member) {
     const li = document.createElement('li');
 
+    const id = member.userId;
+
     const img = document.createElement('img');
-    img.src = member.image;
+    img.onerror = function() {
+        img.src = "/images/default.jpg";
+    };
+    img.src = "/finpoint/ranking/image/"+id;
     li.appendChild(img);
 
-    const nicknameDiv = document.createElement('div');
-    nicknameDiv.textContent = member.nickname;
-    li.appendChild(nicknameDiv);
+    // const nicknameDiv = document.createElement('div');
+    // nicknameDiv.textContent = member.nickname;
+    // li.appendChild(nicknameDiv);
 
     const emailDiv = document.createElement('div');
     emailDiv.textContent = member.email;

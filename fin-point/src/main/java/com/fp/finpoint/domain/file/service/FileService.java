@@ -74,7 +74,19 @@ public class FileService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         FileEntity file = fileRepository.findById(member.getFileEntity().getId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return new UrlResource("file:" + file.getSavedPath());
+        Resource a =  new UrlResource("file:" + file.getSavedPath());
+        System.out.println("확인확인확인확인 인식 mypage : "+a);
+        return a;
+    }
+
+    public Resource getRankingImageUrl(Long id) throws MalformedURLException {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        FileEntity file = fileRepository.findById(member.getFileEntity().getId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Resource a =  new UrlResource("file:" + file.getSavedPath());
+        System.out.println("확인확인확인확인 인식 mypage : "+a);
+        return a;
     }
 
 }

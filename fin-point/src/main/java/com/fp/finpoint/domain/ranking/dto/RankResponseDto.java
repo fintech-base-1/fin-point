@@ -14,7 +14,6 @@ public class RankResponseDto {
     private int typeCount;
     private Long pieceRetainCount; // double?
     private Long assetAmount;
-    private UrlResource image;
     private String nickname;
-
+    private Long userId;
 }

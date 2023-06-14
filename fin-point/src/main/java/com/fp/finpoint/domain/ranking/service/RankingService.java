@@ -44,22 +44,17 @@ public class RankingService {
             int typeCount = pieceListByMember.size();
             Long pieceRetainCount = 0L;
             Long assetAmount = 0L;
-
+            Long userId = member.getMemberId();
             for (Piece piece : pieceListByMember) {
                 pieceRetainCount += piece.getCount();
                 assetAmount += piece.getPrice() * piece.getCount();
             }
-
-            UrlResource src = new UrlResource("file:" +member.getFileEntity().getSavedPath() );
             RankResponseDto rankResponseDto = new RankResponseDto();
             rankResponseDto.setEmail(member.getEmail());
             rankResponseDto.setTypeCount(typeCount);
             rankResponseDto.setPieceRetainCount(pieceRetainCount);
             rankResponseDto.setAssetAmount(assetAmount);
-            if (rankResponseDto.getImage() != null) {
-                rankResponseDto.setImage(src);
-            }
-
+            rankResponseDto.setUserId(userId);
             rankResponseDtos.add(rankResponseDto);
         }
         return rankResponseDtos;
