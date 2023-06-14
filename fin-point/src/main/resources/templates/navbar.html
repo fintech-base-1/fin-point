@@ -2,7 +2,7 @@
 <nav th:fragment="navbarFragment" class="nav-bar" >
     <div class="nav-container">
         <div >
-            <a th:href="@{/finpoint/invest/list}">
+            <a th:href="@{/}">
                 <img th:src="@{/images/finpoint-logo.png}" class="logo"  alt="image"  src=""/>
             </a>
         </div>
@@ -13,7 +13,8 @@
         </div>
         <div class="mypage-logout">
             <button th:onclick="|location.href='/finpoint/mypage'|" class="mypage">마이페이지</button>
-            <button th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
+            <button th:if="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
+<!--            <button th:if="${#request.getCookies()!= null}" th:onclick="|location.href='/finpoint/login'|" class="logout">로그아웃</button>-->
         </div>
     </div>
 </nav>
