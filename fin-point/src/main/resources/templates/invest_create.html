@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko">
 
 <body>
 <div layout:fragment="content" >
@@ -36,13 +36,13 @@
 
       <div class="input-each">
         <label class="input-label-font" for="piecePrice">조각 가격</label>
-        <input class="input-class" type="number" th:field="*{piecePrice}" id="piecePrice" name="piecePrice" placeholder="조각 가격" maxlength="8"/>
+        <input class="input-class" type="number" th:field="*{piecePrice}" id="piecePrice" name="piecePrice" placeholder="조각 가격" th:maxlength="8"/>
         <!--        th:field="*{subject}"-->
       </div>
 
       <div class="input-each">
         <label class="input-label-font" for="pieceCount">조각 갯수</label>
-        <input class="input-class" type="number" th:field="*{pieceCount}" id="pieceCount" name="pieceCount" placeholder="조각 갯수" maxlength="8"/>
+        <input class="input-class" type="number" th:field="*{pieceCount}" id="pieceCount" name="pieceCount" placeholder="조각 갯수" th:maxlength="8" />
         <!--        th:field="*{subject}"-->
       </div>
 
