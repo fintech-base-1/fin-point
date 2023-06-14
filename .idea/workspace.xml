@@ -4,20 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a020d-b69f-4e8b-886f-720fb94d0333" name="Changes" comment="FIX : change path &amp; bug fix">
+    <list default="true" id="fd2a020d-b69f-4e8b-886f-720fb94d0333" name="Changes" comment="FIX : ranking test fin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/file/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/file/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/file/service/InvestFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/file/service/InvestFileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/entity/Invest.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/entity/Invest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/ranking/dto/RankResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/ranking/dto/RankResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/ranking/service/RankingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/ranking/service/RankingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/service/InvestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/service/InvestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/invest/controller/InvestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/invest/controller/InvestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/RankingDto/RankingResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/RankingDto/RankingResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/controller/RankingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/controller/RankingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/css/invest_list.css" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/css/invest_list.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/js/ranking.js" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/js/ranking.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/invest_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/invest_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/css/ranking.css" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/css/ranking.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/ranking/ranking.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/ranking/ranking.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,11 +27,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GitToolBoxStore">
     <option name="recentBranches">
       <RecentBranches>
@@ -87,28 +79,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ParkJS/IdeaProjects/fin-point/fin-point/src/main/resources/templates",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "spring.configuration.checksum": "ab0f80020c53753a0cabf1f72ae8c55d",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ParkJS/IdeaProjects/fin-point/fin-point/src/main/resources/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;ab0f80020c53753a0cabf1f72ae8c55d&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates" />
@@ -138,7 +130,8 @@
       <option name="presentableId" value="Default" />
       <updated>1686467902894</updated>
       <workItem from="1686467905872" duration="246000" />
-      <workItem from="1686705217239" duration="13888000" />
+      <workItem from="1686705217239" duration="14282000" />
+      <workItem from="1686721440190" duration="3446000" />
     </task>
     <task id="LOCAL-00001" summary="FIX : change path &amp; bug fix">
       <created>1686677241648</created>
@@ -168,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686679520166</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="FIX : ranking test fin">
+      <created>1686720913839</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1686720913839</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +201,7 @@
     <MESSAGE value="FIX : change path &amp; bug fix2" />
     <MESSAGE value="FIX : change path" />
     <MESSAGE value="FIX : change path &amp; bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX : change path &amp; bug fix" />
+    <MESSAGE value="FIX : ranking test fin" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX : ranking test fin" />
   </component>
 </project>
