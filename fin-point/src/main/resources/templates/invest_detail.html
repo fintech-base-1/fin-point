@@ -1,4 +1,4 @@
-<html layout:decorate="~{layout}"> <!--layout.html 템플릿을 상속-->
+<html  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko"> <!--layout.html 템플릿을 상속-->
 <body>
 <div layout:fragment="content" class="invest-detail" style="">
 
@@ -37,16 +37,16 @@
         </div>
     </form>
         <form class="form-box2"
-                th:action="@{/finpoint/invest/${investDetail.id}/buy}"
-th:object="${count}"
+                th:action="@{|/finpoint/invest/list/detail/${investDetail.id}/buy|}"
+                th:object="${count}"
                 method="post">
-            <div class="text-content2" >조각 (개당) 가격 : </div>
+            <div class="text-content2">조각 (개당) 가격 : </div>
             <div class="text-content2-number" th:text="${piece.price}"></div>
             <div class="text-content2" >조각 (구매 가능) 갯수 : </div>
             <div class="text-content2-number" th:text="${piece.count}"></div>
 <!--아이디, 구매할 조각 수-->
             <label class="text-content2" for="count">구매 수량</label>
-            <input class="input-buy" type="text"  id="count" name="count" placeholder="구매 수량을 입력해주세요."/>
+            <input class="input-buy" type="text"  id="count" name="count"  placeholder="구매 수량을 입력해주세요." th:maxlength="8"/>
             <button class="btn-buy" >조각 구매</button>
 
         </form>
