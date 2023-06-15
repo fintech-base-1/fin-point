@@ -94,9 +94,9 @@ public class InvestService {
         if (savedPiece.getCount() < count) {
             throw new BusinessLogicException(ExceptionCode.PIECE_NOT_ENOUGH);
         }
-        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
-            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
-        }
+//        if (savedMember.getFinPoint() < savedPiece.getPrice() * count) {
+//            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
+//        }
         savedPiece.updateCount(count);
         Piece newPiece = getNewPiece(count, savedMember, savedPiece);
         mapPieceAndMember(newPiece, savedMember);
