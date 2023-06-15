@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #profile-input {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<h2>프로필 이미지 변경</h2>
+<form id="profile-form" enctype="multipart/form-data">
+  <input id="profile-input" type="file" name="file" accept="image/*">
+  <button type="button" onclick="confirmProfileImage()">확인</button>
+</form>
+<script src="/mypage/js/mypage.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+@keyframes colorTransition {
+    0% { color: black; }
+    50% { color: #ff3d3d; }
+    100% { color: #ff0000; }
+}
+
+[id^="piece-"]:hover {
+    cursor: pointer;
+    animation: colorTransition 1s infinite;
+}
+
+[id^="piece-"]:active {
+    animation: none;
+    color: #de5353;
+    transition: color 0.3s ease;
+}
+
+[id^="piece-"].selected {
+    color: blue;
+}
+
+#image {
+    max-width: 533.33px;
+    max-height: 533.33px;
+    object-fit: fill;
+    background-color: #eaeaea;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
