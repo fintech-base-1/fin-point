@@ -4,21 +4,14 @@
 
     <div class="invest-detail_container">
     <form th:action="@{/finpoint/invest/list/detail/${investDetail.id}}" class="form-box">
-        <div class="text-box">
-            <h2 class="text-subject" th:text="${investDetail.subject}"></h2>
-            <div class="text-content" th:text="${investDetail.content}"></div>
+
+        <div class="invest-wrap">
+            <img class="invest-logo" th:src="@{|/finpoint/invest/image/${investDetail.id}|}"/>
+            <div class="text-box">
+                <h2 class="text-subject" th:text="${investDetail.subject}"></h2>
+                <div class="text-content" th:text="${investDetail.content}"></div>
+            </div>
         </div>
-        <div class="btn-box">
-
-            <button class="btn">
-            <a th:href="@{|/finpoint/invest/delete/${investDetail.id}|}" id="delete" >삭제</a>
-            </button>
-            <button class="btn">
-            <a th:href="@{|/finpoint/invest/modify/${investDetail.id}|}">수정</a>
-            </button>
-        </div>
-
-
 
         <div class="like-container" th:if="${#request.getCookies()!= null}">
             <!-- or th:unless="${#strings.equals(investDetail.getMember().getEmail(),login_email)}"-->
@@ -35,14 +28,28 @@
             <img id="loginCheck" src="/images/likes-before.png" alt="" width="30px" height="30px">
             <span th:text="${investDetail.likeCnt}"></span>
         </div>
+
+        <div class="btn-box">
+
+            <button class="btn">
+            <a th:href="@{|/finpoint/invest/delete/${investDetail.id}|}" id="delete" >삭제</a>
+            </button>
+            <button class="btn">
+            <a th:href="@{|/finpoint/invest/modify/${investDetail.id}|}">수정</a>
+            </button>
+        </div>
+
+
+
+
     </form>
         <form class="form-box2"
                 th:action="@{|/finpoint/invest/list/detail/${investDetail.id}/buy|}"
                 th:object="${count}"
                 method="post">
-            <div class="text-content2">조각 (개당) 가격 : </div>
+            <div class="text-content2">조각 (개당) 가격  </div>
             <div class="text-content2-number" th:text="${piece.price}"></div>
-            <div class="text-content2" >조각 (구매 가능) 갯수 : </div>
+            <div class="text-content2" >조각 (구매 가능) 갯수  </div>
             <div class="text-content2-number" th:text="${piece.count}"></div>
 <!--아이디, 구매할 조각 수-->
             <label class="text-content2" for="count">구매 수량</label>
