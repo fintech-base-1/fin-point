@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MY PAGE</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <link rel="stylesheet" href="/mypage/css/main.css" />
+    <link rel="stylesheet" href="/mypage/css/mypage.css" />
+    <noscript><link rel="stylesheet" href="/mypage/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!-- Nav -->
+    <nav id="nav">
+        <a href="#my" class="icon solid fa-user"><span>내정보</span></a>
+        <a href="#assets" class="icon solid fa-wallet"><span>자산</span></a>
+        <a href="#goal" class="icon solid fa-thumbtack"><span>목표</span></a>
+        <a onclick="authorizationOpenBank()" class="icon solid fa-piggy-bank" style="cursor: pointer;"><span>뱅킹인증</span></a>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- Me -->
+        <article id="my" class="panel intro">
+            <header>
+                <h1 th:text="${mypageDto.nickname}"></h1>
+                <p th:text="${mypageDto.email}"></p>
+                <br>
+                <p>finpoint : <span th:text="${mypageDto.finpoint != null ? mypageDto.finpoint : 0}"></span></p>
+                <br>
+                <button onclick="openProfileWindow()"> 프로필 이미지 변경 </button>
+            </header>
+            <img th:src="@{/finpoint/mypage/image}" id="image"/>
+        </article>
+
+        <!-- Assets -->
+        <article id="assets" class="panel">
+            <header>
+                <h2>assets</h2>
+                <p>finpoint : <span th:text="${mypageDto.finpoint != null ? mypageDto.finpoint : 0}"></span></p>
+                <p id="piece-cnt" onclick="toggleSection('cnt', this)">보유조각수 : <span th:text="${mypageDto.pieceCnt}"></span></p>
+                <p id="piece-kind" onclick="toggleSection('kind', this)">보유조각종류 : <span th:text="${mypageDto.pieceKind}"></span></p>
+                <p id="piece-price" onclick="toggleSection('price', this)">보유조각금액 : <span th:text="${mypageDto.piecePrice}"></span></p>
+
+            </header>
+        </article>
+
+        <!-- Goal -->
+        <article id="goal" class="panel">
+            <header>
+                <h2>목표 지출금액</h2>
+            </header>
+            <form action="#" method="post">
+                <div>
+                    <div class="row">
+                        <div class="col-6 col-12-medium">
+                            <text>현재 목표 지출금액 : </text>
+                        </div>
+                        <div class="col-6 col-12-medium">
+                            <span th:text="${mypageDto.goal != 0 ? mypageDto.goal : '금액을 설정해주세요'}"></span>
+                        </div>
+                        <div class="col-6 col-12-medium">
+                            <text>일일 지출금액 : </text>
+                        </div>
+                        <div class="col-6 col-12-medium" id="targetValue">
+                            <span th:text="${mypageDto.spend}"></span>
+                        </div>
+                        <div class="col-6 col-12-medium">
+                            <text>예상 핀포인트 : </text>
+                        </div>
+                        <div class="col-6 col-12-medium">
+                            <span th:text="${mypageDto.goal-mypageDto.spend}"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-12">
+                <input type="submit" onclick="openResetGoalWindow()" value="목표 재설정"></input>
+            </div>
+        </article>
+    </div>
+</div>
+
+        <div class="home-button" onclick="goHome()">Home</div>
+<script src="/mypage/js/jquery.min.js"></script>
+<script src="/mypage/js/browser.min.js"></script>
+<script src="/mypage/js/breakpoints.min.js"></script>
+<script src="/mypage/js/util.js"></script>
+<script src="/mypage/js/main.js"></script>
+<script src="/mypage/js/mypage.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" lang="ko">
+<body>
+<div layout:fragment="content">
+    <div class="add-btn-wrap">
+        <div class="add-invest">
+            <button  th:onclick="|location.href='@{/finpoint/invest/create}'|">
+               <span class="btn-text">투자 등록</span>
+<!--                <a th:href="@{/invest/create}" >투자 등록</a>-->
+            </button>
+        </div>
+    </div>
+        <th:block class="list-wrap">
+            <div class="list-container" >
+                <div th:each="invest, loop : ${list}" class="list-each">
+                    <a th:href="@{|/finpoint/invest/list/detail/${invest.id}|}">
+                        <div class="list-each-inner-wrap">
+                            <img class="invest-logo_list" th:src="@{|/finpoint/invest/image/${invest.id}|}"/>
+<!--                            th:text="${invest.fileEntity.savedPath}"-->
+                            <div class="list-each-text-box">
+                                <div class="invest-subject" th:text="${invest.subject}"></div>
+<!--                                <div class="invest-content" th:text="${invest.content}"></div>-->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+
+</div>
+</body>
+</html>
+
+

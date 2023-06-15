@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/ranking/css/ranking.css"/>
+
+</head>
+<body>
+
+<!--<section>-->
+<!--    <div></div>-->
+<!--    <div style="  display: flex;-->
+<!--            justify-content: center;">-->
+<!--        <span class="standard" id="type" style="background-color: red; margin :10px;">조각종류?</span>-->
+<!--        <span class="standard" id="piece" style="background-color: blue; margin :10px;">조각수?</span>-->
+<!--        <span class="standard" id="asset" style="background-color: #3dd5f3; margin :10px;">조각총액?</span>-->
+<!--    </div>-->
+<!--    <div></div>-->
+<!--</section>-->
+
+<ol class="title-ol">
+    <li class="title-li" style="padding-left: 200px">
+        <span>이메일</span><span></span><span>조각종류</span> <span>조각수</span> <span>조각총액</span>
+    </li>
+</ol>
+
+
+<ol id="memberList" style="--length: 5" role="list"></ol>
+<div class="home-button" onclick="goHome()">Home</div>
+
+<script th:inline="javascript" src="/ranking/js/ranking.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+
+body {
+    font-family: "Raleway", sans-serif;
+    height: 1000vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.invest-detail {
+    margin-top: 200px;
+}
+
+.invest-detail_container {
+    width: 900px;
+    /*height: 800px;*/
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+}
+
+.form-box {
+    gap: 10px;
+    margin: auto;
+    width: 550px;
+    background-color: #E7E8F9;
+    border-radius: 10px;
+
+    /*height: 400px;*/
+
+}
+
+.invest-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.invest-logo {
+    width: 200px;
+    height: 200px;
+    /*border: 1px solid black;*/
+    border-radius: 10px;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.form-box2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.text-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.text-subject {
+    width: 90%;
+    height: 50px;
+    font-size: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.text-content {
+    width: 90%;
+    font-size: 20px;
+    font-weight: 100;
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+}
+
+.text-content2 {
+    font-size: 25px;
+}
+
+.text-content2-number {
+    font-size: 20px;
+    color: darkblue;
+    font-weight: bolder;
+}
+
+.btn-box {
+    display: flex;
+    height: 50px;
+    border-radius: 10px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    width: 120px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #008dcd;
+    cursor: pointer;
+}
+
+.like-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom : 30px;
+}
+
+.like-count {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-buy {
+    height: 40px;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border:none;
+    border-bottom: 1px solid black;
+}
+.btn-buy {
+    margin-bottom: 25px;
+    width: 120px;
+    height: 35px;
+    background-color: #f8f988;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 20px 30px;
+    cursor: pointer;
+
+}
+
+.btn-buy:hover{
+    box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset,
+    -200px 0 0 0 rgba(0,0,0,0.25) inset;
+}
