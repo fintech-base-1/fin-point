@@ -60,7 +60,7 @@ document.getElementById('googleLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
-                    window.location.href = '/finpoint/invest/list';
+                    window.location.href = '/';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);
@@ -82,7 +82,7 @@ document.getElementById('naverLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
-                    window.location.href = '/finpoint/invest/list';
+                    window.location.href = '/';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);
@@ -104,7 +104,7 @@ document.getElementById('kakaoLogin').addEventListener('click', function () {
             const check = setInterval(()=> {
                 if (login.window.location.href.includes('finpoint')) {
                     login.close()
-                    window.location.href = '/finpoint/invest/list';
+                    window.location.href = '/';
                 }
                 if (!login || login.closed) {
                     clearInterval(check);

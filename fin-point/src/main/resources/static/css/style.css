@@ -49,7 +49,7 @@ body {
 }
 
 .nav-container {
-    width: 1200px;
+    width: auto;
     display: flex;
     justify-content: space-between;
     padding: 20px 50px;

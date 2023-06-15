@@ -59,11 +59,9 @@ import java.util.UUID;
 
         public Resource getInvestImageUrl(Long id) throws MalformedURLException {
             Invest invest = investRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVEST_NOT_FOUND));
-//            System.out.println("invest.getFileEntity().getId() : 확인확인확인확인 인식"+ invest.getFileEntity().getId());
             FileEntity file = fileRepository.findById(invest.getFileEntity().getId())
                     .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VALUE_NOT_FOUND));
             Resource a =  new UrlResource("file:" + file.getSavedPath());
-            System.out.println("확인확인확인확인 인식 : "+a);
             return a;
         }
 

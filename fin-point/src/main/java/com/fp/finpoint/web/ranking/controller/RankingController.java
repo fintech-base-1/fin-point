@@ -32,17 +32,8 @@ public class RankingController {
     @ResponseBody
     @PostMapping("/ranking/data")
     public List<RankResponseDto> getRankList(@RequestBody RankingResponseDto.Post post) throws MalformedURLException {
-        System.out.println("요청 확인 페이지 : "+post.getPage());
         return rankingService.getRankList(post.getStandard(), post.getPage(), 5);
     }
-
-//    @ResponseBody
-//    @PostMapping("/ranking/data")
-//    public List<RankResponseDto> getRankList(@RequestBody RankingResponseDto.Post post) throws MalformedURLException {
-//        System.out.println("요청 확인 페이지 : "+post.getPage());
-//        return rankingService.getRankList(post.getStandard(), post.getPage(), 5);
-//    }
-
 
 
     @ResponseBody

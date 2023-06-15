@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -75,12 +76,11 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ResponseBody
     @GetMapping("/finpoint/logout")
-    public ResponseEntity<HttpStatus> logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        cookieUtil.deleteCookie(JwtUtil.AUTHORIZATION,response);
-        cookieUtil.deleteCookie(JwtUtil.REFRESH,response);
-        return  new ResponseEntity<>(HttpStatus.OK);
+    public String logout(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        CookieUtil.deleteCookie(JwtUtil.AUTHORIZATION,response);
+        CookieUtil.deleteCookie(JwtUtil.REFRESH,response);
+        return "redirect:/";
     }
 
 }

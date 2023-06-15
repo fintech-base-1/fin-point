@@ -194,7 +194,7 @@ public class MemberService {
         mypageDto.setPiecePrice(totalPreice);
         mypageDto.setEmail(email);
         mypageDto.setGoal(Objects.requireNonNullElse(goal, 0));
-        mypageDto.setNickname("Test");//TODO:SPEND, NICKNAME
+        mypageDto.setNickname("Email");//TODO:SPEND, NICKNAME
         mypageDto.setSpend(47000L);
         return mypageDto;
     }
