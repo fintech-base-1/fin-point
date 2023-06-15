@@ -82,7 +82,7 @@ public class InvestController {
         );
         like = likeService.findLike(id, email);
         model.addAttribute("like",like);
-        Piece savedPiece = pieceRepository.findById(savedMember.getMemberId()).orElseThrow(() -> new RuntimeException("error"));
+        Piece savedPiece = readInvestDetail.getPiece();
         model.addAttribute("piece", savedPiece);
         System.out.println("1"+id);
         System.out.println("2"+email);
@@ -151,9 +151,9 @@ public class InvestController {
 
 
     @PostMapping("/invest/list/detail/{id}/buy")
-    @ResponseBody
     public String test(@PathVariable("id") Long id, HttpServletRequest request, @RequestParam("count") Long count) {  //id 는 게시판 글번호.
         //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
+        System.out.println("count 찾기 아아"+id);
         investService.purchase(id, request, count);
         log.info("count={}",count);
         return "redirect:/finpoint/invest/list";

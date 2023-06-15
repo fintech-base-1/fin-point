@@ -24,6 +24,10 @@ ol {
     padding: 0 1rem;
 }
 
+#memberList {
+    margin-top: -10px;
+}
+
 li {
     --stop: calc(100% / var(--length) * var(--i));
     --l: 62%;
@@ -78,15 +82,15 @@ h3::before {
 
 li img {
     height: 100px;
-    width: auto;
+    width: 100px;
     margin-right: 1rem;
+    object-fit: contain;
 }
 
 #memberList li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
 ol li div {
@@ -95,18 +99,67 @@ ol li div {
     margin: 0 0.5rem;
 }
 
-@media (min-width: 40em) {
-    li {
-        margin: 3rem auto;
-        padding: 3rem 2rem 2rem;
-    }
+.title-ol {
+    width: 100%;
+    padding: 0;
+    list-style-type: none;
+}
 
-    h3 {
-        font-size: 2.25rem;
-        margin: 0 0 2rem;
-    }
+.title-li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+}
 
-    h3::before {
-        margin-right: 1.5rem;
-    }
+.title-li span {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.section-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.standard {
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+#type {
+    background-color: red;
+    margin-right: 10px;
+}
+
+#piece {
+    background-color: blue;
+    margin: 0 10px;
+}
+
+#asset {
+    background-color: #3dd5f3;
+    margin-left: 10px;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }

@@ -62,7 +62,7 @@ public class CookieUtil {
                 .httpOnly(true)
                 .build();
 
-        response.setHeader(SET_COOKIE, cookie.toString());
+        response.addHeader(SET_COOKIE, cookie.toString());
     }
 
     public static String getEmailToCookie(HttpServletRequest request) {
