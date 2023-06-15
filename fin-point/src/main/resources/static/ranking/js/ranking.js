@@ -76,3 +76,8 @@ window.addEventListener('scroll', function () {
     }
 });
 window.onload = loadMemberPage;
+
+
+function goHome() {
+    window.location.href = "/";
+}

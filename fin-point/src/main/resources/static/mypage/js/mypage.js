@@ -104,3 +104,7 @@
             confirmButton.disabled = false;
         }
     });
+
+    function goHome() {
+        window.location.href = "/";
+    }

@@ -7,14 +7,20 @@
             </a>
         </div>
         <div class="services">
-    <!--        <a >홈</a>-->
-            <a th:href="@{/finpoint/invest/list}" >조각투자</a>
-            <a th:href="@{/finpoint/ranking}">랭킹</a>
+
+        <div class="nav-wrap">
+            <a th:if="${#request.getCookies()!= null}" th:href="@{/finpoint/invest/list}">조각투자</a>
+            <a th:if="${#request.getCookies()!= null}"  th:href="@{/finpoint/ranking}">랭킹</a>
+
+            <a th:if="${#request.getCookies()== null}" th:href="@{/finpoint/invest/list}" style="pointer-events: none" onclick="notLogin()">조각투자</a>
+            <a th:if="${#request.getCookies()== null}" th:href="@{/finpoint/ranking}"  style="pointer-events: none" onclick="notLogin()">랭킹</a>
         </div>
+
         <div class="mypage-logout">
             <button th:onclick="|location.href='/finpoint/mypage'|" class="mypage">마이페이지</button>
             <button th:if="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
-<!--            <button th:if="${#request.getCookies()!= null}" th:onclick="|location.href='/finpoint/login'|" class="logout">로그아웃</button>-->
+            <button th:unless="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/logout'|" class="logout">로그아웃</button>
+        </div>
         </div>
     </div>
 </nav>

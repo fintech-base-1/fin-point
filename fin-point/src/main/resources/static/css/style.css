@@ -57,6 +57,11 @@ body {
     align-items: center;
 }
 
+.nav-wrap {
+    margin-left: 0;
+    margin-right: 100px;
+}
+
 .logo {
     width: 120px;
     height: 50px;

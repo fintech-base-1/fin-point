@@ -4,154 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/ranking/css/ranking.css"/>
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            --h: 212deg;
-            --l: 43%;
-            --brandColor: hsl(var(--h), 71%, var(--l));
-            font-family: Montserrat, sans-serif;
-            margin: 0;
-            background-color: whitesmoke;
-        }
-
-        p {
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        ol {
-            list-style: none;
-            counter-reset: list;
-            padding: 0 1rem;
-        }
-
-        #memberList {
-            margin-top: -10px;
-        }
-
-        li {
-            --stop: calc(100% / var(--length) * var(--i));
-            --l: 62%;
-            --l2: 88%;
-            --h: calc((var(--i) - 1) * (180 / var(--length)));
-            --c1: hsl(var(--h), 71%, var(--l));
-            --c2: hsl(var(--h), 71%, var(--l2));
-
-            position: relative;
-            counter-increment: list;
-            max-width: 45rem;
-            margin: 2rem auto;
-            padding: 2rem 1rem 1rem;
-            box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.3);
-            border-radius: 0.25rem;
-            overflow: hidden;
-            background-color: white;
-        }
-
-        li::before {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 1rem;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: linear-gradient(to right, var(--c1) var(--stop), var(--c2) var(--stop));
-        }
-
-        h3 {
-            display: flex;
-            align-items: baseline;
-            margin: 0 0 1rem;
-            color: rgb(70 70 70);
-        }
-
-        h3::before {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex: 0 0 auto;
-            margin-right: 1rem;
-            width: 3rem;
-            height: 3rem;
-            content: counter(list);
-            padding: 1rem;
-            border-radius: 50%;
-            background-color: var(--c1);
-            color: white;
-        }
-
-        li img {
-            height: 100px;
-            width: auto;
-            margin-right: 1rem;
-        }
-
-        #memberList li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        ol li div {
-            font-size: 20px;
-            flex-grow: 1;
-            margin: 0 0.5rem;
-        }
-
-        .title-ol {
-            width: 100%;
-            padding: 0;
-            list-style-type: none;
-        }
-
-        .title-li {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #ccc;
-            padding: 1rem 0;
-        }
-
-        .title-li span {
-            flex: 1;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .section-container {
-            display: flex;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        .standard {
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-        }
-
-        #type {
-            background-color: red;
-            margin-right: 10px;
-        }
-
-        #piece {
-            background-color: blue;
-            margin: 0 10px;
-        }
-
-        #asset {
-            background-color: #3dd5f3;
-            margin-left: 10px;
-        }
-    </style>
 </head>
 <body>
 
@@ -167,13 +20,14 @@
 <!--</section>-->
 
 <ol class="title-ol">
-    <li class="title-li">
+    <li class="title-li" style="padding-left: 200px">
         <span>이메일</span><span></span><span>조각종류</span> <span>조각수</span> <span>조각총액</span>
     </li>
 </ol>
 
 
 <ol id="memberList" style="--length: 5" role="list"></ol>
+<div class="home-button" onclick="goHome()">Home</div>
 
 <script th:inline="javascript" src="/ranking/js/ranking.js"></script>
 </body>

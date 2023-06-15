@@ -1,15 +1,13 @@
-@import "reset.css";
-@import "style.css";
 
-body {
-    font-family: "Raleway", sans-serif;
-    height: 1000vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    margin: 0 auto;
-}
+/*body {*/
+/*    font-family: "Raleway", sans-serif;*/
+/*    height: 1000vh;*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: baseline;*/
+/*    margin: 0 auto;*/
+/*}*/
 
 .add-btn-wrap {
     width: 1000px;
