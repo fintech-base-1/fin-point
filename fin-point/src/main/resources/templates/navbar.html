@@ -17,7 +17,7 @@
         </div>
 
         <div class="mypage-logout">
-            <button th:onclick="|location.href='/finpoint/mypage'|" class="mypage">마이페이지</button>
+            <button  th:if="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/mypage'|" class="mypage" style="pointer-events: none;">마이페이지</button>
             <button th:if="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/login'|" class="logout">로그인</button>
             <button th:unless="${#request.getCookies()== null}" th:onclick="|location.href='/finpoint/logout'|" class="logout">로그아웃</button>
         </div>
