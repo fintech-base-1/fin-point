@@ -22,9 +22,7 @@
 #image {
     max-width: 533.33px;
     max-height: 533.33px;
-    width: auto;
-    height: auto;
-    object-fit: cover;
+    object-fit: fill;
     background-color: #eaeaea;
 }
 

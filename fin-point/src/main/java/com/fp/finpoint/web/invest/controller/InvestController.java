@@ -72,7 +72,6 @@ public class InvestController {
     @GetMapping(value = "/invest/list/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id,HttpServletRequest request) {
         Invest readInvestDetail = investService.readInvestDetail(id);
-        System.out.println("readInvestDetail!@#@!#!@#"+readInvestDetail.getId());
         model.addAttribute("investDetail", readInvestDetail); // model 을 통해 view(화면)에서 사용 가능하게 함.
 
         boolean like = false;
@@ -84,9 +83,6 @@ public class InvestController {
         model.addAttribute("like",like);
         Piece savedPiece = readInvestDetail.getPiece();
         model.addAttribute("piece", savedPiece);
-        System.out.println("1"+id);
-        System.out.println("2"+email);
-        System.out.println("3"+like);
         return "invest_detail";
     }
 
@@ -112,7 +108,6 @@ public class InvestController {
 //
 //        }
         Long fileEntity = investFileService.saveFile(file);
-        System.out.println("fileId : "+fileEntity);
         //TODO: 이미지 저장하는 로직에 대한 리펙토링 필요 (성능적인 이유)
         log.info("파일 저장 fullPath={}", file);
         String email = CookieUtil.getEmailToCookie(request);
@@ -153,7 +148,6 @@ public class InvestController {
     @PostMapping("/invest/list/detail/{id}/buy")
     public String test(@PathVariable("id") Long id, HttpServletRequest request, @RequestParam("count") Long count) {  //id 는 게시판 글번호.
         //todo: pathVariable 이용해 invest_id 를 가져올 예정 일단 테스트를 위해 만든 api 로 requestparam 으로 받아서 테스트했음
-        System.out.println("count 찾기 아아"+id);
         investService.purchase(id, request, count);
         log.info("count={}",count);
         return "redirect:/finpoint/invest/list";
@@ -162,7 +156,6 @@ public class InvestController {
     @ResponseBody
     @GetMapping("/invest/image/{id}")
     public Resource investImage(@PathVariable("id") Long id) throws MalformedURLException {
-        System.out.println("id 가져오는지 확인 : "+id);
         return investFileService.getInvestImageUrl(id);
     }
 
