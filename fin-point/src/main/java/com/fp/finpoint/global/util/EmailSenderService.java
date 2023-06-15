@@ -62,13 +62,13 @@ public class EmailSenderService {
     private String buildHtmlEmail(String message) {
         Context context = new Context();
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime tenMinutesLater = now.plusMinutes(10);
+        LocalDateTime tenMinutesLater = now.plusMinutes(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         context.setVariable("message", message);
         context.setVariable("imageId", IMAGE_ID);
 //        context.setVariable("currentTime", now.format(formatter));
         context.setVariable("tenMinutesLater", tenMinutesLater.format(formatter));
-        return templateEngine.process("login-mail", context);
+        return templateEngine.process("user/login/login-mail", context);
     }
 
 }

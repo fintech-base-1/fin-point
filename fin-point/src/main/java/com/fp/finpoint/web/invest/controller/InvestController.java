@@ -82,7 +82,7 @@ public class InvestController {
         );
         like = likeService.findLike(id, email);
         model.addAttribute("like",like);
-        Piece savedPiece = pieceRepository.findById(savedMember.getMemberId()).orElseThrow(() -> new RuntimeException("error"));
+        Piece savedPiece = readInvestDetail.getPiece();
         model.addAttribute("piece", savedPiece);
         System.out.println("1"+id);
         System.out.println("2"+email);

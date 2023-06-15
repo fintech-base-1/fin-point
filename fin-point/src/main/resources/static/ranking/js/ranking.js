@@ -41,10 +41,6 @@ function createMemberElement(member) {
     img.src = "/finpoint/ranking/image/"+id;
     li.appendChild(img);
 
-    // const nicknameDiv = document.createElement('div');
-    // nicknameDiv.textContent = member.nickname;
-    // li.appendChild(nicknameDiv);
-
     const emailDiv = document.createElement('div');
     emailDiv.textContent = member.email;
     li.appendChild(emailDiv);

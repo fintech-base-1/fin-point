@@ -1,3 +1,4 @@
+/*
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 * {
@@ -22,7 +23,6 @@ ol {
     list-style: none;
     counter-reset: list;
     padding: 0 1rem;
-    margin-top : 200px;
 }
 
 li {
@@ -110,4 +110,4 @@ ol li div {
     h3::before {
         margin-right: 1.5rem;
     }
-}
+}*/

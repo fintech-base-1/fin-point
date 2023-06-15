@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd2a020d-b69f-4e8b-886f-720fb94d0333" name="Changes" comment="FIX : ranking test fin">
+    <list default="true" id="fd2a020d-b69f-4e8b-886f-720fb94d0333" name="Changes" comment="FIX : dd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/service/InvestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/domain/invest/service/InvestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/exception/ExceptionCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/exception/ExceptionCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/util/EmailSenderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/global/util/EmailSenderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/invest/controller/InvestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/invest/controller/InvestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/controller/RankingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/java/com/fp/finpoint/web/ranking/controller/RankingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/db/h2/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/db/h2/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/login/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/login/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/login/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/login/js/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/css/ranking.css" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/css/ranking.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/js/ranking.js" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/static/ranking/js/ranking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/login/login-mail.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/login/login-mail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/login/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/ranking/ranking.html" beforeDir="false" afterPath="$PROJECT_DIR$/fin-point/src/main/resources/templates/user/ranking/ranking.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,6 +72,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-11.0.13/lib/src.zip!/java.base/java/lang/Long.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -107,6 +117,7 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates\user\login" />
+      <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates" />
       <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates\user\ranking" />
       <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates\user\mypage" />
       <recent name="C:\Users\ParkJS\IdeaProjects\fin-point\fin-point\src\main\resources\templates\user\join" />
@@ -131,7 +142,9 @@
       <updated>1686467902894</updated>
       <workItem from="1686467905872" duration="246000" />
       <workItem from="1686705217239" duration="14282000" />
-      <workItem from="1686721440190" duration="3446000" />
+      <workItem from="1686721440190" duration="6220000" />
+      <workItem from="1686731087597" duration="85000" />
+      <workItem from="1686791846308" duration="9603000" />
     </task>
     <task id="LOCAL-00001" summary="FIX : change path &amp; bug fix">
       <created>1686677241648</created>
@@ -168,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686720913839</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="FIX : dd">
+      <created>1686726254783</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1686726254783</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +222,7 @@
     <MESSAGE value="FIX : change path" />
     <MESSAGE value="FIX : change path &amp; bug fix" />
     <MESSAGE value="FIX : ranking test fin" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX : ranking test fin" />
+    <MESSAGE value="FIX : dd" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX : dd" />
   </component>
 </project>
